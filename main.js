@@ -1,0 +1,462 @@
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
+
+  var HUB = window.HUB;
+  var UI = {
+    en: {
+      wordmark: "Webber Hsu",
+      skip: "Skip to work",
+      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.blog": "Blog",
+      motto: "I build, write and wander to build a deeper understanding of the world :)",
+      "hub.h": "Build, Think, Learn",
+      cats: {
+        build: { h: "Projects" },
+        think: { h: "Perspectives" },
+        learn: { h: "Knowledge" }
+      },
+      "foot.h": "Elsewhere",
+      "foot.meta": "Taipei",
+      "foot.pending": "Links are on their way.",
+      status: { live: "Live", built: "Built", planned: "Planned" },
+      pending: "Private for now",
+      aiTag: "Translated by AI",
+      "exp.h": "Experience",
+      now: "Now",
+      types: { work: "Work", school: "Education", program: "Programme", life: "Interest" },
+      lanes: { main: "School & work", side: "Programmes", interest: "Interests" },
+      ongoing: "ongoing",
+      readMore: "Read the story",
+      emptyThink: "Nothing here yet.",
+      emptyLearn: "Nothing here yet.",
+      readOn: { medium: "More on Medium", substack: "More on Substack", github: "More on GitHub" },
+      links: { portaly: "All links", github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook" }
+    },
+    zh: {
+      wordmark: "徐偉博",
+      skip: "跳到作品",
+      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.blog": "部落格",
+      motto: "做產品、寫文章、流浪，對這個世界建立深度的理解:)",
+      "hub.h": "實作、思考、學習",
+      cats: {
+        build: { h: "作品" },
+        think: { h: "觀點" },
+        learn: { h: "知識" }
+      },
+      "foot.h": "其他地方",
+      "foot.meta": "台北",
+      "foot.pending": "連結整理中。",
+      status: { live: "上線中", built: "已完成", planned: "規劃中" },
+      pending: "目前不公開",
+      "exp.h": "經歷",
+      now: "現在",
+      types: { work: "工作", school: "學歷", program: "計畫", life: "興趣" },
+      lanes: { main: "學業與工作", side: "計畫與社團", interest: "興趣" },
+      ongoing: "持續中",
+      readMore: "看這段的文章",
+      emptyThink: "這裡還沒有東西。",
+      emptyLearn: "這裡還沒有東西。",
+      readOn: { medium: "Medium 上還有更多", substack: "Substack 上還有更多", github: "GitHub 上還有更多" },
+      links: { portaly: "所有連結", github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook" }
+    }
+  };
+
+  var SIZES = { 1: 15, 2: 11, 3: 8, 4: 6 };
+  var ARROW = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg>';
+
+  var lang = initialLang();
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  // The homepage shows at most three per category.
+  var PER_CATEGORY = 3;
+  function featured(list) {
+    var picked = list.filter(function (x) { return x.featured; });
+    return (picked.length ? picked : list).slice(0, PER_CATEGORY);
+  }
+
+  function t(o) { return o && typeof o === "object" ? (o[lang] || o.en) : o; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function orbitName(id) { var o = HUB.orbits.filter(function (x) { return x.id === id; })[0]; return o ? t(o.name) : id; }
+
+  function initialLang() {
+    var saved = null;
+    try { saved = localStorage.getItem("hub-lang"); } catch (e) {}
+    if (saved === "en" || saved === "zh") return saved;
+    return /^zh/i.test(navigator.language || "") ? "zh" : "en";
+  }
+
+  var TAG_ICONS = {
+    product: '<path d="M12 3 20 7.5v9L12 21 4 16.5v-9Z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/>',
+    workflow: '<circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18.5" r="2.2"/><path d="M7.4 6h9.2M6.3 8 10.8 16.4M17.7 8 13.2 16.4"/>',
+    compass: '<circle cx="12" cy="12" r="9"/><path d="M15.6 8.4 13.4 13.4 8.4 15.6 10.6 10.6Z"/>',
+    basketball: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.7 5.6c3.3 3.5 3.3 9.3 0 12.8M18.3 5.6c-3.3 3.5-3.3 9.3 0 12.8"/>',
+    trail: '<path d="M2.5 19 9 8.5l3.6 5.6 2.4-3.4L21.5 19Z"/><path d="M6 19c1.6-1.6 3.2-.6 4.6-2.2s2.4-1.2 3.4-2.4" stroke-dasharray="1.4 2.2"/>'
+  };
+
+  function renderTags() {
+    document.querySelector("[data-tags]").innerHTML = (HUB.tags || []).map(function (g, i) {
+      var icon = TAG_ICONS[g.icon] ? '<svg class="tag-icon" data-at="' + (g.at === "below" ? "below" : "above") + '" style="--x:' + (g.x || 0) + "px;--tilt:" + (g.tilt || 0) + "deg;--i:" + i + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + TAG_ICONS[g.icon] + "</svg>" : "";
+      return "<li>" + icon + "<span>#" + esc(t(g)) + "</span></li>";
+    }).join("");
+  }
+
+  // ---------- The four-part dial, driven by scroll ----------
+  var CATS = ["build", "think", "learn"];
+  var SOURCE = { build: "github", think: "medium", learn: "substack" };
+  var STEP = 360 / CATS.length;      // each part spans a third of the dial
+  var DC = 320;                       // dial centre in its viewBox
+  var R_ARC = 262, R_IN = 196, R_OUT = 296, R_LABEL = 220, R_DOTS = 287;
+  var HOLD = 0.62;                    // share of each section during which its quarter sits still at the pointer
+  var active = 0, rot = 0, rotTarget = 0;
+  var dialSvg = document.querySelector("[data-dial-svg]");
+  var rotorEl = document.querySelector("[data-rotor]");
+  var labelsEl = document.querySelector("[data-dial-labels]");
+  var panelEl = document.querySelector("[data-panel]");
+  var blocks = [];
+
+  function pt(r, deg) { var a = deg * Math.PI / 180; return [DC + r * Math.sin(a), DC - r * Math.cos(a)]; }
+  function arc(r, a0, a1) { var p0 = pt(r, a0), p1 = pt(r, a1); return "M" + p0[0].toFixed(2) + " " + p0[1].toFixed(2) + " A" + r + " " + r + " 0 0 1 " + p1[0].toFixed(2) + " " + p1[1].toFixed(2); }
+  function sector(a0, a1) { var o0 = pt(R_OUT, a0), o1 = pt(R_OUT, a1), i1 = pt(R_IN, a1), i0 = pt(R_IN, a0);
+    return "M" + o0 + " A" + R_OUT + " " + R_OUT + " 0 0 1 " + o1 + " L" + i1 + " A" + R_IN + " " + R_IN + " 0 0 0 " + i0 + " Z"; }
+
+  function itemsFor(cat) {
+    if (cat === "build") return featured(HUB.works);
+    if (cat === "learn") return featured(HUB.notes.filter(function (e) { return e.url; }));
+    return featured(HUB.writing.filter(function (e) { return e.url && (e.orbit || "think") === cat; }));
+  }
+
+  function renderDial() {
+    var ticks = "";
+    for (var d = 0; d < 360; d += 6) { var a = pt(306, d), b = pt(d % 30 === 0 ? 316 : 311, d); ticks += '<line x1="' + a[0].toFixed(1) + '" y1="' + a[1].toFixed(1) + '" x2="' + b[0].toFixed(1) + '" y2="' + b[1].toFixed(1) + '"/>'; }
+    document.querySelector("[data-dial-ticks]").innerHTML = ticks;
+    rotorEl.innerHTML = CATS.map(function (c, i) {
+      var mid = i * STEP, items = itemsFor(c), dots = "";
+      items.forEach(function (it, k) {
+        var at = pt(R_DOTS, mid + (k - (items.length - 1) / 2) * 5);
+        dots += '<circle class="seg-dot' + (it.status === "planned" ? " is-planned" : "") + '" cx="' + at[0].toFixed(1) + '" cy="' + at[1].toFixed(1) + '" r="3"/>';
+      });
+      return '<g class="seg" data-seg="' + i + '">' +
+        '<path class="seg-hit" d="' + sector(mid - STEP / 2 + 1, mid + STEP / 2 - 1) + '" role="link" tabindex="0" aria-label="' + esc(orbitName(c)) + '" data-tab="' + i + '"/>' +
+        '<path class="seg-arc" d="' + arc(R_ARC, mid - STEP / 2 + 6, mid + STEP / 2 - 6) + '"/>' + dots + "</g>";
+    }).join("");
+    labelsEl.innerHTML = CATS.map(function (c, i) {
+      return '<text class="seg-label" data-label="' + i + '" text-anchor="middle" dominant-baseline="middle">' + esc(orbitName(c)) + "</text>";
+    }).join("");
+    rotorEl.querySelectorAll(".seg-hit").forEach(function (h) {
+      h.addEventListener("keydown", function (e) {
+        var k = e.key, n = null, i = +h.getAttribute("data-tab");
+        if (k === "Enter" || k === " ") n = i;
+        if (k === "ArrowRight" || k === "ArrowDown") n = (active + 1) % CATS.length;
+        if (k === "ArrowLeft" || k === "ArrowUp") n = (active + CATS.length - 1) % CATS.length;
+        if (n !== null) { e.preventDefault(); goTo(n); }
+      });
+    });
+    drawDial();
+  }
+
+  function drawDial() {
+    rotorEl.setAttribute("transform", "rotate(" + rot.toFixed(2) + " " + DC + " " + DC + ")");
+    labelsEl.querySelectorAll("[data-label]").forEach(function (l) {
+      var i = +l.getAttribute("data-label"), at = pt(R_LABEL, i * STEP + rot);
+      l.setAttribute("x", at[0].toFixed(1)); l.setAttribute("y", at[1].toFixed(1));
+      l.classList.toggle("is-active", i === active);
+    });
+    rotorEl.querySelectorAll(".seg").forEach(function (g) { g.classList.toggle("is-active", +g.getAttribute("data-seg") === active); });
+  }
+
+  function setActive(i, inHub) {
+    if (i !== active) {
+      active = i;
+      var ui = UI[lang];
+      document.querySelectorAll("[data-core-name]").forEach(function (el) { el.textContent = orbitName(CATS[i]); });
+    }
+    document.querySelectorAll(".bar [data-cat-link]").forEach(function (a) { a.classList.toggle("is-current", inHub && a.getAttribute("data-cat-link") === CATS[i]); });
+  }
+
+  // Scroll position -> dial angle. Each quarter holds still at the pointer while its
+  // section is read, then the dial turns on toward the next one as that section ends.
+  function readScroll() {
+    if (!blocks.length) return;
+    var anchor = window.innerHeight * 0.42, pos = 0, inHub = false;
+    var N = CATS.length, first = blocks[0].getBoundingClientRect(), last = blocks[N - 1].getBoundingClientRect();
+    if (anchor < first.top) pos = 0;
+    else if (anchor >= last.bottom) pos = N - 1;
+    else {
+      inHub = true;
+      for (var i = 0; i < N; i++) {
+        // A section's stretch runs to the next section's top, so the gap between them still turns the dial.
+        var top = blocks[i].getBoundingClientRect().top;
+        var bottom = i < N - 1 ? blocks[i + 1].getBoundingClientRect().top : last.bottom;
+        if (anchor >= top && anchor < bottom) {
+          var f = (anchor - top) / (bottom - top);
+          var turn = i < N - 1 && f > HOLD ? (f - HOLD) / (1 - HOLD) : 0;
+          pos = i + turn * turn * (3 - 2 * turn);   // smoothstep between quarters
+          break;
+        }
+      }
+    }
+    rotTarget = -STEP * pos;
+    setActive(Math.min(N - 1, Math.round(pos)), inHub);
+  }
+
+  function stepDial() {
+    if (dragging) return;
+    readScroll();
+    var d = rotTarget - rot;
+    if (Math.abs(d) < 0.02) rot = rotTarget; else rot += reduce.matches ? d : d * 0.16;
+    drawDial();
+  }
+
+  function goTo(i) {
+    var el = blocks[i];
+    if (!el) return;
+    var y = el.getBoundingClientRect().top + window.scrollY - parseFloat(getComputedStyle(el).scrollMarginTop || 0) - (document.querySelector(".bar").offsetHeight || 0);
+    window.scrollTo({ top: Math.max(0, y), behavior: reduce.matches ? "auto" : "smooth" });
+    history.replaceState(null, "", "#" + CATS[i]);
+  }
+
+  function workRow(w) {
+    var ui = UI[lang];
+    var links = w.links.filter(function (l) { return l.url; }).map(function (l) {
+      return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(t(l.label)) + ARROW + "</a>";
+    }).join("");
+    if (!links && w.status !== "planned") links = '<span class="work-pending">' + esc(ui.pending) + "</span>";
+    var dot = w.mag === 1 ? "background:var(--gold)" : w.status === "planned" ? "background:none;border:1px dashed var(--ink-3)" : "";
+    return '<li class="work" id="work-' + w.id + '" data-status="' + w.status + '">' +
+      '<div class="work-title"><span class="dot" style="--d:' + SIZES[w.mag] + "px;" + dot + '" aria-hidden="true"></span><h4>' + esc(t(w.name)) + "</h4></div>" +
+      '<p class="work-meta"><span>' + esc(t(w.year)) + '</span><span class="status" data-s="' + w.status + '">' + esc(ui.status[w.status]) + "</span>" + (w.stack ? "<span>" + esc(t(w.stack)) + "</span>" : "") + "</p>" +
+      '<p class="work-summary">' + esc(t(w.summary)) + "</p>" +
+      (links ? '<div class="work-links">' + links + "</div>" : "") + "</li>";
+  }
+  function entryRow(e) {
+    return '<li class="entry"><a hreflang="zh-Hant" href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(t(e.title)) + ARROW + "</a>" +
+      '<p class="entry-meta">' + (e.date ? '<time datetime="' + esc(e.date) + '">' + esc(e.date) + "</time>" : "") +
+      (lang === "en" && e.title && e.title.en ? '<span class="ai-tag">' + esc(UI.en.aiTag) + "</span>" : "") + "</p></li>";
+  }
+
+  function renderPanel() {
+    var ui = UI[lang];
+    panelEl.innerHTML = CATS.map(function (cat) {
+      var copy = ui.cats[cat], items = itemsFor(cat), src = SOURCE[cat];
+      var list = cat === "build"
+        ? '<ol class="works">' + items.map(workRow).join("") + "</ol>"
+        : items.length ? '<ol class="entries">' + items.map(entryRow).join("") + "</ol>"
+        : '<p class="empty"><span class="dot" style="--d:8px" aria-hidden="true"></span>' + esc(cat === "learn" ? ui.emptyLearn : ui.emptyThink) + "</p>";
+      var more = HUB.links[src] ? '<a class="panel-more" href="' + esc(HUB.links[src]) + '" target="_blank" rel="noopener">' + esc(ui.readOn[src]) + ARROW + "</a>" : "";
+      return '<section class="cat" id="' + cat + '" aria-labelledby="' + cat + '-h"><header class="panel-head"><h3 class="panel-h" id="' + cat + '-h">' + esc(copy.h) + "</h3></header>" + list + more + "</section>";
+    }).join("");
+    blocks = CATS.map(function (c) { return document.getElementById(c); });
+    active = -1; readScroll();
+    if (active < 0) setActive(0, false);
+  }
+
+  // Drag to turn: the dial follows the pointer, then the page scrolls to the quarter it settles on.
+  var dragging = false, dragA0 = 0, dragRot0 = 0, dragMoved = 0, dragHit = null;
+  function pointerAngle(e) {
+    var b = dialSvg.getBoundingClientRect();
+    return Math.atan2(e.clientX - (b.left + b.width / 2), -(e.clientY - (b.top + b.height / 2))) * 180 / Math.PI;
+  }
+  dialSvg.addEventListener("pointerdown", function (e) {
+    dragging = true; dragMoved = 0; dragA0 = pointerAngle(e); dragRot0 = rot;
+    dragHit = e.target.closest ? e.target.closest("[data-tab]") : null;
+    dialSvg.setPointerCapture(e.pointerId);
+  });
+  dialSvg.addEventListener("pointermove", function (e) {
+    if (!dragging) return;
+    var d = ((pointerAngle(e) - dragA0 + 540) % 360) - 180;
+    dragMoved = Math.max(dragMoved, Math.abs(d));
+    if (dragMoved > 4) { rot = Math.max(-STEP * (CATS.length - 1), Math.min(0, dragRot0 + d)); drawDial(); dialSvg.classList.add("is-dragging"); }
+  });
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false; dialSvg.classList.remove("is-dragging");
+    if (dragMoved > 4) goTo(Math.max(0, Math.min(CATS.length - 1, Math.round(-rot / STEP))));
+    else if (dragHit) goTo(+dragHit.getAttribute("data-tab"));
+  }
+  dialSvg.addEventListener("pointerup", endDrag);
+  dialSvg.addEventListener("pointercancel", endDrag);
+
+  // ---------- Experience: three lines ----------
+  // The main line (school and work) and a side line (programmes and clubs) split at the far left, so the
+  // diagonal sits in empty space; the interest line is a separate track running in from the left edge.
+  // Entries are evenly spaced in time order; each prints its own dates.
+  function renderTimeline() {
+    var ui = UI[lang], list = HUB.timeline || [];
+    var narrow = !window.matchMedia("(min-width: 761px)").matches;
+    var SLOT = narrow ? 230 : 268, PAD = narrow ? 16 : 40, GAP_SIDE = narrow ? 64 : 78;
+    var FORK = narrow ? 150 : 210;                   // room on the left for the diagonals
+
+    function when(e) {
+      if (e.to === e.from) return e.from;          // a single month, e.g. a trip
+      var to = e.to === "now" ? ui.now : e.to === "ongoing" ? ui.ongoing : t(e.to);
+      return e.from + (to ? (/^\d/.test(to) ? " – " : " · ") + to : "");
+    }
+    function body(e) {
+      return '<p class="tl-when"><span>' + esc(when(e)) + '</span><span class="tl-type">' + esc(ui.types[e.type]) + "</span></p>" +
+        '<h3 class="tl-title">' + esc(t(e.title)) + "</h3>" +
+        (e.org ? '<p class="tl-org">' + esc(t(e.org)) + "</p>" : "") +
+        // Only the current role carries a description; the rest stay to title, place and story link.
+        (e.note && e.to === "now" ? '<p class="tl-note">' + esc(t(e.note)) + "</p>" : "") +
+        (e.link ? '<a class="tl-link" href="' + esc(e.link) + '" target="_blank" rel="noopener">' + esc(ui.readMore) + ARROW + "</a>" : "");
+    }
+    var X = function (i) { return PAD + FORK + i * SLOT; };
+    var W = X(list.length - 1) + (narrow ? 250 : 300) + PAD;
+
+    var items = "";
+    list.forEach(function (e, i) {
+      var now = e.to === "now" && e.lane === "main";
+      var attrs = ' data-lane="' + e.lane + '" data-i="' + i + '"' + (now ? " data-now" : "");
+      items += '<li class="tl tl-' + e.lane + '"' + attrs + ' style="left:' + X(i) + "px;top:0;width:" + (SLOT - 20) + 'px">' + body(e) + "</li>";
+    });
+    var track = document.querySelector("[data-timeline]");
+    track.style.width = W + "px";
+    track.innerHTML = items;
+
+    // The main line sits just below its tallest label; labels hang bottom-aligned above it.
+    var tallest = 0;
+    track.querySelectorAll(".tl-main").forEach(function (li) { tallest = Math.max(tallest, li.offsetHeight); });
+    var MAIN = tallest + 34, SIDE = MAIN + GAP_SIDE;
+    track.querySelectorAll(".tl-main").forEach(function (li) { li.style.top = (MAIN - 22 - li.offsetHeight) + "px"; });
+    track.querySelectorAll(".tl-side").forEach(function (li) { li.style.top = (SIDE + 22) + "px"; });
+    // The interest line runs below the tallest side-line card.
+    var sideBottom = SIDE + 40;
+    track.querySelectorAll(".tl-side").forEach(function (li) { sideBottom = Math.max(sideBottom, li.offsetTop + li.offsetHeight); });
+    var INTEREST = sideBottom + (narrow ? 36 : 44);
+    var h = INTEREST;
+    track.querySelectorAll(".tl-interest").forEach(function (li) { li.style.top = (INTEREST + 22) + "px"; h = Math.max(h, li.offsetTop + li.offsetHeight); });
+    track.style.height = (h + 24) + "px";
+
+    var first = { side: -1, interest: -1 }, last = { side: -1, interest: -1 }, nowAt = -1, nodes = "";
+    list.forEach(function (e, i) {
+      var y = e.lane === "main" ? MAIN : e.lane === "side" ? SIDE : INTEREST;
+      if (e.lane !== "main") { if (first[e.lane] < 0) first[e.lane] = i; last[e.lane] = i; }
+      if (e.lane === "main" && e.to === "now") nowAt = i;
+      nodes += '<circle class="tl-node is-' + e.lane + (e.lane === "main" && e.to === "now" ? " is-now" : "") + '" cx="' + X(i) + '" cy="' + y + '" r="' + (e.lane === "main" ? 6 : 4.5) + '"/>';
+    });
+    var fx = PAD, lines = '<line class="tl-rail is-main" x1="0" y1="' + MAIN + '" x2="' + W + '" y2="' + MAIN + '"/>';
+    if (nowAt >= 0) lines += '<line class="tl-rail is-now" x1="' + X(nowAt) + '" y1="' + MAIN + '" x2="' + W + '" y2="' + MAIN + '"/>';
+    // The side line forks off the main line; the interest line is its own track from the left edge.
+    if (first.side >= 0) {
+      var endFork = Math.min(PAD + FORK - 24, fx + (SIDE - MAIN) * 1.2);
+      lines += '<path class="tl-rail is-side" d="M' + fx + " " + MAIN + " L" + endFork.toFixed(1) + " " + SIDE + " H" + (X(last.side) + 40) + '"/>';
+    }
+    if (first.interest >= 0) lines += '<path class="tl-rail is-interest" d="M0 ' + INTEREST + " H" + (X(last.interest) + 40) + '"/>';
+    // Lane names sit at the start of each line, in the fork.
+    var names = [["main", MAIN], ["side", SIDE], ["interest", INTEREST]].map(function (l) {
+      return '<text class="tl-lane" x="' + (PAD + FORK - 28) + '" y="' + (l[1] - 10) + '" text-anchor="end">' + esc(ui.lanes[l[0]]) + "</text>";
+    }).join("");
+    track.insertAdjacentHTML("afterbegin", '<svg class="tl-lines" width="' + W + '" height="100%" aria-hidden="true" focusable="false">' + lines + nodes + names + "</svg>");
+  }
+
+  function renderLinks() {
+    var ui = UI[lang];
+    var html = Object.keys(HUB.links).filter(function (k) { return HUB.links[k]; }).map(function (k) {
+      return '<li><a href="' + esc(HUB.links[k]) + '" target="_blank" rel="noopener">' + esc(ui.links[k]) + ARROW + "</a></li>";
+    }).join("");
+    document.querySelectorAll("[data-links]").forEach(function (ul) { ul.innerHTML = html; });
+    document.querySelector("[data-links-pending]").hidden = !!html;
+  }
+
+  function applyLang() {
+    var ui = UI[lang];
+    document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var v = ui[el.getAttribute("data-i18n")];
+      if (typeof v === "string") el.textContent = v;
+    });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    renderTags();
+    renderDial();
+    renderPanel();
+    renderTimeline();
+    if (typeof measureExp === "function" && exp) measureExp();
+    renderLinks();
+  }
+
+  document.querySelectorAll("[data-lang]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      lang = b.getAttribute("data-lang");
+      try { localStorage.setItem("hub-lang", lang); } catch (e) {}
+      document.documentElement.classList.remove("js"); // no re-entrance animation on language switch
+      applyLang();
+    });
+  });
+
+  // ---------- One clock: the dial eases toward the scroll position ----------
+  // The background's colour patches orbit the page centre as you scroll (about 150° from top to bottom),
+  // eased so they glide rather than track the wheel. Reduced motion: they stay put.
+  var BG = [
+    { k: "gold",  a0: -52, rx: 46, ry: 40 },
+    { k: "ember", a0: -8,  rx: 44, ry: 36 },
+    { k: "blue",  a0: 140, rx: 48, ry: 44 }
+  ];
+  var bgTurn = 0, rootStyle = document.documentElement.style;
+  function stepBackground() {
+    var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    var target = reduce.matches ? 0 : (window.scrollY / max) * 150;
+    bgTurn += (target - bgTurn) * (reduce.matches ? 1 : 0.06);
+    BG.forEach(function (p) {
+      var a = (p.a0 + bgTurn) * Math.PI / 180;
+      rootStyle.setProperty("--" + p.k + "-x", (50 + p.rx * Math.cos(a)).toFixed(2) + "%");
+      rootStyle.setProperty("--" + p.k + "-y", (50 + p.ry * Math.sin(a)).toFixed(2) + "%");
+    });
+  }
+
+  // Fixed header: publish its height for sticky offsets and anchor landings, and veil it once the page scrolls.
+  var bar = document.querySelector(".bar");
+  function measureBar() { rootStyle.setProperty("--bar-h", bar.offsetHeight + "px"); }
+  window.addEventListener("resize", measureBar);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureBar);
+  measureBar();
+
+  // Experience: on wide screens the section is pinned while the page scroll pans the timeline
+  // from the oldest entry (left) to the newest (right). On phones the row simply swipes.
+  var exp = document.getElementById("experience");
+  var expStage = document.querySelector("[data-exp-stage]");
+  var expTrack = document.querySelector("[data-timeline]");
+  var expViewport = document.querySelector("[data-exp-viewport]");
+  var expWide = window.matchMedia("(min-width: 761px)");
+  var expTravel = 0, expScale = 1, PIN_GAP = 16, expMapOffset = 0;
+  // The heading scrolls away; the map itself pins under the header and, on short screens,
+  // scales down so it always fits the viewport while the page scroll pans it sideways.
+  function measureExp() {
+    expTrack.style.transform = "";
+    if (!expWide.matches) { exp.style.height = ""; expViewport.style.height = ""; expTravel = 0; expScale = 1; return; }
+    var room = window.innerHeight - (bar.offsetHeight || 0) - PIN_GAP * 2;
+    expScale = Math.min(1, room / expTrack.offsetHeight);
+    expViewport.style.height = Math.ceil(expTrack.offsetHeight * expScale) + "px";
+    expTravel = Math.max(0, expTrack.offsetWidth * expScale - expViewport.clientWidth);
+    // Where the map sits inside the section before it pins (a sticky element's own offset moves once stuck).
+    var head = document.getElementById("exp-h");
+    expMapOffset = head.offsetTop + head.offsetHeight + parseFloat(getComputedStyle(head).marginBottom || 0);
+    exp.style.height = (expMapOffset + expViewport.offsetHeight + PIN_GAP + expTravel) + "px";
+    stepExp();
+  }
+  function stepExp() {
+    if (!expWide.matches) return;
+    var pinAt = (bar.offsetHeight || 0) + PIN_GAP;
+    var start = exp.getBoundingClientRect().top + expMapOffset - pinAt;
+    var p = expTravel ? Math.min(1, Math.max(0, -start / expTravel)) : 0;
+    expTrack.style.transform = "translate3d(" + (-p * expTravel).toFixed(1) + "px,0,0) scale(" + expScale.toFixed(4) + ")";
+  }
+  window.addEventListener("resize", measureExp);
+  expWide.addEventListener("change", function () { renderTimeline(); measureExp(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureExp);
+
+  function tick() {
+    stepExp();
+    bar.classList.toggle("is-scrolled", window.scrollY > 8);
+    stepDial();
+    stepBackground();
+    requestAnimationFrame(tick);
+  }
+
+  applyLang();
+  // Content is drawn by script, so a deep link (#learn, #work-lifeos) is honoured once it exists.
+  if (location.hash.length > 1) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) target.scrollIntoView({ block: "start" });
+  }
+  requestAnimationFrame(tick);
+})();
+

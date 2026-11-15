@@ -1,0 +1,6 @@
+# Design-tool working files: screenshots, review reports, decision sketches
+.impeccable/
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-bg="accretion">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Webber Hsu</title>
+<meta name="description" content="Webber Hsu (徐偉博) — a product manager in Taipei who builds what he writes about.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..800&family=Noto+Sans+TC:wght@200;300;400;500;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#hub" data-i18n="skip">Skip to work</a>
+
+<header class="bar">
+  <a class="wordmark" href="#top" data-i18n="wordmark">Webber Hsu</a>
+  <nav aria-label="Primary">
+    <a href="#build" data-cat-link="build" data-i18n="nav.build">Build</a>
+    <a href="#think" data-cat-link="think" data-i18n="nav.think">Think</a>
+    <a href="#learn" data-cat-link="learn" data-i18n="nav.learn">Learn</a>
+    <a href="#experience" data-i18n="nav.exp">Experience</a>
+    <a href="blog.html" data-i18n="nav.blog">Blog</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">EN</button>
+    <button type="button" data-lang="zh" aria-pressed="false">中</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-name">
+    <h1 id="hero-name" class="name"><span class="name-en" lang="en">Webber Hsu</span><span class="name-cjk" lang="zh-Hant">徐偉博</span></h1>
+    <p class="motto" data-i18n="motto">I build, write and wander to build a deeper understanding of the world :)</p>
+    <ul class="tags" data-tags aria-label="Interests"></ul>
+  </section>
+
+  <section id="hub" class="section hub" aria-labelledby="hub-h">
+    <h2 id="hub-h" class="visually-hidden" data-i18n="hub.h">Build, Think, Learn</h2>
+    <div class="hub-grid">
+      <div class="dial-wrap">
+        <div class="dial" data-dial>
+          <svg class="dial-art" viewBox="0 0 640 640" role="group" aria-label="Build, Think, Learn" data-dial-svg>
+            <g class="dial-ticks" data-dial-ticks aria-hidden="true"></g>
+            <g class="dial-rotor" data-rotor></g>
+            <g class="dial-labels" data-dial-labels aria-hidden="true"></g>
+            <path class="dial-pointer" d="M320 2 L311 -12 L329 -12 Z" aria-hidden="true"/>
+          </svg>
+          <div class="dial-core" aria-hidden="true">
+            <span class="dial-core-name" data-core-name></span>
+          </div>
+        </div>
+        <p class="dial-caption" aria-hidden="true"><span data-core-name></span></p>
+      </div>
+      <div class="panel" id="hub-panel" data-panel></div>
+    </div>
+  </section>
+
+  <section id="experience" class="section exp" aria-labelledby="exp-h">
+    <div class="exp-stage" data-exp-stage>
+      <h2 id="exp-h" class="exp-h" data-i18n="exp.h">Experience</h2>
+      <div class="tl-viewport" data-exp-viewport>
+        <ol class="timeline" data-timeline></ol>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" aria-labelledby="foot-h">
+  <h2 id="foot-h" class="foot-h" data-i18n="foot.h">Elsewhere</h2>
+  <ul class="ext ext-foot" data-links></ul>
+  <p class="foot-pending" data-links-pending hidden data-i18n="foot.pending">Links are on their way.</p>
+  <p class="foot-meta"><span>© 2026 Webber Hsu</span><span data-i18n="foot.meta">Taipei</span></p>
+  <svg class="horizon-rise" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="beam2" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#6B4E17"/>
+        <stop offset=".35" stop-color="#E9B949"/>
+        <stop offset=".6" stop-color="#F4CD6A"/>
+        <stop offset="1" stop-color="#6B4E17"/>
+      </linearGradient>
+    </defs>
+    <circle cx="500" cy="520" r="470" fill="none" stroke="#22252E"/>
+    <circle cx="500" cy="520" r="395" fill="none" stroke="#30343F"/>
+    <circle cx="500" cy="520" r="318" fill="none" stroke="url(#beam2)" stroke-width="6"/>
+    <circle cx="500" cy="520" r="304" fill="#000" stroke="#C2452D" stroke-opacity=".8"/>
+  </svg>
+</footer>
+
+<noscript><p class="noscript">This page draws its content with JavaScript. Links: https://portaly.cc/tsuwebber</p></noscript>
+<script src="content.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

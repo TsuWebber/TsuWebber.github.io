@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" data-bg="accretion">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog · Webber Hsu</title>
+<meta name="description" content="Everything Webber Hsu (徐偉博) has published on Medium and Substack.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..800&family=Noto+Sans+TC:wght@200;300;400;500;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-blog">
+<a class="skip" href="#posts" data-i18n="skip">Skip to posts</a>
+
+<header class="bar">
+  <a class="wordmark" href="index.html" data-i18n="wordmark">Webber Hsu</a>
+  <nav aria-label="Primary">
+    <a href="index.html#build" data-i18n="nav.build">Build</a>
+    <a href="index.html#think" data-i18n="nav.think">Think</a>
+    <a href="index.html#learn" data-i18n="nav.learn">Learn</a>
+    <a href="index.html#experience" data-i18n="nav.exp">Experience</a>
+    <a href="blog.html" class="is-current" aria-current="page" data-i18n="nav.blog">Blog</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">EN</button>
+    <button type="button" data-lang="zh" aria-pressed="false">中</button>
+  </div>
+</header>
+
+<main id="top" class="blog">
+  <header class="blog-head">
+    <h1 class="blog-h" data-i18n="blog.h">Blog</h1>
+    <p class="blog-sub" data-blog-sub></p>
+    <div class="blog-filter" role="group" aria-label="Source" data-filter>
+      <button type="button" data-src="all" aria-pressed="true" data-i18n="f.all">All</button>
+      <button type="button" data-src="medium" aria-pressed="false">Medium</button>
+      <button type="button" data-src="substack" aria-pressed="false">Substack</button>
+    </div>
+  </header>
+  <div id="posts" class="blog-list" data-posts aria-live="polite"></div>
+</main>
+
+<footer class="foot" aria-labelledby="foot-h">
+  <h2 id="foot-h" class="foot-h" data-i18n="foot.h">Elsewhere</h2>
+  <ul class="ext ext-foot" data-links></ul>
+  <p class="foot-meta"><span>© 2026 Webber Hsu</span><span data-i18n="foot.meta">Taipei</span></p>
+  <svg class="horizon-rise" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="beam2" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#6B4E17"/>
+        <stop offset=".35" stop-color="#E9B949"/>
+        <stop offset=".6" stop-color="#F4CD6A"/>
+        <stop offset="1" stop-color="#6B4E17"/>
+      </linearGradient>
+    </defs>
+    <circle cx="500" cy="520" r="470" fill="none" stroke="#22252E"/>
+    <circle cx="500" cy="520" r="395" fill="none" stroke="#30343F"/>
+    <circle cx="500" cy="520" r="318" fill="none" stroke="url(#beam2)" stroke-width="6"/>
+    <circle cx="500" cy="520" r="304" fill="#000" stroke="#C2452D" stroke-opacity=".8"/>
+  </svg>
+</footer>
+
+<script src="content.js"></script>
+<script src="blog.js"></script>
+</body>
+</html>
