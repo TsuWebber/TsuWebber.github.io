@@ -11,9 +11,9 @@
       motto: "I build, write and wander to build a deeper understanding of the world :)",
       "hub.h": "Build, Think, Learn",
       cats: {
-        build: { h: "Projects" },
-        think: { h: "Perspectives" },
-        learn: { h: "Knowledge" }
+        build: { h: "Build" },
+        think: { h: "Think" },
+        learn: { h: "Learn" }
       },
       "foot.h": "Elsewhere",
       "foot.meta": "Taipei",
@@ -39,9 +39,9 @@
       motto: "做產品、寫文章、流浪，對這個世界建立深度的理解:)",
       "hub.h": "實作、思考、學習",
       cats: {
-        build: { h: "作品" },
-        think: { h: "觀點" },
-        learn: { h: "知識" }
+        build: { h: "實作" },
+        think: { h: "思考" },
+        learn: { h: "學習" }
       },
       "foot.h": "其他地方",
       "foot.meta": "台北",

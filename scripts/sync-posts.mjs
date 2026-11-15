@@ -6,7 +6,8 @@
 //
 // New posts arrive with their original title only. To show an English title, add
 //   "title_en": "...", "title_en_by": "ai"
-// to that post in posts.json; the blog labels it "Title translated by AI".
+// to that post in posts.json; the blog labels it "Translated by AI". Use "title_en_by": "author"
+// for a title that is already English and only needs tidying (no AI label).
 
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";

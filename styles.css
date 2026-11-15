@@ -540,3 +540,6 @@ html[lang="zh-Hant"] .tl-main .tl-title { font-weight: 400; font-stretch: 100%; 
 .ext a.ext-invite:hover .invite-logo, .ext a.ext-invite:focus-visible .invite-logo {
   fill: var(--gold); transform: translate(3px, -5px) rotate(14deg) scale(1.3); animation-play-state: paused;
 }
+
+/* Blog metadata (date, source) reads at full contrast at 12px. */
+.post-meta { color: var(--ink-2); }

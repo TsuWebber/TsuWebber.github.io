@@ -217,7 +217,7 @@ All content lives in three parts of one dial: Build, Think and Learn. There is n
 - **Direct control:** clicking a part, pressing Enter or an arrow key on it, or dragging the dial and letting go all scroll the page to that pillar's section, and the scroll then turns the dial.
 - **States:** the active arc is gold at 5 units, and the active dots and label are Ink. Inactive arcs are Near Ring at 2 units, with labels and dots in Far Dust. The header's matching pillar link is current only while the reading line is inside the dial section.
 - **Layout:** desktop is 5fr/7fr, with the dial sticky and vertically centred and sections separated by s7. Below 960px the dial shrinks to a 76px sticky strip at the top of the screen, beside the pillar name and item count, and keeps turning; labels, ticks and core are hidden there.
-- **Sections:** headed with plain nouns, Projects / Perspectives / Knowledge (作品／觀點／知識), set as a wide-thin headline with no description line beneath it, then the list (work rows for Build, entries for Think and Learn), ending with a link to the pillar's home (GitHub, Medium, Substack).
+- **Sections:** headed with the same three words as the header and dial, Build / Think / Learn (實作／思考／學習), so each part has exactly one name, set as a wide-thin headline with no description line beneath it, then the list (work rows for Build, entries for Think and Learn), ending with a link to the pillar's home (GitHub, Medium, Substack).
 
 ### Work rows
 - Single-column rows inside the dial's panel, ruled in ring-3. Dot plus work title, then one tracked metadata line (year, status, stack; "Live" in gold), the summary at 18px, then links underlined in gold with an out-arrow.
@@ -271,3 +271,10 @@ No load animation. The only continuous motion is the dial turning with scroll (e
 - Only the current role shows its one-line description; every other entry is date, type, title, organisation and an optional story link, so the whole map fits a laptop screen while pinned.
 - The side line forks off the main line at the far left, and its diagonal lives in an empty fork zone before the first entry, so it never crosses a card. The interest line does not fork: it is its own dotted track running in straight from the left edge. Lane names sit in small tracked caps at the start of each line.
 - Desktop (above 760px): the section pins below the header, and page scroll pans the row sideways 1:1. Phones: no pinning; the row swipes, and main-line notes are hidden.
+
+## Sharing and housekeeping
+- **Link previews:** both pages carry canonical, Open Graph and `twitter:card summary_large_image` tags pointing at `og.png`. og.png is 1200x630 and drawn in the site's own world: the name in wide-thin display, 徐偉博 and the motto in Dust, the URL in tracked caps, and the horizon ring (gold photon ring, ember edge, ring-2 and ring-3 arcs) rising from the bottom-right corner, kept clear of the text, over the accretion glow and grain. `apple-touch-icon.png` is the favicon mark at 180px.
+- **404.html:** the same background with a centred wide-thin "404", one line each in English and Chinese, and one pill link home.
+- `robots.txt` and `sitemap.xml` list the homepage and the blog.
+- Fonts load Noto Sans TC at 200/300/400/500 only.
+

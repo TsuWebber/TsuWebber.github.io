@@ -64,7 +64,7 @@
           var en = lang === "en" && (p.title_en || EN_TITLES[norm(p.url)]);
           return '<li class="post"><a href="' + esc(p.url) + '" target="_blank" rel="noopener" hreflang="zh-Hant">' +
             '<span class="post-title"' + (en ? "" : ' lang="zh-Hant"') + ">" + esc(en || p.title) + ARROW +
-            (en ? '<span class="ai-tag">' + esc(UI.en.aiTag) + "</span>" : "") + "</span>" +
+            (en && p.title_en_by !== "author" ? '<span class="ai-tag">' + esc(UI.en.aiTag) + "</span>" : "") + "</span>" +
             '<span class="post-meta"><time datetime="' + esc(p.date) + '">' + esc(p.date.slice(5).replace("-", "/")) + "</time><span>" + SOURCE_NAME[p.source] + "</span></span></a></li>";
         }).join("") + "</ol></section>";
     }).join("");
