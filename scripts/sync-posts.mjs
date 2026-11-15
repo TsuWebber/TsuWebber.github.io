@@ -85,4 +85,7 @@ const changed = JSON.stringify(posts) !== JSON.stringify([...existing].sort((a, 
 const updated = changed || !lastUpdated ? new Date().toISOString().slice(0, 10) : lastUpdated;
 await writeFile(OUT, JSON.stringify({ updated, posts }, null, 2) + "\n");
 console.log(`posts.json: ${posts.length} posts (${posts.filter((p) => p.source === "medium").length} Medium, ${posts.filter((p) => p.source === "substack").length} Substack)`);
-if (failures.length) { console.error("Feeds that failed:\n  " + failures.join("\n  ")); process.exitCode = 1; }
+// One platform failing must not block saving what the other returned; posts already on file are kept.
+// Only fail the run when every feed failed.
+if (failures.length) console.warn("Feeds that failed (kept their existing posts):\n  " + failures.join("\n  "));
+if (failures.length === FEEDS.length) process.exitCode = 1;
