@@ -7,12 +7,12 @@
 window.HUB = {
   // Shown in this order in the footer.
   links: {
-    portaly: "https://portaly.cc/tsuwebber",
     github: "https://github.com/TsuWebber",
     medium: "https://medium.com/@webber52543363",
     substack: "https://xuexiweibo.substack.com/",
     linkedin: "https://www.linkedin.com/in/webber-wei-bo-hsu-b63a44246/",
-    facebook: "https://www.facebook.com/profile.php?id=100003396676319"
+    facebook: "https://www.facebook.com/profile.php?id=100003396676319",
+    heptabase: "https://join.heptabase.com/?invite-acc-id=ba713a94-b8b1-46fe-ba8a-804439a0a2d1"   // referral invite
   },
 
   // Hashtags under the name in the first screen.

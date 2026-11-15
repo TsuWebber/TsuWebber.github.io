@@ -30,7 +30,7 @@
       emptyThink: "Nothing here yet.",
       emptyLearn: "Nothing here yet.",
       readOn: { medium: "More on Medium", substack: "More on Substack", github: "More on GitHub" },
-      links: { portaly: "All links", github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook" }
+      links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase invite" }
     },
     zh: {
       wordmark: "徐偉博",
@@ -57,7 +57,7 @@
       emptyThink: "這裡還沒有東西。",
       emptyLearn: "這裡還沒有東西。",
       readOn: { medium: "Medium 上還有更多", substack: "Substack 上還有更多", github: "GitHub 上還有更多" },
-      links: { portaly: "所有連結", github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook" }
+      links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase 邀請連結" }
     }
   };
 
@@ -351,6 +351,12 @@
   function renderLinks() {
     var ui = UI[lang];
     var html = Object.keys(HUB.links).filter(function (k) { return HUB.links[k]; }).map(function (k) {
+      // The Heptabase invite carries the official Heptabase mark, floating at its top-right corner.
+      if (k === "heptabase") {
+        return '<li><a class="ext-invite" href="' + esc(HUB.links[k]) + '" target="_blank" rel="noopener">' +
+          '<span>' + esc(ui.links[k]) + "</span>" + ARROW +
+          '<svg class="invite-logo" viewBox="0 0 28 28" aria-hidden="true" focusable="false"><path d="M27.96 24.466a3.495 3.495 0 1 1-6.99 0 3.495 3.495 0 0 1 6.99 0ZM0 20.388V2.913a2.913 2.913 0 0 1 5.825 0c0 .73 0 3.799.002 5.242v1.517c0 .848.501 1.616 1.278 1.956a5.34 5.34 0 0 0 4.115.073l.243-.096a2.145 2.145 0 0 0 1.354-1.994l-.001-2.038a2.913 2.913 0 0 1 5.825 0v17.475a2.913 2.913 0 0 1-5.825 0V18.35c0-.879-.536-1.669-1.353-1.993l-.243-.097a5.34 5.34 0 0 0-4.115.073 2.136 2.136 0 0 0-1.278 1.957v1.517l-.002.582a2.913 2.913 0 0 1-5.825 0Z"/></svg></a></li>';
+      }
       return '<li><a href="' + esc(HUB.links[k]) + '" target="_blank" rel="noopener">' + esc(ui.links[k]) + ARROW + "</a></li>";
     }).join("");
     document.querySelectorAll("[data-links]").forEach(function (ul) { ul.innerHTML = html; });
