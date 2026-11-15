@@ -55,7 +55,7 @@ delegated：純靜態 HTML / CSS / Vanilla JS，不需建置步驟，部署在 G
 已完成、可公開的作品（Webber 確認）：
 
 - **LifeOS** — 個人目標、OKR 與任務管理工具，純 HTML + Supabase，已部署於 `https://lifeos-phi-one.vercel.app`（原始碼：`../index.html`）。
-- **籃球裁判助理** — 籃球規則、判例、二人／三人裁判法與執法筆記的知識庫（`../basketballRefereeAssistant/`）。
+- **籃球裁判助理** — 用 Claude Code 做的 FIBA 規則問答 agent，含案例筆記與評測集，公開在 github.com/TsuWebber/basketball-referee-assistant。
 - **EchoTrail prototype** — PM 課程小組專案的互動原型（與 Ariel 合作，2026-08-30 Pitch + demo）。
 
 不可捏造：

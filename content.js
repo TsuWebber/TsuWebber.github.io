@@ -2,7 +2,7 @@
   Personal Hub content: the one file to edit.
   Every text field is { en, zh }. Add a work, essay or note by adding one object.
   A link with an empty url is not rendered. Fill these in:
-  TODO(webber): public links for refereeAide + echotrail.
+  TODO(webber): public link for echotrail.
 */
 window.HUB = {
   // Shown in this order in the footer.
@@ -135,11 +135,11 @@ window.HUB = {
       name: { en: "Referee Aide", zh: "籃球裁判助理" },
       status: "built", year: { en: "2026", zh: "2026" },
       summary: {
-        en: "The FIBA rulebook, its official interpretations and two- and three-person mechanics, reorganised so I can look up a call quickly.",
-        zh: "把 FIBA 規則、官方解釋和二人、三人裁判法重新整理，讓我能很快查到一個判例。"
+        en: "A FIBA rules Q&A agent built with Claude Code. It answers calls and mechanics questions with the article number and source, alongside my case notes and a 66-question eval set.",
+        zh: "用 Claude Code 打造的 FIBA 規則問答 agent，回答判定與執法機制問題時附上條號和來源，另有我的實戰案例筆記和 66 題評測集。"
       },
-      stack: { en: "Knowledge base · Claude", zh: "知識庫 · Claude" },
-      links: [{ label: { en: "View source", zh: "看原始內容" }, url: "" }]
+      stack: { en: "Claude Code · Eval set", zh: "Claude Code · 評測集" },
+      links: [{ label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/basketball-referee-assistant" }]
     },
     {
       id: "echotrail",
