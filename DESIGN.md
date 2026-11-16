@@ -265,9 +265,12 @@ No load animation. The only continuous motion is the dial turning with scroll (e
 
 ## Experience timeline (homepage, after the dial, before the footer)
 - Three lines, oldest on the left, with entries evenly spaced in time order (268px slots on desktop, 230px on phones) from `timeline` in content.js. Each entry has a `lane` and prints its own dates. Dates come from the CV, his posts, or him directly; the current employer is not named and no internal metrics appear.
-  - **Main line, "School & work" / 「學業與工作」** (BBA, internships, MBA exchange, current role): a 2-unit Dust rail with solid 6px nodes and labels above the line in a larger 112-width display. The rail turns gold (2.5 units) from the current role onward, and only the current role gets the gold node and date.
-  - **Side line, "Programmes" / 「計畫與社團」** (clubs, training programmes, The Mentorship): a 1.5-unit ring-1 line with hollow nodes, cards below.
+  - **Main line, "Education & work" / 「學業與工作」** (BBA, internships, MBA exchange, current role): a 2-unit Dust rail with solid 6px nodes and labels above the line in a larger 112-width display. The rail turns gold (2.5 units) from the current role onward, and only the current role gets the gold node and date.
+  - **Side line, "Projects" / 「計畫與社團」** (clubs, training programmes, The Mentorship): a 1.5-unit ring-1 line with hollow nodes, cards below.
   - **Interest line, "Interests" / 「興趣」** (basketball refereeing since 2021, the Camino, trail running since 2026): a dotted ring-1 line below the tallest side-line card, hollow nodes, cards below. Ongoing interests read "ongoing" / 「持續中」 and, like the current role, get a gold node and gold date (no gold rail).
+- Interest entries carry a 24px line icon after the title (basketball, scallop shell, dive mask, lotus, cedars on a path, mountain trail), drawn and floating like the hero hashtag icons. Set with `icon` in content.js.
+- Every entry reads the same way: the title is the role (or degree, or activity for interests) and the line under it is the organisation or place, nothing else.
+- Awards (type `award`, on the side line) are lighter than cards: a 3px hollow node, the usual date row, and one 15px Dust line with no org.
 - Only the current role shows its one-line description; every other entry is date, type, title, organisation and an optional story link, so the whole map fits a laptop screen while pinned.
 - The side line forks off the main line at the far left, and its diagonal lives in an empty fork zone before the first entry, so it never crosses a card. The interest line does not fork: it is its own dotted track running in straight from the left edge. Lane names sit in small tracked caps at the start of each line.
 - Desktop (above 760px): the section pins below the header, and page scroll pans the row sideways 1:1. Phones: no pinning; the row swipes, and main-line notes are hidden.

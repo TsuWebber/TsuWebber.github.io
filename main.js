@@ -23,8 +23,8 @@
       aiTag: "Translated by AI",
       "exp.h": "Experience",
       now: "Now",
-      types: { work: "Work", school: "Education", program: "Programme", life: "Interest" },
-      lanes: { main: "School & work", side: "Programmes", interest: "Interests" },
+      types: { work: "Work", school: "Education", program: "Programme", award: "Award", life: "Interest" },
+      lanes: { main: "Education & work", side: "Projects", interest: "Interests" },
       ongoing: "ongoing",
       readMore: "Read the story",
       emptyThink: "Nothing here yet.",
@@ -50,7 +50,7 @@
       pending: "目前不公開",
       "exp.h": "經歷",
       now: "現在",
-      types: { work: "工作", school: "學歷", program: "計畫", life: "興趣" },
+      types: { work: "工作", school: "學歷", program: "計畫", award: "獲獎", life: "興趣" },
       lanes: { main: "學業與工作", side: "計畫與社團", interest: "興趣" },
       ongoing: "持續中",
       readMore: "看這段的文章",
@@ -90,7 +90,12 @@
     workflow: '<circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18.5" r="2.2"/><path d="M7.4 6h9.2M6.3 8 10.8 16.4M17.7 8 13.2 16.4"/>',
     compass: '<circle cx="12" cy="12" r="9"/><path d="M15.6 8.4 13.4 13.4 8.4 15.6 10.6 10.6Z"/>',
     basketball: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.7 5.6c3.3 3.5 3.3 9.3 0 12.8M18.3 5.6c-3.3 3.5-3.3 9.3 0 12.8"/>',
-    trail: '<path d="M2.5 19 9 8.5l3.6 5.6 2.4-3.4L21.5 19Z"/><path d="M6 19c1.6-1.6 3.2-.6 4.6-2.2s2.4-1.2 3.4-2.4" stroke-dasharray="1.4 2.2"/>'
+    trail: '<path d="M2.5 19 9 8.5l3.6 5.6 2.4-3.4L21.5 19Z"/><path d="M6 19c1.6-1.6 3.2-.6 4.6-2.2s2.4-1.2 3.4-2.4" stroke-dasharray="1.4 2.2"/>',
+    // Timeline interests
+    shell: '<path d="M12 20.5 3.6 10.2a9 9 0 0 1 16.8 0Z"/><path d="M12 20.5 7.2 5.4M12 20.5 12 3.6M12 20.5 16.8 5.4M12 20.5 4.6 8M12 20.5 19.4 8"/>',
+    dive: '<path d="M3.5 10.5h13v4.2a2 2 0 0 1-2 2h-2.3l-1.7-2.2h-1L7.8 16.7H5.5a2 2 0 0 1-2-2Z"/><path d="M20 4.5v10.5a3 3 0 0 1-3 3h-1"/><circle cx="9" cy="6" r="1.2"/><circle cx="12.5" cy="3.8" r=".9"/>',
+    lotus: '<path d="M12 19c-2.6-2.4-2.6-8.6 0-12 2.6 3.4 2.6 9.6 0 12Z"/><path d="M12 19c-4.2-.4-7.4-3.6-7.6-8.4 3.4.6 6 2.8 7.6 8.4ZM12 19c4.2-.4 7.4-3.6 7.6-8.4-3.4.6-6 2.8-7.6 8.4Z"/><path d="M3.5 19h17"/>',
+    cedar: '<path d="M8 3.5 3.5 13h9Z"/><path d="M8 13v6"/><path d="M16.5 6.5 12.6 15h7.8Z"/><path d="M16.5 15v4"/><path d="M2.5 20.5c3-.8 6-.8 9.5 0s6.5.8 9.5 0" stroke-dasharray="1.4 2.2"/>'
   };
 
   function renderTags() {
@@ -291,9 +296,13 @@
       var to = e.to === "now" ? ui.now : e.to === "ongoing" ? ui.ongoing : t(e.to);
       return e.from + (to ? (/^\d/.test(to) ? " – " : " · ") + to : "");
     }
-    function body(e) {
+    function body(e, i) {
+      // Awards are footnotes: the date row and one short line, no org.
+      var whenRow = '<p class="tl-when"><span>' + esc(when(e)) + '</span><span class="tl-type">' + esc(ui.types[e.type]) + "</span></p>";
+      if (e.type === "award") return whenRow + '<p class="tl-mini">' + esc(t(e.title)) + "</p>";
       return '<p class="tl-when"><span>' + esc(when(e)) + '</span><span class="tl-type">' + esc(ui.types[e.type]) + "</span></p>" +
-        '<h3 class="tl-title">' + esc(t(e.title)) + "</h3>" +
+        '<h3 class="tl-title">' + esc(t(e.title)) +
+          (e.icon && TAG_ICONS[e.icon] ? '<svg class="tl-icon" style="--i:' + (i % 5) + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + TAG_ICONS[e.icon] + "</svg>" : "") + "</h3>" +
         (e.org ? '<p class="tl-org">' + esc(t(e.org)) + "</p>" : "") +
         // Only the current role carries a description; the rest stay to title, place and story link.
         (e.note && e.to === "now" ? '<p class="tl-note">' + esc(t(e.note)) + "</p>" : "") +
@@ -307,7 +316,7 @@
       // The current role and ongoing interests get the gold highlight.
       var now = e.to === "now" || e.to === "ongoing";
       var attrs = ' data-lane="' + e.lane + '" data-i="' + i + '"' + (now ? " data-now" : "");
-      items += '<li class="tl tl-' + e.lane + '"' + attrs + ' style="left:' + X(i) + "px;top:0;width:" + (SLOT - 20) + 'px">' + body(e) + "</li>";
+      items += '<li class="tl tl-' + e.lane + '"' + attrs + ' style="left:' + X(i) + "px;top:0;width:" + (SLOT - 20) + 'px">' + body(e, i) + "</li>";
     });
     var track = document.querySelector("[data-timeline]");
     track.style.width = W + "px";
@@ -332,7 +341,7 @@
       var y = e.lane === "main" ? MAIN : e.lane === "side" ? SIDE : INTEREST;
       if (e.lane !== "main") { if (first[e.lane] < 0) first[e.lane] = i; last[e.lane] = i; }
       if (e.lane === "main" && e.to === "now") nowAt = i;
-      nodes += '<circle class="tl-node is-' + e.lane + (e.to === "now" || e.to === "ongoing" ? " is-now" : "") + '" cx="' + X(i) + '" cy="' + y + '" r="' + (e.lane === "main" ? 6 : 4.5) + '"/>';
+      nodes += '<circle class="tl-node is-' + e.lane + (e.to === "now" || e.to === "ongoing" ? " is-now" : "") + (e.type === "award" ? " is-mini" : "") + '" cx="' + X(i) + '" cy="' + y + '" r="' + (e.lane === "main" ? 6 : e.type === "award" ? 3 : 4.5) + '"/>';
     });
     var fx = PAD, lines = '<line class="tl-rail is-main" x1="0" y1="' + MAIN + '" x2="' + W + '" y2="' + MAIN + '"/>';
     if (nowAt >= 0) lines += '<line class="tl-rail is-now" x1="' + X(nowAt) + '" y1="' + MAIN + '" x2="' + W + '" y2="' + MAIN + '"/>';
