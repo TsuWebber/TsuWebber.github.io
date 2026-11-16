@@ -334,19 +334,22 @@ html[lang="zh-Hant"] .panel .work h4, html[lang="zh-Hant"] .panel .entry a { fon
   position: absolute; left: 50%; width: 22px; height: 22px;
   fill: none; stroke: var(--ink-3); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
   transform: translateX(calc(-50% + var(--x, 0px))) rotate(var(--tilt, 0deg));
-  transition: stroke .35s var(--ease-out), transform .45s var(--ease-out);
   pointer-events: none;
 }
 .tag-icon[data-at="above"] { bottom: calc(100% + 10px); }
 .tag-icon[data-at="below"] { top: calc(100% + 10px); }
-.tags li:hover .tag-icon { stroke: var(--gold); transform: translateX(calc(-50% + var(--x, 0px))) rotate(0deg) scale(1.15); }
+/* The icons are decoration, not buttons: no hover change. Each one drifts on its own slow loop,
+   with a different length and start, so they never move in step. */
 @media (prefers-reduced-motion: no-preference) {
-  .tag-icon { animation: tag-bob 6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -1.3s); }
-  .tags li:hover .tag-icon { animation-play-state: paused; }
+  .tag-icon {
+    animation: tag-float calc(7s + var(--i, 0) * 1.1s) ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * -2.3s);
+  }
 }
-@keyframes tag-bob {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -3px; }
+@keyframes tag-float {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  30% { translate: 2px -7px; rotate: 5deg; }
+  65% { translate: -2px -3px; rotate: -4deg; }
 }
 @media (max-width: 560px) {
   .hero .tags { row-gap: 56px; column-gap: 26px; }
