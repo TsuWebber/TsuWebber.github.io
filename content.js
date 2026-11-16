@@ -27,6 +27,7 @@ window.HUB = {
 
   // Experience timeline, shown left to right in this order (oldest first).
   // lane: "main" (school and work), "side" (programmes and clubs), "interest" (things done for their own sake). type: work | school | program | award | life. "now" marks the current role.
+  // Phones show education and work in full and fold the rest; fold: true folds a main-line entry, show: true keeps another one out.
   // Dates come from the CV and the Medium posts. The current employer is deliberately not named.
   timeline: [
     { lane: "main", from: "2021.09", to: "2025.06", type: "school",
@@ -36,7 +37,7 @@ window.HUB = {
       title: { en: "Head of Academics → Vice President", zh: "學術部部長 → 副社長" },
       org: { en: "Maker In College", zh: "大學新創平台" },
       link: "https://medium.com/@webber52543363/%E7%A4%BE%E5%9C%98-%E5%A4%A7%E5%AD%B8%E6%96%B0%E5%89%B5%E5%B9%B3%E5%8F%B0-%E6%B4%BB%E5%8A%9B%E6%BB%BF%E8%BC%89%E7%9A%84%E5%A4%A2%E6%83%B3%E5%AF%A6%E8%B8%90%E5%9C%B0-e1023fcee9c1" },
-    { lane: "interest", from: "2021", to: "ongoing", type: "life", icon: "basketball",
+    { show: true, lane: "interest", from: "2021", to: "ongoing", type: "life", icon: "basketball",
       title: { en: "Basketball Referee", zh: "籃球裁判" } },
     { lane: "side", from: "2022.01", to: "2023.06", type: "program",
       title: { en: "Career Ambassador", zh: "職涯大使" },
@@ -70,14 +71,14 @@ window.HUB = {
     { lane: "side", from: "2024.01", to: "2024.06", type: "program",
       title: { en: "PM Mentee", zh: "PM 組學員" },
       org: { en: "XChange College", zh: "XChange 互聯網大學" } },
-    { lane: "main", from: "2024.01", to: "2024.07", type: "work",
+    { fold: true, lane: "main", from: "2024.01", to: "2024.07", type: "work",
       title: { en: "Startup Accelerator Intern", zh: "新創加速器實習生" },
       org: { en: "TAcc+ (Taiwan Accelerator Plus)", zh: "TAcc+ 加速器" },
       link: "https://medium.com/@webber52543363/%E6%88%91%E5%9C%A8-tacc-%E7%B3%BB%E7%B5%B1%E6%80%A7%E5%8A%A0%E9%80%9F%E7%9A%84%E9%81%8E%E7%A8%8B-9b75d54c09a3" },
     { lane: "side", from: "2024.04", to: "2024.04", type: "award",
       title: { en: "Solana Hackathon · 2nd in Taiwan", zh: "Solana 黑客松・台灣區第二" },
       org: { en: "Gen3", zh: "Gen3" } },
-    { lane: "main", from: "2024.11", to: "2024.12", type: "work",
+    { fold: true, lane: "main", from: "2024.11", to: "2024.12", type: "work",
       title: { en: "QA & PM Intern", zh: "品質保證與產品實習生" },
       org: { en: "IHH", zh: "桓竑智聯 IHH" },
       link: "https://medium.com/@webber52543363/ihh-%E8%BB%9F%E9%AB%94%E6%96%B0%E5%89%B5%E5%AF%A6%E7%BF%92%E5%88%86%E4%BA%AB-4e40589bf974" },

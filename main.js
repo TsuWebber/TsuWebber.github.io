@@ -26,7 +26,7 @@
       types: { work: "Work", school: "Education", program: "Programme", award: "Award", life: "Interest" },
       lanes: { main: "Education & work", side: "Projects", interest: "Interests" },
       ongoing: "ongoing",
-      more: function (n) { return n + " more: projects, awards and interests"; },
+      more: function (n) { return n + " more: internships, projects, awards and interests"; },
       readMore: "Read the story",
       emptyThink: "Nothing here yet.",
       emptyLearn: "Nothing here yet.",
@@ -54,7 +54,7 @@
       types: { work: "工作", school: "學歷", program: "計畫", award: "獲獎", life: "興趣" },
       lanes: { main: "學業與工作", side: "計畫與社團", interest: "興趣" },
       ongoing: "持續中",
-      more: function (n) { return "還有 " + n + " 筆：計畫、獎項與興趣"; },
+      more: function (n) { return "還有 " + n + " 筆：實習、計畫、獎項與興趣"; },
       readMore: "看這段的文章",
       emptyThink: "這裡還沒有東西。",
       emptyLearn: "這裡還沒有東西。",
@@ -329,9 +329,10 @@
         return '<li class="tl tl-' + e.lane + (e.type === "award" ? " is-award" : "") + '" data-lane="' + e.lane + '"' + (now ? " data-now" : "") + ">" + body(e, i) + "</li>";
       };
       var newest = list.slice().reverse();
-      var work = newest.filter(function (e) { return e.lane === "main"; });
+      var shown = function (e) { return e.show || (e.lane === "main" && !e.fold); };
+      var work = newest.filter(shown);
       work.sort(function (a, b) { return (b.to === "now") - (a.to === "now"); });
-      var rest = newest.filter(function (e) { return e.lane !== "main"; });
+      var rest = newest.filter(function (e) { return !shown(e); });
       track.innerHTML = work.map(row).join("") + (rest.length ?
         '<li class="tl-more"><details><summary>' + esc(ui.more(rest.length)) + '</summary><ol class="timeline is-list">' + rest.map(row).join("") + "</ol></details></li>" : "");
       return;
