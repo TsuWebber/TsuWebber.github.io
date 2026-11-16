@@ -273,7 +273,19 @@ No load animation. The only continuous motion is the dial turning with scroll (e
 - Awards (type `award`, on the side line) are lighter than cards: a 3px hollow node, the usual date row, and one 15px Dust line with no org.
 - Only the current role shows its one-line description; every other entry is date, type, title, organisation and an optional story link, so the whole map fits a laptop screen while pinned.
 - The side line forks off the main line at the far left, and its diagonal lives in an empty fork zone before the first entry, so it never crosses a card. The interest line does not fork: it is its own dotted track running in straight from the left edge. Lane names sit in small tracked caps at the start of each line.
-- Desktop (above 760px): the section pins below the header, and page scroll pans the row sideways 1:1. Phones: no pinning; the row swipes, and main-line notes are hidden.
+- Desktop (above 760px): the section pins below the header, and page scroll pans the row sideways 1:1.
+- Phones (760px and below): no map. The entries become one vertical list on a single 1.5-unit rail: the current job first, then the rest of education and work newest first; projects, awards and interests fold behind a "+ N more" toggle (a 22px ringed + on the rail, 44px tall). The node still tells the line apart: solid 12px for education and work, hollow 9px for projects and interests, 7px for awards, gold for the current role and ongoing interests. The current role keeps its note.
+
+## Small screens
+- Touch screens: language buttons, work links, "More on…", story links and blog filters all reach 44px of tap area without changing their look; hover colours are off on touch so a tapped title never stays gold. Link arrows travel with the last word of their title. Chinese hashtags break 3 + 2.
+- The open menu makes the rest of the page inert and keeps Tab inside the header; opening it from the keyboard moves focus to the first link.
+- The blog subtitle counts the posts the filter shows.
+- The homepage frame loop sleeps when nothing is moving and wakes on scroll, resize, pointer or key input.
+- 960px and below: the header is one row (wordmark, EN/中, menu button). The menu button (two lines that cross into an X) opens the five links as a full-height list under the bar in wide-thin display type, with the current page in gold; Escape or a link closes it, and the page behind does not scroll. menu.js is shared by both pages.
+- 960px and below there is no dial: each part's heading says where you are. Spacing tightens (64px between parts and before the timeline, 24px between works, 16px between posts) so the page is a short scroll.
+- Below 560px the English name scales with the screen width so "Webber Hsu" stays on one line; the motto is balanced, and in Chinese it breaks only at punctuation.
+- Footer links sit in two columns with 10px of tap padding; the Heptabase invite takes its own row.
+- Below 360px the header nav tightens (11px, 12px gaps) so all five links fit.
 
 ## Sharing and housekeeping
 - **Link previews:** both pages carry canonical, Open Graph and `twitter:card summary_large_image` tags pointing at `og.png`. og.png is 1200x630 and drawn in the site's own world: the name in wide-thin display, 徐偉博 and the motto in Dust, the URL in tracked caps, and the horizon ring (gold photon ring, ember edge, ring-2 and ring-3 arcs) rising from the bottom-right corner, kept clear of the text, over the accretion glow and grain. `apple-touch-icon.png` is the favicon mark at 180px.

@@ -29,7 +29,7 @@
 
 <header class="bar">
   <a class="wordmark" href="#top" data-i18n="wordmark">Webber Hsu</a>
-  <nav aria-label="Primary">
+  <nav id="primary-nav" aria-label="Primary">
     <a href="#build" data-cat-link="build" data-i18n="nav.build">Build</a>
     <a href="#think" data-cat-link="think" data-i18n="nav.think">Think</a>
     <a href="#learn" data-cat-link="learn" data-i18n="nav.learn">Learn</a>
@@ -40,6 +40,7 @@
     <button type="button" data-lang="en" aria-pressed="true">EN</button>
     <button type="button" data-lang="zh" aria-pressed="false">中</button>
   </div>
+  <button type="button" class="menu-btn" data-menu aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu"><span></span><span></span></button>
 </header>
 
 <main id="top">
@@ -103,6 +104,7 @@
 
 <noscript><p class="noscript">This page draws its content with JavaScript. Code: https://github.com/TsuWebber</p></noscript>
 <script src="content.js"></script>
+<script src="menu.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

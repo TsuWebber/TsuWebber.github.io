@@ -532,8 +532,22 @@ html[lang="zh-Hant"] .tl-main .tl-title { font-weight: 400; font-stretch: 100%; 
   .exp-stage { padding-top: 0; height: auto; }
   .tl-viewport { position: static; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .tl-viewport::-webkit-scrollbar { display: none; }
-  .tl-main .tl-note { display: none; }
 }
+/* Phones: the timeline becomes one vertical list, newest first, on a single rail.
+   Node style still says which line an entry belongs to: solid for education and work,
+   hollow for projects, small for awards, gold for what is still going on. */
+.timeline.is-list { position: relative; padding-left: 26px; transform: none !important; }
+.timeline.is-list::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 1.5px; background: var(--ring-1); }
+.is-list .tl { position: relative; left: auto; top: auto; width: auto; padding: 0 0 var(--s4); }
+.is-list .tl::before {
+  content: ""; position: absolute; left: -26px; top: 4px; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--void); border: 1.5px solid var(--ink-3); box-sizing: border-box;
+}
+.is-list .tl-main::before { width: 12px; height: 12px; left: -27.5px; top: 2px; background: var(--ink); border: 0; }
+.is-list .tl.is-award::before { width: 7px; height: 7px; left: -25px; top: 5px; border-width: 1px; }
+.is-list .tl[data-now]::before { background: var(--gold); border-color: var(--gold); }
+.is-list .tl-main .tl-title { font-size: 1.45rem; }
+.is-list .tl-mini { max-width: none; }
 
 /* "Translated by AI" sits on its own line under the title it describes. */
 .post-title .ai-tag { display: block; margin-top: 4px; font-size: 12px; font-weight: 400; letter-spacing: .04em; color: var(--ink-3); }
@@ -558,3 +572,115 @@ html[lang="zh-Hant"] .tl-main .tl-title { font-weight: 400; font-stretch: 100%; 
 
 /* Blog metadata (date, source) reads at full contrast at 12px. */
 .post-meta { color: var(--ink-2); }
+
+/* ---------- Small screens ---------- */
+/* The name stays on one line: it scales with the screen instead of wrapping. */
+@media (max-width: 560px) {
+  .hero .name-en { font-size: min(3.6rem, calc((100vw - 2 * var(--gutter)) / 6.6)); white-space: nowrap; }
+  /* Footer links in two even columns with room to tap. */
+  .ext-foot { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--s3); }
+  .ext-foot a { padding-block: 10px; }
+  .ext-foot li:has(.ext-invite) { grid-column: 1 / -1; }   /* the invite gets its own row so it never wraps */
+  .ext-foot a { white-space: nowrap; }
+}
+.motto { text-wrap: balance; }
+html[lang="zh-Hant"] .motto { word-break: keep-all; }   /* Chinese breaks at the commas, not mid-word */
+/* The narrowest phones: the five nav links tighten so Blog stays on screen. */
+@media (max-width: 359px) {
+  .bar nav { gap: 12px; font-size: 11px; letter-spacing: .06em; }
+}
+
+/* ---------- Phones and tablets (960px and below) ---------- */
+/* Header: one row. The links fold into a menu button that opens a full-height list under the bar. */
+.menu-btn { display: none; }
+@media (max-width: 960px) {
+  .bar { flex-wrap: nowrap; padding-block: 14px; gap: var(--s2); }
+  .menu-btn {
+    display: grid; place-content: center; gap: 6px; width: 44px; height: 44px; margin-right: -10px;
+    background: none; border: 0; cursor: pointer; padding: 0;
+  }
+  .menu-btn span { display: block; width: 22px; height: 1.5px; background: var(--ink); border-radius: 2px; transition: transform .35s var(--ease-out); }
+  .bar.is-open .menu-btn span:first-child { transform: translateY(3.75px) rotate(45deg); }
+  .bar.is-open .menu-btn span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+  .bar nav, .bar nav a { all: unset; }
+  .bar nav {
+    position: absolute; top: 100%; left: 0; right: 0; height: calc(100dvh - var(--bar-h));
+    display: flex; flex-direction: column; gap: 4px; padding: var(--s4) var(--gutter);
+    background: rgba(0, 0, 0, .97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+    border-top: 1px solid var(--ring-3); box-sizing: border-box;
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity .3s var(--ease-out), transform .3s var(--ease-out), visibility 0s .3s;
+    text-transform: none; letter-spacing: 0;
+  }
+  .bar.is-open nav { opacity: 1; visibility: visible; transform: none; transition: opacity .3s var(--ease-out), transform .3s var(--ease-out); }
+  .bar nav a {
+    display: block; padding: 12px 0; cursor: pointer; color: var(--ink);
+    font-size: clamp(2rem, 9vw, 2.75rem); font-weight: 200; font-stretch: 125%; font-variation-settings: "wdth" 125; letter-spacing: -.02em; line-height: 1.1;
+  }
+  html[lang="zh-Hant"] .bar nav a { font-weight: 300; letter-spacing: .08em; font-stretch: 100%; font-variation-settings: normal; }
+  .bar nav a.is-current { color: var(--gold); }
+  .bar nav a.is-current::after { display: none; }
+  .bar nav a:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+  .bar.is-open { background: rgba(0, 0, 0, .94); border-bottom-color: var(--ring-3); }
+  html.menu-open { overflow: hidden; }
+  .hero { padding-top: 96px; }
+}
+
+/* Phones and tablets: no dial at all; each part's big heading says where you are.
+   Spacing tightens so the three parts, the timeline and the footer read as one short scroll. */
+@media (max-width: 960px) {
+  .dial-wrap { display: none; }
+  .hub-grid { display: block; }
+  .hub { padding-top: var(--s5); }
+  .cat { scroll-margin-top: 16px; }
+  .cat + .cat { margin-top: var(--s5); }
+  .panel-h { font-size: clamp(2.4rem, 11vw, 3.4rem); }
+  .panel-head { padding-bottom: var(--s2); }
+  .panel .work { padding: var(--s3) 0; }
+  .panel .work-summary { margin-top: var(--s1); }
+  .panel .entry { padding: 16px 0; }
+  .panel-more { margin-top: var(--s3); }
+  .exp { padding-top: var(--s5); }
+  .is-list .tl { padding-bottom: var(--s3); }
+  .foot { padding-top: var(--s5); }
+}
+
+/* ---------- Mobile review fixes ---------- */
+/* The link arrow travels with the last word of its title. */
+.nowrap { white-space: nowrap; }
+
+/* Story links read at 14px in Dust, not 13px in the dimmest grey. */
+.tl-link { font-size: 14px; color: var(--ink-2); }
+
+/* Tap areas reach 44px on touch screens; what you see stays the same size. */
+@media (pointer: coarse) {
+  .lang button { position: relative; }
+  .lang button::after { content: ""; position: absolute; inset: -7px 0; }
+  .work-links a, .panel-more, .tl-link { padding-block: 10px; margin-block: -10px; }
+  .panel .entry a, .post a { padding-block: 4px; }
+  .blog-filter button { min-height: 44px; }
+}
+/* Touch screens have no hover: a tapped title must not stay gold. */
+@media (hover: none) {
+  .panel .entry a:hover, .post a:hover .post-title { color: inherit; }
+  .tl-link:hover, .panel-more:hover { color: var(--ink-2); }
+  .work-links a:hover { color: inherit; }
+}
+
+/* Chinese hashtags break 3 + 2 on phones, never 4 + 1. */
+@media (max-width: 560px) {
+  html[lang="zh-Hant"] .hero .tags { max-width: 230px; margin-inline: auto; }
+}
+
+/* Phones: the folded part of the timeline (projects, awards, interests). */
+.tl-more { list-style: none; }
+.tl-more summary {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer;
+  font-size: 14px; letter-spacing: .04em; color: var(--ink-2); list-style: none;
+}
+.tl-more summary::-webkit-details-marker { display: none; }
+.tl-more summary::before { content: "+"; display: grid; place-items: center; width: 22px; height: 22px; border: 1px solid var(--ring-1); border-radius: 50%; font-size: 15px; line-height: 1; margin-left: -31px; margin-right: -2px; background: var(--void); color: var(--ink); }
+.tl-more details[open] summary::before { content: "−"; }
+.tl-more summary:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+.tl-more .timeline.is-list { padding-left: 0; margin-top: var(--s2); }
+.tl-more .timeline.is-list::before { display: none; }

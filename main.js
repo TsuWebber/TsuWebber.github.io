@@ -26,6 +26,7 @@
       types: { work: "Work", school: "Education", program: "Programme", award: "Award", life: "Interest" },
       lanes: { main: "Education & work", side: "Projects", interest: "Interests" },
       ongoing: "ongoing",
+      more: function (n) { return n + " more: projects, awards and interests"; },
       readMore: "Read the story",
       emptyThink: "Nothing here yet.",
       emptyLearn: "Nothing here yet.",
@@ -53,6 +54,7 @@
       types: { work: "工作", school: "學歷", program: "計畫", award: "獲獎", life: "興趣" },
       lanes: { main: "學業與工作", side: "計畫與社團", interest: "興趣" },
       ongoing: "持續中",
+      more: function (n) { return "還有 " + n + " 筆：計畫、獎項與興趣"; },
       readMore: "看這段的文章",
       emptyThink: "這裡還沒有東西。",
       emptyLearn: "這裡還沒有東西。",
@@ -233,8 +235,15 @@
       '<p class="work-summary">' + esc(t(w.summary)) + "</p>" +
       (links ? '<div class="work-links">' + links + "</div>" : "") + "</li>";
   }
+  // The arrow travels with the last word, so it never wraps onto a line of its own.
+  function withArrow(text) {
+    text = String(text);
+    var cut = text.lastIndexOf(" ");
+    cut = cut < 0 ? text.length - Array.from(text).slice(-2).join("").length : cut + 1;
+    return esc(text.slice(0, cut)) + '<span class="nowrap">' + esc(text.slice(cut)) + ARROW + "</span>";
+  }
   function entryRow(e) {
-    return '<li class="entry"><a hreflang="zh-Hant" href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(t(e.title)) + ARROW + "</a>" +
+    return '<li class="entry"><a hreflang="zh-Hant" href="' + esc(e.url) + '" target="_blank" rel="noopener">' + withArrow(t(e.title)) + "</a>" +
       '<p class="entry-meta">' + (e.date ? '<time datetime="' + esc(e.date) + '">' + esc(e.date) + "</time>" : "") +
       (lang === "en" && e.title && e.title.en ? '<span class="ai-tag">' + esc(UI.en.aiTag) + "</span>" : "") + "</p></li>";
   }
@@ -308,6 +317,25 @@
         (e.note && e.to === "now" ? '<p class="tl-note">' + esc(t(e.note)) + "</p>" : "") +
         (e.link ? '<a class="tl-link" href="' + esc(e.link) + '" target="_blank" rel="noopener">' + esc(ui.readMore) + ARROW + "</a>" : "");
     }
+    var track = document.querySelector("[data-timeline]");
+    // Phones: a plain vertical list, newest first. The three-line map needs a wide screen.
+    track.classList.toggle("is-list", narrow);
+    if (narrow) {
+      track.style.width = ""; track.style.height = "";
+      // Order: the current job first, then the rest of education and work (newest first);
+      // projects, awards and interests fold behind one "more" toggle.
+      var row = function (e) {
+        var i = list.indexOf(e), now = e.to === "now" || e.to === "ongoing";
+        return '<li class="tl tl-' + e.lane + (e.type === "award" ? " is-award" : "") + '" data-lane="' + e.lane + '"' + (now ? " data-now" : "") + ">" + body(e, i) + "</li>";
+      };
+      var newest = list.slice().reverse();
+      var work = newest.filter(function (e) { return e.lane === "main"; });
+      work.sort(function (a, b) { return (b.to === "now") - (a.to === "now"); });
+      var rest = newest.filter(function (e) { return e.lane !== "main"; });
+      track.innerHTML = work.map(row).join("") + (rest.length ?
+        '<li class="tl-more"><details><summary>' + esc(ui.more(rest.length)) + '</summary><ol class="timeline is-list">' + rest.map(row).join("") + "</ol></details></li>" : "");
+      return;
+    }
     var X = function (i) { return PAD + FORK + i * SLOT; };
     var W = X(list.length - 1) + (narrow ? 250 : 300) + PAD;
 
@@ -318,7 +346,6 @@
       var attrs = ' data-lane="' + e.lane + '" data-i="' + i + '"' + (now ? " data-now" : "");
       items += '<li class="tl tl-' + e.lane + '"' + attrs + ' style="left:' + X(i) + "px;top:0;width:" + (SLOT - 20) + 'px">' + body(e, i) + "</li>";
     });
-    var track = document.querySelector("[data-timeline]");
     track.style.width = W + "px";
     track.innerHTML = items;
 
@@ -406,10 +433,10 @@
     { k: "ember", a0: -8,  rx: 44, ry: 36 },
     { k: "blue",  a0: 140, rx: 48, ry: 44 }
   ];
-  var bgTurn = 0, rootStyle = document.documentElement.style;
+  var bgTurn = 0, bgTarget = 0, rootStyle = document.documentElement.style;
   function stepBackground() {
     var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    var target = reduce.matches ? 0 : (window.scrollY / max) * 150;
+    var target = bgTarget = reduce.matches ? 0 : (window.scrollY / max) * 150;
     bgTurn += (target - bgTurn) * (reduce.matches ? 1 : 0.06);
     BG.forEach(function (p) {
       var a = (p.a0 + bgTurn) * Math.PI / 180;
@@ -459,13 +486,22 @@
   expWide.addEventListener("change", function () { renderTimeline(); measureExp(); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureExp);
 
+  // The frame loop runs only while something is moving: a scroll, a resize, a drag, or the dial and
+  // background still easing toward where the scroll put them. Idle, it stops (battery on phones).
+  var running = false, lastY = -1, still = 0;
   function tick() {
     stepExp();
     bar.classList.toggle("is-scrolled", window.scrollY > 8);
     stepDial();
     stepBackground();
+    var moved = window.scrollY !== lastY || dragging || Math.abs(rotTarget - rot) > 0.02 || Math.abs(bgTarget - bgTurn) > 0.05;
+    lastY = window.scrollY;
+    still = moved ? 0 : still + 1;
+    if (still > 20) { running = false; return; }
     requestAnimationFrame(tick);
   }
+  function wake() { if (!running) { running = true; still = 0; requestAnimationFrame(tick); } }
+  ["scroll", "resize", "pointermove", "pointerdown", "keydown"].forEach(function (ev) { window.addEventListener(ev, wake, { passive: true }); });
 
   applyLang();
   // Content is drawn by script, so a deep link (#learn, #work-lifeos) is honoured once it exists.
@@ -473,6 +509,6 @@
     var target = document.getElementById(location.hash.slice(1));
     if (target) target.scrollIntoView({ block: "start" });
   }
-  requestAnimationFrame(tick);
+  wake();
 })();
 

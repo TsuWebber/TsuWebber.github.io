@@ -6,7 +6,7 @@
       wordmark: "Webber Hsu", skip: "Skip to posts",
       "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.blog": "Blog",
       "blog.h": "Blog",
-      sub: function (n, d) { return n + " posts from Medium and Substack. Synced " + d + "."; },
+      sub: function (n, d, src) { return n + " posts from " + (src || "Medium and Substack") + ". Synced " + d + "."; },
       "f.all": "All",
       empty: "No posts here yet.",
       aiTag: "Translated by AI",
@@ -18,7 +18,7 @@
       wordmark: "徐偉博", skip: "跳到文章",
       "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.blog": "部落格",
       "blog.h": "部落格",
-      sub: function (n, d) { return "Medium 與 Substack 上的 " + n + " 篇文章，" + d + " 同步。"; },
+      sub: function (n, d, src) { return (src || "Medium 與 Substack") + " 上的 " + n + " 篇文章，" + d + " 同步。"; },
       "f.all": "全部",
       empty: "這裡還沒有文章。",
       failed: "文章清單載入失敗，請稍後再試。",
@@ -28,6 +28,12 @@
   };
   var ARROW = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg>';
   var SOURCE_NAME = { medium: "Medium", substack: "Substack" };
+  function withArrow(text) {
+    text = String(text);
+    var cut = text.lastIndexOf(" ");
+    cut = cut < 0 ? text.length - Array.from(text).slice(-2).join("").length : cut + 1;
+    return esc(text.slice(0, cut)) + '<span class="nowrap">' + esc(text.slice(cut)) + ARROW + "</span>";
+  }
 
   var lang = (function () {
     var saved = null;
@@ -48,8 +54,9 @@
     var ui = UI[lang], el = document.querySelector("[data-posts]");
     if (failed) { el.innerHTML = '<p class="empty">' + esc(ui.failed) + "</p>"; return; }
     if (!data) return;
-    document.querySelector("[data-blog-sub]").textContent = ui.sub(data.posts.length, data.updated);
     var posts = data.posts.filter(function (p) { return filter === "all" || p.source === filter; });
+    // The subtitle counts what is shown: all posts, or only the chosen platform's.
+    document.querySelector("[data-blog-sub]").textContent = ui.sub(posts.length, data.updated, filter === "all" ? null : SOURCE_NAME[filter]);
     if (!posts.length) { el.innerHTML = '<p class="empty">' + esc(ui.empty) + "</p>"; return; }
     var years = [], byYear = {};
     posts.forEach(function (p) {
@@ -63,7 +70,7 @@
           // English titles are AI translations; say so on every one that shows.
           var en = lang === "en" && (p.title_en || EN_TITLES[norm(p.url)]);
           return '<li class="post"><a href="' + esc(p.url) + '" target="_blank" rel="noopener" hreflang="zh-Hant">' +
-            '<span class="post-title"' + (en ? "" : ' lang="zh-Hant"') + ">" + esc(en || p.title) + ARROW +
+            '<span class="post-title"' + (en ? "" : ' lang="zh-Hant"') + ">" + withArrow(en || p.title) +
             (en && p.title_en_by !== "author" ? '<span class="ai-tag">' + esc(UI.en.aiTag) + "</span>" : "") + "</span>" +
             '<span class="post-meta"><time datetime="' + esc(p.date) + '">' + esc(p.date.slice(5).replace("-", "/")) + "</time><span>" + SOURCE_NAME[p.source] + "</span></span></a></li>";
         }).join("") + "</ol></section>";
