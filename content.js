@@ -95,7 +95,7 @@ window.HUB = {
       title: { en: "Ten-Day Vipassana Retreat", zh: "十日內觀" },
       org: { en: "Chiayi, Taiwan", zh: "嘉義" },
       link: "https://medium.com/@webber52543363/%E5%8D%81%E6%97%A5%E5%85%A7%E8%A7%80-%E4%B8%80%E5%A0%B4%E7%9B%B4%E8%A6%96%E8%BA%AB%E5%BF%83%E7%9A%84%E5%BF%83%E9%9D%88%E6%89%8B%E8%A1%93-2569bee86789" },
-    { lane: "interest", from: "2025.12", to: "2025.12", type: "life", icon: "cedar",
+    { lane: "interest", from: "2025.12", to: "2025.12", type: "life", icon: "crow",
       title: { en: "Walked the Kumano Kodo", zh: "走過熊野古道" },
       org: { en: "Japan", zh: "日本" } },
     { lane: "main", from: "2026.01", to: "now", type: "work",
