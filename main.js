@@ -304,7 +304,8 @@
 
     var items = "";
     list.forEach(function (e, i) {
-      var now = e.to === "now" && e.lane === "main";
+      // The current role and ongoing interests get the gold highlight.
+      var now = e.to === "now" || e.to === "ongoing";
       var attrs = ' data-lane="' + e.lane + '" data-i="' + i + '"' + (now ? " data-now" : "");
       items += '<li class="tl tl-' + e.lane + '"' + attrs + ' style="left:' + X(i) + "px;top:0;width:" + (SLOT - 20) + 'px">' + body(e) + "</li>";
     });
@@ -331,7 +332,7 @@
       var y = e.lane === "main" ? MAIN : e.lane === "side" ? SIDE : INTEREST;
       if (e.lane !== "main") { if (first[e.lane] < 0) first[e.lane] = i; last[e.lane] = i; }
       if (e.lane === "main" && e.to === "now") nowAt = i;
-      nodes += '<circle class="tl-node is-' + e.lane + (e.lane === "main" && e.to === "now" ? " is-now" : "") + '" cx="' + X(i) + '" cy="' + y + '" r="' + (e.lane === "main" ? 6 : 4.5) + '"/>';
+      nodes += '<circle class="tl-node is-' + e.lane + (e.to === "now" || e.to === "ongoing" ? " is-now" : "") + '" cx="' + X(i) + '" cy="' + y + '" r="' + (e.lane === "main" ? 6 : 4.5) + '"/>';
     });
     var fx = PAD, lines = '<line class="tl-rail is-main" x1="0" y1="' + MAIN + '" x2="' + W + '" y2="' + MAIN + '"/>';
     if (nowAt >= 0) lines += '<line class="tl-rail is-now" x1="' + X(nowAt) + '" y1="' + MAIN + '" x2="' + W + '" y2="' + MAIN + '"/>';
