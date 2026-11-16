@@ -684,3 +684,29 @@ html[lang="zh-Hant"] .motto { word-break: keep-all; }   /* Chinese breaks at the
 .tl-more summary:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
 .tl-more .timeline.is-list { padding-left: 0; margin-top: var(--s2); }
 .tl-more .timeline.is-list::before { display: none; }
+
+/* ---------- Menu, two levels (960px and below) ----------
+   Top: "Home" and the four places on the homepage, at a modest size.
+   Then Blog, the one link that changes page, large and set apart.
+   Bottom: the outside links, small, so contact is one tap away. */
+.menu-label, .menu-ext { display: none; }
+@media (max-width: 960px) {
+  .bar nav .menu-label {
+    display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .bar nav a { font-size: clamp(1.6rem, 7vw, 2rem); padding: 9px 0; }
+  .bar nav a[href$="blog.html"] {
+    margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--ring-3);
+    font-size: clamp(2.2rem, 10vw, 2.9rem);
+  }
+  .bar nav .menu-ext {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--s3); margin-top: auto; padding-top: var(--s4);
+  }
+  .bar nav .menu-ext a {
+    display: inline-flex; align-items: center; gap: 6px; padding: 12px 0; min-height: 44px; box-sizing: border-box;
+    font-size: 15px; font-weight: 400; font-stretch: 100%; font-variation-settings: normal; letter-spacing: .01em; color: var(--ink-2);
+  }
+  html[lang="zh-Hant"] .bar nav .menu-ext a { font-weight: 400; letter-spacing: .01em; }
+  .bar nav .menu-ext a svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+  .bar nav { padding-bottom: calc(var(--s4) + env(safe-area-inset-bottom, 0px)); }
+}

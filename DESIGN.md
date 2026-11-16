@@ -278,6 +278,7 @@ No load animation. The only continuous motion is the dial turning with scroll (e
 
 ## Small screens
 - Touch screens: language buttons, work links, "More on…", story links and blog filters all reach 44px of tap area without changing their look; hover colours are off on touch so a tapped title never stays gold. Link arrows travel with the last word of their title. Chinese hashtags break 3 + 2.
+- The menu has two levels: a small "Home" / 「首頁」 label over the four homepage places (Build, Think, Learn, Experience) at a modest size; then Blog, the one link that changes page, larger and set off by a hairline; and at the bottom a 2x2 grid of outside links (LinkedIn, GitHub, Medium, Substack) at 15px, so contact is one tap away.
 - The open menu makes the rest of the page inert and keeps Tab inside the header; opening it from the keyboard moves focus to the first link.
 - The blog subtitle counts the posts the filter shows.
 - The homepage frame loop sleeps when nothing is moving and wakes on scroll, resize, pointer or key input.
