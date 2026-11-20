@@ -192,18 +192,6 @@ window.HUB = {
       ]
     },
     {
-      id: "piyan-party",
-      orbit: "build", mag: 2,
-      name: { en: "Home Digital Twin", zh: "屁眼派對數位分身" },
-      status: "built", year: { en: "2026", zh: "2026" },
-      summary: {
-        en: "A digital twin of our home: an editable floor plan with L-shaped rooms, a 3D walkthrough, photos pinned where they were taken, and floor-area totals.",
-        zh: "我們家的數位分身：可編輯的平面圖（支援 L 型房間）、3D 全覽、把照片釘在拍攝位置的照片牆，以及全屋坪數計算。"
-      },
-      stack: { en: "JavaScript · Vercel Blob", zh: "JavaScript · Vercel Blob" },
-      links: [{ label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/piyan-party" }]
-    },
-    {
       id: "pm-ai-workflows",
       page: "works/pm-workflow-skills.html",
       featured: true,
