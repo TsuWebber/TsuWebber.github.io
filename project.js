@@ -4,9 +4,9 @@
   var HUB = window.HUB;
   var UI = {
     en: {
-      wordmark: "Webber Hsu", skip: "Skip to the project", back: "All work",
-      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.work": "Work", "nav.blog": "Blog",
-      "work.h": "Work",
+      wordmark: "Webber Hsu", skip: "Skip to the project", back: "All projects",
+      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.work": "Projects", "nav.blog": "Blog",
+      "work.h": "Projects",
       "work.sub": "Side projects I built and still run, and earlier projects from school, programmes and teams.",
       side: "Side projects", past: "Past projects",
       status: { live: "Live", built: "Built", planned: "Planned" },
@@ -15,11 +15,11 @@
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase invite" }
     },
     zh: {
-      wordmark: "徐偉博", skip: "跳到專案內容", back: "全部作品",
-      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.work": "作品", "nav.blog": "部落格",
-      "work.h": "作品",
-      "work.sub": "我做出來、還在運作的個人作品，以及過去在學校、培訓計畫和團隊裡做過的專案。",
-      side: "個人作品", past: "過去專案",
+      wordmark: "徐偉博", skip: "跳到專案內容", back: "全部專案",
+      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.work": "專案", "nav.blog": "部落格",
+      "work.h": "專案",
+      "work.sub": "我自己做、還在運作的個人專案，以及過去在學校、培訓計畫和團隊裡做過的專案。",
+      side: "個人專案", past: "過去專案",
       status: { live: "上線中", built: "已完成", planned: "規劃中" },
       pending: "目前不公開", readMore: "看這段的文章",
       "foot.h": "其他地方", "foot.meta": "台北",

@@ -4,7 +4,7 @@
   var UI = {
     en: {
       wordmark: "Webber Hsu", skip: "Skip to posts",
-      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.work": "Work", "nav.blog": "Blog",
+      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.work": "Projects", "nav.blog": "Blog",
       "blog.h": "Blog",
       sub: function (n, d, src) { return n + " posts from " + (src || "Medium and Substack") + ". Synced " + d + "."; },
       "f.all": "All",
@@ -16,7 +16,7 @@
     },
     zh: {
       wordmark: "徐偉博", skip: "跳到文章",
-      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.work": "作品", "nav.blog": "部落格",
+      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.work": "專案", "nav.blog": "部落格",
       "blog.h": "部落格",
       sub: function (n, d, src) { return (src || "Medium 與 Substack") + " 上的 " + n + " 篇文章，" + d + " 同步。"; },
       "f.all": "全部",

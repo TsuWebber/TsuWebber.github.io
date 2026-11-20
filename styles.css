@@ -695,7 +695,7 @@ html[lang="zh-Hant"] .motto { word-break: keep-all; }   /* Chinese breaks at the
     display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3);
   }
   .bar nav a { font-size: clamp(1.6rem, 7vw, 2rem); padding: 9px 0; }
-  /* Work and Blog change page: larger, set apart from the homepage places by a hairline. */
+  /* Projects and Blog change page: larger, set apart from the homepage places by a hairline. */
   .bar nav a.nav-page { font-size: clamp(2.2rem, 10vw, 2.9rem); }
   .bar nav a[href$="works.html"] { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--ring-3); }
   .bar nav .menu-ext {

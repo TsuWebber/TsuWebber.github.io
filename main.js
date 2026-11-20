@@ -7,7 +7,7 @@
     en: {
       wordmark: "Webber Hsu",
       skip: "Skip to work",
-      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.work": "Work", "nav.blog": "Blog",
+      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.work": "Projects", "nav.blog": "Blog",
       motto: "I build, write and wander to build a deeper understanding of the world :)",
       "hub.h": "Build, Think, Learn",
       cats: {
@@ -30,14 +30,14 @@
       readMore: "Read the story",
       emptyThink: "Nothing here yet.",
       emptyLearn: "Nothing here yet.",
-      allWork: "All work", details: "About this project",
+      allWork: "All projects", details: "About this project",
       readOn: { medium: "More on Medium", substack: "More on Substack", github: "More on GitHub" },
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase invite" }
     },
     zh: {
       wordmark: "徐偉博",
       skip: "跳到作品",
-      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.work": "作品", "nav.blog": "部落格",
+      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.work": "專案", "nav.blog": "部落格",
       motto: "做產品、寫文章、流浪，對這個世界建立深度的理解:)",
       "hub.h": "實作、思考、學習",
       cats: {
@@ -59,7 +59,7 @@
       readMore: "看這段的文章",
       emptyThink: "這裡還沒有東西。",
       emptyLearn: "這裡還沒有東西。",
-      allWork: "全部作品", details: "看專案介紹",
+      allWork: "全部專案", details: "看專案介紹",
       readOn: { medium: "Medium 上還有更多", substack: "Substack 上還有更多", github: "GitHub 上還有更多" },
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase 邀請連結" }
     }
