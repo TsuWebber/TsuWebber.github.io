@@ -207,15 +207,15 @@ window.HUB = {
     {
       id: "pm-ai-workflows",
       featured: true,
-      orbit: "build", mag: 3,
-      name: { en: "PM AI Workflows", zh: "PM AI 工作流" },
-      status: "planned", year: { en: "Next", zh: "下一個" },
+      orbit: "build", mag: 2,
+      name: { en: "PM Workflow Skills", zh: "PM 工作流 Skills" },
+      status: "built", year: { en: "2026", zh: "2026" },
       summary: {
-        en: "A workflow that will turn a problem statement into a PRD, user stories and test cases, with me reviewing each output.",
-        zh: "把問題描述轉成 PRD、User Story 與測試案例的工作流，每一份產出都由我審過。"
+        en: "The 11 Claude Code skills I use every day as a software PM, from specs in Git through review, Jira tickets and release, all in Traditional Chinese.",
+        zh: "我身為軟體 PM 每天在用的 11 個 Claude Code skill：從寫規格、審查、開 Jira 票到上線，規格放在 Git 裡用 PR 迭代。"
       },
-      stack: { en: "AI workflow", zh: "AI 工作流" },
-      links: []
+      stack: { en: "Claude Code plugin · 11 skills", zh: "Claude Code plugin · 11 個 skill" },
+      links: [{ label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/pm-workflow-skills" }]
     }
   ],
 
