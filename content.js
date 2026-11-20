@@ -229,6 +229,33 @@ window.HUB = {
     }
   ],
 
+  // Past projects for the Work page (school, programme and team work), newest first.
+  // Written only from his Medium posts and LinkedIn. year is the year it ended.
+  past: [
+    {
+      id: "nccucg-cloud-gaming",
+      name: { en: "Cloud Gaming Launch Strategy", zh: "雲端遊戲平台上市策略" },
+      year: "2024",
+      context: { en: "NCCU Consulting Group · client project · 1st place", zh: "政大管理顧問社・實體業主專案・第一名" },
+      summary: {
+        en: "A go-to-market project for a cloud gaming platform, run with a real client and a mentor. We used issue trees and hypothesis-driven research to focus on the questions that mattered.",
+        zh: "替雲端遊戲平台規劃產品上市策略的實體專案，與業主和 Mentor 一起進行。用議題樹和假說驅動的研究，聚焦在真正關鍵的問題上。"
+      },
+      link: "https://medium.com/@webber52543363/%E6%94%BF%E5%A4%A7%E7%AE%A1%E7%90%86%E9%A1%A7%E5%95%8F%E7%A4%BE-%E8%A7%A3%E6%B1%BA%E5%95%8F%E9%A1%8C%E8%88%87%E9%82%8F%E8%BC%AF%E6%80%9D%E8%80%83%E7%9A%84%E5%AD%B8%E7%BF%92-94d4c9c7907c"
+    },
+    {
+      id: "emonono",
+      name: { en: "Emonono", zh: "Emonono" },
+      year: "2023",
+      context: { en: "YEF Young Entrepreneur Program · co-founder, team of 7", zh: "未來創業人 YEF・共同創辦人，七人團隊" },
+      summary: {
+        en: "A startup to help victims of psychological abuse, from recognising it to gathering evidence and taking legal action: recording guides, a discreet recording feature and AI transcription. We pivoted from B2C to B2B after Demo Day and pitched at the final Elevator Pitch.",
+        zh: "協助精神暴力受害者的新創，從辨識、蒐證到法律訴訟：錄音教學、隱密錄音功能與 AI 逐字稿。Demo Day 後把商業模式從 2C 轉為 2B，最後在 Elevator Pitch 提案。"
+      },
+      link: "https://medium.com/@webber52543363/%E8%BF%B7%E6%83%98%E4%B8%AD%E7%A9%8D%E6%A5%B5-%E6%B7%B7%E4%BA%82%E4%B8%AD%E6%88%90%E9%95%B7-b1c047e911fe"
+    }
+  ],
+
   // Selected essays (Medium) and notes (Substack). Titles are { en, zh }; the pieces themselves are written in Chinese.
   // The English titles were translated by AI, and the page labels them so.
   // Shape: { title: { en, zh }, url, date: "YYYY-MM", orbit: "think" | "learn" }

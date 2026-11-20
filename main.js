@@ -7,7 +7,7 @@
     en: {
       wordmark: "Webber Hsu",
       skip: "Skip to work",
-      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.blog": "Blog",
+      "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.work": "Work", "nav.blog": "Blog",
       motto: "I build, write and wander to build a deeper understanding of the world :)",
       "hub.h": "Build, Think, Learn",
       cats: {
@@ -30,13 +30,14 @@
       readMore: "Read the story",
       emptyThink: "Nothing here yet.",
       emptyLearn: "Nothing here yet.",
+      allWork: "All work",
       readOn: { medium: "More on Medium", substack: "More on Substack", github: "More on GitHub" },
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase invite" }
     },
     zh: {
       wordmark: "徐偉博",
       skip: "跳到作品",
-      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.blog": "部落格",
+      "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.work": "作品", "nav.blog": "部落格",
       motto: "做產品、寫文章、流浪，對這個世界建立深度的理解:)",
       "hub.h": "實作、思考、學習",
       cats: {
@@ -58,6 +59,7 @@
       readMore: "看這段的文章",
       emptyThink: "這裡還沒有東西。",
       emptyLearn: "這裡還沒有東西。",
+      allWork: "全部作品",
       readOn: { medium: "Medium 上還有更多", substack: "Substack 上還有更多", github: "GitHub 上還有更多" },
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase 邀請連結" }
     }
@@ -256,7 +258,9 @@
         ? '<ol class="works">' + items.map(workRow).join("") + "</ol>"
         : items.length ? '<ol class="entries">' + items.map(entryRow).join("") + "</ol>"
         : '<p class="empty"><span class="dot" style="--d:8px" aria-hidden="true"></span>' + esc(cat === "learn" ? ui.emptyLearn : ui.emptyThink) + "</p>";
-      var more = HUB.links[src] ? '<a class="panel-more" href="' + esc(HUB.links[src]) + '" target="_blank" rel="noopener">' + esc(ui.readOn[src]) + ARROW + "</a>" : "";
+      // Build points to the site's own Work page; Think and Learn point out to Medium and Substack.
+      var more = cat === "build" ? '<a class="panel-more" href="works.html">' + esc(ui.allWork) + ARROW + "</a>"
+        : HUB.links[src] ? '<a class="panel-more" href="' + esc(HUB.links[src]) + '" target="_blank" rel="noopener">' + esc(ui.readOn[src]) + ARROW + "</a>" : "";
       return '<section class="cat" id="' + cat + '" aria-labelledby="' + cat + '-h"><header class="panel-head"><h3 class="panel-h" id="' + cat + '-h">' + esc(copy.h) + "</h3></header>" + list + more + "</section>";
     }).join("");
     blocks = CATS.map(function (c) { return document.getElementById(c); });

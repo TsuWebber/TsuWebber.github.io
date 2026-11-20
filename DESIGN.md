@@ -289,6 +289,11 @@ No load animation. The only continuous motion is the dial turning with scroll (e
 - Footer links sit in two columns with 10px of tap padding; the Heptabase invite takes its own row.
 - Below 360px the header nav tightens (11px, 12px gaps) so all five links fit.
 
+## Work page (works.html)
+- Same shell as the Blog page. Two sections in the blog's year grid: "Side projects" / 「個人作品」 (every Build work: the homepage picks first, then finished before planned, each with status, stack, summary and links) and "Past projects" / 「過去專案」 (school, programme and team work from `past` in content.js: year, context line, summary, and a "Read the story" link to his own post). Past projects carry a hollow 9px dot.
+- Past-project write-ups come only from his Medium posts and LinkedIn; nothing is added that those don't say.
+- Homepage Build ends with "All work" / 「全部作品」 linking here (Think and Learn still link out). Nav: Work sits before Blog; in the phone menu both are the large page links under the hairline.
+
 ## Sharing and housekeeping
 - **Link previews:** both pages carry canonical, Open Graph and `twitter:card summary_large_image` tags pointing at `og.png`. og.png is 1200x630 and drawn in the site's own world: the name in wide-thin display, 徐偉博 and the motto in Dust, the URL in tracked caps, and the horizon ring (gold photon ring, ember edge, ring-2 and ring-3 arcs) rising from the bottom-right corner, kept clear of the text, over the accretion glow and grain. `apple-touch-icon.png` is the favicon mark at 180px.
 - **404.html:** the same background with a centred wide-thin "404", one line each in English and Chinese, and one pill link home.
