@@ -9,7 +9,8 @@
     { h, steps: [...] }    a numbered flow; each step is { name, text }
     { h, table: { head: [...], rows: [[...], ...] } }
     { h, figure: { src, alt, caption } }
-    { h, wide: true, flow: { stages, loop, base, side } }   a left-to-right process map in the site's own style
+    { h, wide: true, flow: { stages, loop, base, side } }
+    { h, wide: true, layers: { rows, foot } }   stacked layers, top (application) to bottom (foundation)   a left-to-right process map in the site's own style
   Every text value is { en, zh }; table cells may be plain strings.
 */
 window.HUB_PROJECTS = {
@@ -146,6 +147,39 @@ window.HUB_PROJECTS = {
         p: {
           en: "A study aid for refereeing. Ask it whether a play is a violation, how to administer a throw-in after a late time-out, or where to stand in three-person mechanics, and it looks the answer up instead of answering from memory. Every answer carries the article number, the rule version and what kind of source it is: rule text, official interpretation or officiating practice. It also keeps notes of real cases from my games, and has an eval set to measure how accurate it is.",
           zh: "裁判學習工具。問它某個情況算不算違例、最後兩分鐘暫停後前場發球的程序、三人裁判法該怎麼站位，它會去查資料而不是憑記憶回答。每個答案都附條號、規則版本，以及來源性質：規則條文、官方解釋或執法慣例。它也收了我實際執法遇到的案例筆記，並有一套評測集量測準確度。"
+        }
+      },
+      {
+        h: { en: "How the knowledge fits", zh: "知識架構" },
+        wide: true,
+        layers: {
+          rows: [
+            {
+              role: { en: "Application", zh: "執法應用" },
+              note: { en: "Who stands where, and how the call gets made on court", zh: "誰站哪裡、場上怎麼做出判決" },
+              cells: [
+                { name: "IOT", title: { en: "Individual officiating technique", zh: "個人執法技巧" }, text: { en: "Positioning, where to look, signals and focus, for every referee whatever the crew size", zh: "站姿、視線、手勢與專注力，不分裁判人數都要具備" } },
+                { name: "2PO", title: { en: "Two-person mechanics", zh: "二人裁判法" }, text: { en: "How two referees split coverage, rotate and switch", zh: "兩位裁判怎麼分責任區、輪轉與換位" } },
+                { name: "3PO", title: { en: "Three-person mechanics", zh: "三人裁判法" }, text: { en: "Positions, rotation and areas of responsibility for a crew of three, basic and advanced", zh: "三人制的站位、輪轉與責任區，分基礎版與進階版" } }
+              ]
+            },
+            {
+              role: { en: "Support", zh: "輔助" },
+              note: { en: "How a rule applies in real game situations", zh: "條文在真實比賽情境怎麼適用" },
+              cells: [
+                { name: "OBRI", title: { en: "Official interpretations", zh: "官方解釋（判例）" }, text: { en: "FIBA's worked cases for each article, used to settle disputed situations", zh: "FIBA 針對各條文的實務判例，用來判斷爭議情境" } }
+              ]
+            },
+            {
+              role: { en: "Foundation", zh: "基礎" },
+              note: { en: "What the call is", zh: "判什麼" },
+              base: true,
+              cells: [
+                { name: "FIBA 2024", title: { en: "Official Basketball Rules", zh: "國際籃球規則" }, text: { en: "The 2024 v1.0 English rules decide; the 2022 Chinese edition is for reading in Chinese", zh: "以 2024 v1.0 英文版為準；2022 中文版用來查中文條文" } }
+              ]
+            }
+          ],
+          foot: { en: "A question about a call starts from the rules, then the interpretations. A question that mixes a call with positioning reads the rules and the mechanics together.", zh: "判決問題先查規則，再看官方解釋；同時涉及判決與站位的問題，規則和執法手冊一起查。" }
         }
       },
       {

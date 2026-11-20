@@ -68,9 +68,22 @@
     return '<div class="flow-scroll"><div class="flow" style="--cols:' + cols + '"><ol class="flow-stages">' + stages + "</ol>" + loop + base + side + "</div></div>";
   }
 
+  // Stacked layers: application on top, support in the middle, the foundation at the bottom, widest and in gold.
+  function layerMap(L) {
+    var rows = L.rows.map(function (r) {
+      return '<div class="layer' + (r.base ? " is-base" : "") + '">' +
+        '<div class="layer-role"><span class="layer-name">' + esc(t(r.role)) + '</span><span class="layer-note">' + esc(t(r.note)) + "</span></div>" +
+        '<ul class="layer-cells" style="--n:' + r.cells.length + '">' + r.cells.map(function (c) {
+          return '<li class="layer-cell"><code>' + esc(c.name) + '</code><h3>' + esc(t(c.title)) + "</h3><p>" + esc(t(c.text)) + "</p></li>";
+        }).join("") + "</ul></div>";
+    }).join('<div class="layer-join" aria-hidden="true"></div>');
+    return '<div class="layers">' + rows + "</div>" + (L.foot ? '<p class="layers-foot">' + esc(t(L.foot)) + "</p>" : "");
+  }
+
   function section(sec) {
     var out = '<section class="year proj-sec' + (sec.wide ? " is-wide" : "") + '"><h2 class="year-h">' + esc(t(sec.h)) + '</h2><div class="proj-body">';
     if (sec.flow) out += flowMap(sec.flow);
+    if (sec.layers) out += layerMap(sec.layers);
     if (sec.figure) out += '<figure class="proj-figure"><img src="' + esc(sec.figure.src) + '" alt="' + esc(t(sec.figure.alt)) + '" loading="lazy" decoding="async"><figcaption>' + esc(t(sec.figure.caption)) + "</figcaption></figure>";
     if (sec.steps) out += '<ol class="proj-steps">' + sec.steps.map(function (st) {
       return '<li><span class="proj-step-name">' + esc(t(st.name)) + '</span><span class="proj-step-text">' + esc(t(st.text)) + "</span></li>";
