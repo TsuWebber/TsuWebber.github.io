@@ -149,6 +149,7 @@ window.HUB = {
     },
     {
       id: "referee",
+      page: "works/referee-aide.html",
       featured: true,
       orbit: "build", mag: 2,
       name: { en: "Referee Aide", zh: "籃球裁判助理" },
@@ -216,6 +217,7 @@ window.HUB = {
     },
     {
       id: "pm-ai-workflows",
+      page: "works/pm-workflow-skills.html",
       featured: true,
       orbit: "build", mag: 2,
       name: { en: "PM Workflow Skills", zh: "PM 工作流 Skills" },

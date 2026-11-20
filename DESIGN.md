@@ -294,6 +294,11 @@ No load animation. The only continuous motion is the dial turning with scroll (e
 - Past-project write-ups come only from his Medium posts and LinkedIn; nothing is added that those don't say.
 - Homepage Build ends with "All work" / 「全部作品」 linking here (Think and Learn still link out). Nav: Work sits before Blog; in the phone menu both are the large page links under the hairline.
 
+## Project pages (works/<id>.html)
+- One page per project, linked by "About this project" / 「看專案介紹」 (Ink with a gold underline) as the first link on its card on the homepage and the Work page. Two so far: PM Workflow Skills and Referee Aide.
+- Same shell as Blog and Work, with Work current in the nav. Top: a "← All work" back link, then year · status · stack, the name as the page H1, a one-paragraph lead in Ink, and outside links as pill buttons. Below, sections in the blog's year grid (label left, text right at 68ch): paragraphs, gold-marker lists, numbered steps on hairlines, small tables, and figures on a warm paper card (for diagrams drawn on light backgrounds).
+- Card data comes from HUB.works (content.js); page text from HUB_PROJECTS (projects.js), written only from the project's own README and files. project.js renders it.
+
 ## Sharing and housekeeping
 - **Link previews:** both pages carry canonical, Open Graph and `twitter:card summary_large_image` tags pointing at `og.png`. og.png is 1200x630 and drawn in the site's own world: the name in wide-thin display, 徐偉博 and the motto in Dust, the URL in tracked caps, and the horizon ring (gold photon ring, ember edge, ring-2 and ring-3 arcs) rising from the bottom-right corner, kept clear of the text, over the accretion glow and grain. `apple-touch-icon.png` is the favicon mark at 180px.
 - **404.html:** the same background with a centred wide-thin "404", one line each in English and Chinese, and one pill link home.

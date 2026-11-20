@@ -30,7 +30,7 @@
       readMore: "Read the story",
       emptyThink: "Nothing here yet.",
       emptyLearn: "Nothing here yet.",
-      allWork: "All work",
+      allWork: "All work", details: "About this project",
       readOn: { medium: "More on Medium", substack: "More on Substack", github: "More on GitHub" },
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase invite" }
     },
@@ -59,7 +59,7 @@
       readMore: "看這段的文章",
       emptyThink: "這裡還沒有東西。",
       emptyLearn: "這裡還沒有東西。",
-      allWork: "全部作品",
+      allWork: "全部作品", details: "看專案介紹",
       readOn: { medium: "Medium 上還有更多", substack: "Substack 上還有更多", github: "GitHub 上還有更多" },
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase 邀請連結" }
     }
@@ -226,9 +226,12 @@
 
   function workRow(w) {
     var ui = UI[lang];
+    // A work with its own page gets an inside link first; the rest open outside.
+    var inside = w.page ? '<a class="work-page" href="' + esc(w.page) + '">' + esc(ui.details) + ARROW + "</a>" : "";
     var links = w.links.filter(function (l) { return l.url; }).map(function (l) {
       return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(t(l.label)) + ARROW + "</a>";
     }).join("");
+    links = inside + links;
     if (!links && w.status !== "planned") links = '<span class="work-pending">' + esc(ui.pending) + "</span>";
     var dot = w.mag === 1 ? "background:var(--gold)" : w.status === "planned" ? "background:none;border:1px dashed var(--ink-3)" : "";
     return '<li class="work" id="work-' + w.id + '" data-status="' + w.status + '">' +

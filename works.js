@@ -10,7 +10,7 @@
       "work.sub": "Side projects I built and still run, and earlier projects from school, programmes and teams.",
       side: "Side projects", past: "Past projects",
       status: { live: "Live", built: "Built", planned: "Planned" },
-      pending: "Private for now", readMore: "Read the story",
+      pending: "Private for now", readMore: "Read the story", details: "About this project",
       "foot.h": "Elsewhere", "foot.meta": "Taipei",
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase invite" }
     },
@@ -21,7 +21,7 @@
       "work.sub": "我做出來、還在運作的個人作品，以及過去在學校、培訓計畫和團隊裡做過的專案。",
       side: "個人作品", past: "過去專案",
       status: { live: "上線中", built: "已完成", planned: "規劃中" },
-      pending: "目前不公開", readMore: "看這段的文章",
+      pending: "目前不公開", readMore: "看這段的文章", details: "看專案介紹",
       "foot.h": "其他地方", "foot.meta": "台北",
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase 邀請連結" }
     }
@@ -45,9 +45,12 @@
   function t(o) { return o && typeof o === "object" ? (o[lang] || o.en) : o; }
   function workRow(w) {
     var ui = UI[lang];
+    // A work with its own page gets an inside link first; the rest open outside.
+    var inside = w.page ? '<a class="work-page" href="' + esc(w.page) + '">' + esc(ui.details) + ARROW + "</a>" : "";
     var links = (w.links || []).filter(function (l) { return l.url; }).map(function (l) {
       return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(t(l.label)) + ARROW + "</a>";
     }).join("");
+    links = inside + links;
     if (!links && w.status !== "planned") links = '<span class="work-pending">' + esc(ui.pending) + "</span>";
     var dot = w.mag === 1 ? "background:var(--gold)" : "";
     return '<li class="work" id="work-' + esc(w.id) + '" data-status="' + w.status + '">' +
