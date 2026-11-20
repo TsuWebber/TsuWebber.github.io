@@ -346,7 +346,7 @@
     list.forEach(function (e, i) {
       // The current role and ongoing interests get the gold highlight.
       var now = e.to === "now" || e.to === "ongoing";
-      var attrs = ' data-lane="' + e.lane + '" data-i="' + i + '"' + (now ? " data-now" : "");
+      var attrs = ' data-lane="' + e.lane + '" data-i="' + i + '"' + (now ? " data-now" : "") + (e.cover && e.link ? ' data-cover="' + esc(e.cover) + '"' : "");
       items += '<li class="tl tl-' + e.lane + '"' + attrs + ' style="left:' + X(i) + "px;top:0;width:" + (SLOT - 20) + 'px">' + body(e, i) + "</li>";
     });
     track.style.width = W + "px";
@@ -387,6 +387,51 @@
       return '<text class="tl-lane" x="' + (PAD + FORK - 28) + '" y="' + (l[1] - 10) + '" text-anchor="end">' + esc(ui.lanes[l[0]]) + "</text>";
     }).join("");
     track.insertAdjacentHTML("afterbegin", '<svg class="tl-lines" width="' + W + '" height="100%" aria-hidden="true" focusable="false">' + lines + nodes + names + "</svg>");
+  }
+
+  // ---------- Article preview: hovering an entry that has a story shows that post's cover ----------
+  // One floating card follows the pointer (mouse only); keyboard focus on "Read the story" shows it beside the link.
+  var peek = document.createElement("div");
+  peek.className = "tl-peek"; peek.setAttribute("aria-hidden", "true");
+  peek.innerHTML = '<img alt="" decoding="async">';
+  document.body.appendChild(peek);
+  var peekImg = peek.firstChild, peekOn = false, fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+  function placePeek(x, y) {
+    var w = peek.offsetWidth || 280, h = peek.offsetHeight || 200, gap = 22;
+    var left = x + gap + w > window.innerWidth - 12 ? x - gap - w : x + gap;
+    var top = Math.min(Math.max(12, y - h / 2), window.innerHeight - h - 12);
+    peek.style.transform = "translate3d(" + Math.round(left) + "px," + Math.round(top) + "px,0)";
+  }
+  function showPeek(src) {
+    if (peekImg.getAttribute("src") !== src) peekImg.setAttribute("src", src);
+    peek.classList.add("is-on"); peekOn = true;
+  }
+  function hidePeek() { peek.classList.remove("is-on"); peekOn = false; }
+  var tlTrack = document.querySelector("[data-timeline]");
+  tlTrack.addEventListener("mouseover", function (e) {
+    if (!fine.matches) return;
+    var li = e.target.closest(".tl[data-cover]");
+    if (!li) { hidePeek(); return; }
+    showPeek(li.getAttribute("data-cover")); placePeek(e.clientX, e.clientY);
+  });
+  tlTrack.addEventListener("mousemove", function (e) { if (peekOn) placePeek(e.clientX, e.clientY); });
+  tlTrack.addEventListener("mouseleave", hidePeek);
+  tlTrack.addEventListener("focusin", function (e) {
+    var li = e.target.closest(".tl[data-cover]");
+    if (!li || !fine.matches) return;
+    var r = e.target.getBoundingClientRect();
+    showPeek(li.getAttribute("data-cover")); placePeek(r.right, r.top + r.height / 2);
+  });
+  tlTrack.addEventListener("focusout", hidePeek);
+  window.addEventListener("scroll", function () { if (peekOn && !fine.matches) hidePeek(); }, { passive: true });
+  // Warm the covers once the timeline is near, so the first hover shows at once.
+  if ("IntersectionObserver" in window) {
+    var warm = new IntersectionObserver(function (es) {
+      if (!es.some(function (x) { return x.isIntersecting; })) return;
+      warm.disconnect();
+      (HUB.timeline || []).forEach(function (t) { if (t.cover) { var im = new Image(); im.src = t.cover; } });
+    }, { rootMargin: "600px" });
+    warm.observe(document.getElementById("experience"));
   }
 
   function renderLinks() {
