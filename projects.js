@@ -9,6 +9,7 @@
     { h, steps: [...] }    a numbered flow; each step is { name, text }
     { h, table: { head: [...], rows: [[...], ...] } }
     { h, figure: { src, alt, caption } }
+    { h, wide: true, flow: { stages, loop, base, side } }   a left-to-right process map in the site's own style
   Every text value is { en, zh }; table cells may be plain strings.
 */
 window.HUB_PROJECTS = {
@@ -28,23 +29,22 @@ window.HUB_PROJECTS = {
       },
       {
         h: { en: "The flow", zh: "完整流程" },
-        figure: {
-          src: "../img/projects/pm-skill-map.svg",
-          alt: { en: "Map of the 11 pm-workflow skills, from pm-setup at the top down to pm-launch, with pm-review and pm-design looping back to pm-spec.", zh: "pm-workflow 11 個 skill 的關聯圖：由上往下從 pm-setup 到 pm-launch，pm-review 與 pm-design 會回到 pm-spec。" },
-          caption: { en: "The main line runs top to bottom. Problems found in review, and accepted design changes, go back to the spec.", zh: "主線由上往下；審查找到的問題、接受的設計修改，都回到規格修改。" }
+        wide: true,
+        flow: {
+          stages: [
+            { n: "0", title: { en: "Prepare", zh: "準備" }, skills: [{ name: "pm-setup", subs: ["init", "tools", "sync"] }] },
+            { n: "1", title: { en: "Collect", zh: "收素材" }, skills: [{ name: "pm-intake", subs: ["notion", "meeting", "material"] }, { name: "pm-discover", optional: true, subs: ["cases", "pains"] }] },
+            { n: "1", title: { en: "Decide", zh: "定方向" }, skills: [{ name: "pm-plan", subs: ["scope", "decide"] }] },
+            { n: "2", title: { en: "Write the spec", zh: "寫規格" }, skills: [{ name: "pm-spec", subs: ["write", "story / flow", "reverse", "search"] }], loopTo: true },
+            { n: "3-5", title: { en: "Review & design", zh: "審查與設計" }, skills: [{ name: "pm-review", subs: ["qa", "readers", "edge", "impact", "consistency", "polish", "preflight"] }, { name: "pm-design", subs: ["dr", "prototype"] }], loopFrom: true },
+            { n: "6", title: { en: "Ship", zh: "送審" }, skills: [{ name: "pm-ship", subs: ["PR", "suggest / apply", "wrap", "notion"] }] },
+            { n: "7", title: { en: "Tickets", zh: "開票" }, skills: [{ name: "pm-ticket", subs: ["spec", "bug", "sprint-bug", "task", "more"] }] },
+            { n: "8", title: { en: "After launch", zh: "上線後" }, skills: [{ name: "pm-launch", subs: ["release", "archive", "sync-code", "retro"] }] }
+          ],
+          loop: { en: "Problems found in review, and accepted design changes, go back to the spec", zh: "審查找到的問題、接受的設計修改，都回到規格修改" },
+          base: { name: "shared/ · pm-config", text: { en: "Every skill reads the shared writing rules and your private config first", zh: "所有 skill 執行前都先讀共用規則與私人設定" } },
+          side: { name: "pm-report", subs: ["digest", "daily", "weekly"], text: { en: "Every day and every week, outside any single feature", zh: "每天、每週的例行回報，不屬於單一需求" } }
         }
-      },
-      {
-        h: { en: "Stages", zh: "各階段" },
-        steps: [
-          { name: "pm-setup", text: { en: "Project background, tools and keeping the spec repo up to date.", zh: "專案背景、工具授權、規格庫更新到最新。" } },
-          { name: "pm-intake · pm-discover", text: { en: "Bring in Notion specs, meeting notes and loose material; optionally research how others solve it and whether the pain is real.", zh: "把 Notion 規格、會議記錄、零散素材整理進來；選用的調研：別人怎麼做、這個痛是不是真的。" } },
-          { name: "pm-plan", text: { en: "Decide whether to do it and how far, and write a decision document for big changes.", zh: "要不要做、範圍到哪，重大改動寫決策文件。" } },
-          { name: "pm-spec", text: { en: "Write the spec with acceptance criteria and metrics, user stories and flows; reverse-engineer current behaviour from code.", zh: "寫規格（AC 與指標一起寫）、User Story、Userflow；從程式碼反推現況規格。" } },
-          { name: "pm-review · pm-design", text: { en: "QA, reader, edge-case, impact and consistency checks, plus a full pre-flight review; record designers' changes and prototype.", zh: "QA、讀者、邊界、跨部門、矛盾檢查與送審前預審；記錄設計師的修改、做可操作的 prototype。" } },
-          { name: "pm-ship · pm-ticket", text: { en: "Group commits and open the PR; split the spec into front-end and back-end Jira stories, bugs and tasks.", zh: "分組 commit、開 PR；依規格拆前端 / 後端 Jira Story、Bug、Task。" } },
-          { name: "pm-launch · pm-report", text: { en: "Release notes for sales, operations and support, archiving and retros; daily and weekly reports.", zh: "給業務、營運、客服看的 release note、封存與回顧；每日與每週回報。" } }
-        ]
       },
       {
         h: { en: "In real use", zh: "實際使用" },
@@ -81,6 +81,56 @@ window.HUB_PROJECTS = {
           en: "I wrote the overall v3 structure, plus pm-plan decide, the reader, edge, impact, consistency and polish reviews, the general ticket types, release notes and retros, pm-report and project setup. The other sub-commands are adapted from my team's shared spec repo; their authors are teammates, and they are published de-identified with their consent. Company names, internal systems, people and IDs are replaced with placeholders. MIT licensed.",
           zh: "v3 的整體結構，以及 pm-plan decide、讀者 / 邊界 / 影響 / 矛盾 / 精簡審查、一般票型、release note 與回顧、pm-report、專案初始化由我撰寫。其他子指令改寫自團隊共用的規格庫，原作者為團隊成員，經同意以去識別形式公開。公司名稱、內部系統、人名、ID 都已換成佔位符。MIT 授權。"
         }
+      }
+    ]
+  },
+
+  "echotrail": {
+    lead: {
+      en: "A career-reflection product we specified in The Mentorship's PM × engineering project, for people who feel stuck in their career but can't say where. Two PMs wrote the spec in a Git repo; two engineers built from it, with a PM mentor and an engineering mentor reviewing.",
+      zh: "曼陀號 PM × 工程師合作專案裡一起定義的職涯反思產品，給職涯卡關、卻說不清楚卡在哪裡的人。兩位 PM 在 Git repo 寫規格，兩位工程師照著實作，PM 與工程 mentor 各一位協助審閱。"
+    },
+    sections: [
+      {
+        h: { en: "The problem", zh: "要解決的問題" },
+        list: [
+          { en: "What happened in your career and how you felt about it live apart, so nobody compares them to see where \"everything looks fine\" and \"something feels off\" diverge.", zh: "客觀的職涯紀錄和真實的主觀感受分開存在，沒有人把兩者放在一起比對，看不出「客觀上一切正常」和「主觀上不對勁」之間的落差。" },
+          { en: "Most people can't tune prompts, so chatting with a general AI rarely produces a structured picture that fits them; they need a coach that asks one question at a time.", zh: "多數人不會調 prompt，自己跟生成式 AI 聊很難得到結構化、貼近自己的輸出，需要有人一問一答地引導。" },
+          { en: "Events pile up without being summed up. Generic tests like RIASEC or DISC give abstract labels that don't connect to what actually happened.", zh: "累積的事件沒有被歸納。RIASEC、DISC 這類通用測驗給的是抽象標籤，連不回真實發生過的經歷。" }
+        ]
+      },
+      {
+        h: { en: "What the MVP tests", zh: "MVP 要驗證的事" },
+        p: {
+          en: "Whether pulling in your career record, collecting how you felt through conversation, cross-checking the two and presenting them in structure gives insight you can't get by chatting with an AI yourself; and whether those events add up to a self-portrait you agree with, closer to your real experience than a generic test. The answer decides whether to build a full engine; the MVP uses a single lightweight prompt to an existing model.",
+          zh: "「拉取客觀職涯紀錄＋對話收集主觀感受＋交叉比對＋結構化呈現」這套流程，能不能產出自己跟 AI 聊天達不到的洞察；累積的事件能不能組成一份使用者認同、比通用測驗更貼近真實經歷的自我畫像。結果決定要不要投入完整的自動化引擎；MVP 先用單一 prompt 呼叫既有的模型。"
+        }
+      },
+      {
+        h: { en: "Three parts", zh: "三個核心功能" },
+        steps: [
+          { name: { en: "Conversation and input", zh: "對話與輸入" }, text: { en: "Start from text, a CV or an import, then a multi-turn conversation where an AI coach asks for whatever is still missing, and a button that turns it into insight.", zh: "從文字、履歷或快速匯入開始，接著多輪對話，由 AI 教練追問還缺的資訊，最後一個按鈕產生洞察。" } },
+          { name: { en: "Timeline and insight", zh: "時間軸與洞察" }, text: { en: "Each event becomes an Echo Card that sets the record against the feeling.", zh: "每個事件產出一張 Echo Card，把客觀紀錄和主觀感受放在一起。" } },
+          { name: { en: "Dashboard", zh: "儀表板" }, text: { en: "A persona card, what drives you, a word cloud, behaviour patterns, and career-anchor, RIASEC and DISC charts that update as events add up.", zh: "Persona 卡片、驅動因素、文字雲、行為模式，以及職涯錨點、RIASEC、DISC 圖表，隨事件累積增量更新。" } }
+        ]
+      },
+      {
+        h: { en: "How we worked", zh: "協作方式" },
+        list: [
+          { en: "The repo is the single source of truth: the spec says what it is now, a decisions file says why and what is still open, and a changelog gives one line per change.", zh: "repo 是規格的單一真實來源：SPEC 寫「現在是什麼」，DECISIONS 寫「為什麼這樣定、還有什麼沒決定」，CHANGELOG 每次改動一句話。" },
+          { en: "Small changes go straight to main; bigger ones go through a pull request reviewed by the other PM, never merged by their own author.", zh: "小改動直接推 main；較大的改動開 PR 給另一位 PM 審，不 merge 自己的 PR。" },
+          { en: "Engineers raise unclear or unworkable spec as Issues; once settled, the answer goes back into the decisions file.", zh: "工程師發現規格講不清楚或做不到，就開 Issue；有結論後寫回決策紀錄。" },
+          { en: "Three Claude Code skills in the repo push the spec, log decisions and log the changelog, so every spec change records its reason.", zh: "repo 裡有三個 Claude Code skill：推 spec、記 decision、記 changelog，讓每次改規格都留下原因。" }
+        ]
+      },
+      {
+        h: { en: "What I did", zh: "我做的事" },
+        list: [
+          { en: "Co-wrote and maintained the MVP spec and decision log with the other PM.", zh: "和另一位 PM 一起撰寫並維護 MVP 規格與決策紀錄。" },
+          { en: "Upgraded the coach's system prompt, including a care-first policy for statements about self-harm.", zh: "升級 AI 教練的 System Prompt，包含遇到自傷或極端負面語句時的關懷提示政策。" },
+          { en: "Added a grounding table that defines what evidence each Echo Card field needs, so the model doesn't make things up.", zh: "新增 Echo Card 欄位的 Grounding 查核表：每個欄位需要什麼證據才能生成，避免模型幻覺。" },
+          { en: "Trimmed the spec of numbers and UI details the team had never agreed on, so engineers wouldn't read them as hard requirements.", zh: "把 team 沒拍板過的數字和 UI 細節從規格刪掉，避免工程師照字面當成硬性規格。" }
+        ]
       }
     ]
   },

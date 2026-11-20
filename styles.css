@@ -785,3 +785,35 @@ html[lang="zh-Hant"] .proj-body { max-width: 36em; }
 .proj-figure figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-3); }
 .proj-sec { border-top: 1px solid var(--ring-3); margin-top: var(--s5); }
 .page-project .blog-head { border-bottom: 0; padding-bottom: 0; }
+
+/* ---------- Process map on project pages (left to right) ---------- */
+.proj-sec.is-wide { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
+.proj-sec.is-wide .proj-body { max-width: none; min-width: 0; }
+.flow-scroll { overflow-x: auto; margin-inline: calc(var(--gutter) * -1); padding: 4px var(--gutter) var(--s2); scrollbar-width: thin; scrollbar-color: var(--ring-1) transparent; }
+.flow { display: grid; grid-template-columns: repeat(var(--cols), minmax(132px, 1fr)); column-gap: 14px; min-width: calc(var(--cols) * 146px); }
+.flow-stages { display: contents; list-style: none; margin: 0; padding: 0; }
+.flow-stage { grid-row: 1; position: relative; padding-top: 40px; }
+/* the rail: one line through every stage's dot, with an arrowhead into the next stage */
+.flow-stage::before { content: ""; position: absolute; top: 26px; left: 0; right: -14px; height: 1.5px; background: var(--ring-1); }
+.flow-stage:last-child::before { right: 0; }
+.flow-stage:not(:last-child)::after { content: ""; position: absolute; top: 22.5px; right: -10px; width: 7px; height: 7px; border-top: 1.5px solid var(--ink-3); border-right: 1.5px solid var(--ink-3); transform: rotate(45deg); }
+.flow-n { position: absolute; top: 0; left: 0; font-size: 11px; letter-spacing: .16em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.flow-dot { position: absolute; top: 22px; left: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--void); border: 1.5px solid var(--ink-2); box-sizing: border-box; }
+.flow-stage.is-loop-to .flow-dot, .flow-stage.is-loop-from .flow-dot { border-color: var(--gold); }
+.flow-title { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.3; margin: 0 0 10px; }
+html[lang="zh-Hant"] .flow-title { letter-spacing: .04em; }
+.flow-skill { padding: 10px 11px; border: 1px solid var(--ring-2); border-radius: 8px; background: rgba(255, 255, 255, .02); }
+.flow-skill + .flow-skill { margin-top: 8px; }
+.flow-skill code, .flow-band code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12.5px; }
+.flow-skill code { color: var(--gold); }
+.flow-opt { margin-left: 6px; font-size: 11px; letter-spacing: .08em; color: var(--ink-3); }
+.flow-subs { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.flow-subs li { font-size: 11.5px; line-height: 1; padding: 4px 6px; border-radius: 4px; background: rgba(255, 255, 255, .05); color: var(--ink-2); }
+/* the loop back to the spec: a dashed gold bracket under the two stages */
+.flow-loop { grid-row: 2; position: relative; margin: 12px 8% 0; height: 34px; border: 1.5px dashed var(--gold); border-top: 0; border-radius: 0 0 12px 12px; opacity: .9; }
+.flow-loop::before { content: ""; position: absolute; left: -5.5px; top: -2px; width: 8px; height: 8px; border-left: 1.5px solid var(--gold); border-top: 1.5px solid var(--gold); transform: rotate(45deg); }
+.flow-loop span { position: absolute; left: 50%; bottom: -9px; transform: translateX(-50%); padding: 0 8px; background: var(--void); font-size: 12px; color: var(--gold); white-space: nowrap; }
+.flow-band { grid-row: 3; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: var(--s4); padding: 12px 14px; border: 1px solid var(--ring-2); border-radius: 8px; font-size: 13px; color: var(--ink-2); }
+.flow-band code { color: var(--ink); }
+.flow-side { grid-row: 4; margin-top: 10px; border-style: dashed; }
+.flow-side .flow-subs { margin: 0; }

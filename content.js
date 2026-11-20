@@ -1,8 +1,7 @@
 /*
   Personal Hub content: the one file to edit.
   Every text field is { en, zh }. Add a work, essay or note by adding one object.
-  A link with an empty url is not rendered. Fill these in:
-  TODO(webber): public link for echotrail.
+  A link with an empty url is not rendered.
 */
 window.HUB = {
   // Shown in this order in the footer.
@@ -163,15 +162,16 @@ window.HUB = {
     },
     {
       id: "echotrail",
+      page: "works/echotrail.html",
       orbit: "build", mag: 2,
       name: { en: "EchoTrail", zh: "EchoTrail" },
       status: "built", year: { en: "2026", zh: "2026" },
       summary: {
-        en: "A team prototype from a PM programme: defined, vibe-coded and pitched with a live demo inside one sprint week.",
-        zh: "PM 課程的小組原型：在一週衝刺內完成定義、用 vibe coding 做出來，並現場 demo 提案。"
+        en: "A career-reflection product from The Mentorship's PM × engineering project: an AI coach draws out your career story, sets it against your record to show where things feel off, and builds a self-portrait over time. I co-wrote and kept the MVP spec in Git with another PM, for two engineers and two mentors.",
+        zh: "曼陀號 PM × 工程師合作專案的職涯反思產品：AI 教練一問一答引導你講出職涯經歷，和客觀紀錄交叉比對找出落差，並隨時間累積成一份自我畫像。我和另一位 PM 一起撰寫並維護放在 Git 的 MVP 規格，給兩位工程師和兩位 mentor 使用。"
       },
-      stack: { en: "Prototype · Team of two", zh: "原型 · 兩人小組" },
-      links: [{ label: { en: "See prototype", zh: "看原型" }, url: "" }]
+      stack: { en: "MVP spec in Git · 2 PMs, 2 engineers", zh: "Git 規格庫 · 2 PM、2 工程師" },
+      links: [{ label: { en: "Spec repo on GitHub", zh: "GitHub 規格庫" }, url: "https://github.com/ZeYuanDuan/echotrail-project-management" }]
     },
     {
       id: "flexbox-rpg",

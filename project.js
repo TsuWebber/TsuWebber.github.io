@@ -47,8 +47,30 @@
   var card = (HUB.works || []).filter(function (w) { return w.id === pid; })[0] || {};
   var page = (window.HUB_PROJECTS || {})[pid] || { sections: [] };
 
+  // A left-to-right process map: numbered stages on one rail, a dashed gold loop back to the spec,
+  // a base band every stage reads from, and a side band for routine work outside the main line.
+  function flowMap(f) {
+    var cols = f.stages.length, from = -1, to = -1;
+    f.stages.forEach(function (st, i) { if (st.loopTo) to = i; if (st.loopFrom) from = i; });
+    var subs = function (list) { return '<ul class="flow-subs">' + list.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>"; };
+    var stages = f.stages.map(function (st, i) {
+      return '<li class="flow-stage' + (st.loopTo ? " is-loop-to" : "") + (st.loopFrom ? " is-loop-from" : "") + '" style="grid-column:' + (i + 1) + '">' +
+        '<span class="flow-n">' + esc(st.n) + '</span><span class="flow-dot" aria-hidden="true"></span>' +
+        '<h3 class="flow-title">' + esc(t(st.title)) + "</h3>" +
+        st.skills.map(function (sk) {
+          return '<div class="flow-skill"><code>' + esc(sk.name) + "</code>" +
+            (sk.optional ? '<span class="flow-opt">' + esc(lang === "zh" ? "選用" : "optional") + "</span>" : "") + subs(sk.subs) + "</div>";
+        }).join("") + "</li>";
+    }).join("");
+    var loop = from > -1 && to > -1 ? '<div class="flow-loop" style="grid-column:' + (to + 1) + " / " + (from + 2) + '"><span>' + esc(t(f.loop)) + "</span></div>" : "";
+    var base = f.base ? '<div class="flow-band flow-base" style="grid-column:1 / ' + (cols + 1) + '"><code>' + esc(f.base.name) + "</code><span>" + esc(t(f.base.text)) + "</span></div>" : "";
+    var side = f.side ? '<div class="flow-band flow-side" style="grid-column:1 / ' + (cols + 1) + '"><code>' + esc(f.side.name) + "</code>" + subs(f.side.subs) + "<span>" + esc(t(f.side.text)) + "</span></div>" : "";
+    return '<div class="flow-scroll"><div class="flow" style="--cols:' + cols + '"><ol class="flow-stages">' + stages + "</ol>" + loop + base + side + "</div></div>";
+  }
+
   function section(sec) {
-    var out = '<section class="year proj-sec"><h2 class="year-h">' + esc(t(sec.h)) + '</h2><div class="proj-body">';
+    var out = '<section class="year proj-sec' + (sec.wide ? " is-wide" : "") + '"><h2 class="year-h">' + esc(t(sec.h)) + '</h2><div class="proj-body">';
+    if (sec.flow) out += flowMap(sec.flow);
     if (sec.figure) out += '<figure class="proj-figure"><img src="' + esc(sec.figure.src) + '" alt="' + esc(t(sec.figure.alt)) + '" loading="lazy" decoding="async"><figcaption>' + esc(t(sec.figure.caption)) + "</figcaption></figure>";
     if (sec.steps) out += '<ol class="proj-steps">' + sec.steps.map(function (st) {
       return '<li><span class="proj-step-name">' + esc(t(st.name)) + '</span><span class="proj-step-text">' + esc(t(st.text)) + "</span></li>";
