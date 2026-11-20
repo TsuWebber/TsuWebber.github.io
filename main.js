@@ -337,6 +337,8 @@
         '<li class="tl-more"><details><summary>' + esc(ui.more(rest.length)) + '</summary><ol class="timeline is-list">' + rest.map(row).join("") + "</ol></details></li>" : "");
       return;
     }
+    // Wide screens: newest on the left, so the current role is in view as soon as the map pins.
+    list = list.slice().reverse();
     var X = function (i) { return PAD + FORK + i * SLOT; };
     var W = X(list.length - 1) + (narrow ? 250 : 300) + PAD;
 
@@ -372,7 +374,8 @@
       nodes += '<circle class="tl-node is-' + e.lane + (e.to === "now" || e.to === "ongoing" ? " is-now" : "") + (e.type === "award" ? " is-mini" : "") + '" cx="' + X(i) + '" cy="' + y + '" r="' + (e.lane === "main" ? 6 : e.type === "award" ? 3 : 4.5) + '"/>';
     });
     var fx = PAD, lines = '<line class="tl-rail is-main" x1="0" y1="' + MAIN + '" x2="' + W + '" y2="' + MAIN + '"/>';
-    if (nowAt >= 0) lines += '<line class="tl-rail is-now" x1="' + X(nowAt) + '" y1="' + MAIN + '" x2="' + W + '" y2="' + MAIN + '"/>';
+    // The gold stretch runs from the current role back toward the left edge, where the present is.
+    if (nowAt >= 0) lines += '<line class="tl-rail is-now" x1="' + (PAD + FORK - 24) + '" y1="' + MAIN + '" x2="' + X(nowAt) + '" y2="' + MAIN + '"/>';
     // The side line forks off the main line; the interest line is its own track from the left edge.
     if (first.side >= 0) {
       var endFork = Math.min(PAD + FORK - 24, fx + (SIDE - MAIN) * 1.2);
@@ -454,7 +457,7 @@
   measureBar();
 
   // Experience: on wide screens the section is pinned while the page scroll pans the timeline
-  // from the oldest entry (left) to the newest (right). On phones the row simply swipes.
+  // from the newest entry (left) to the oldest (right). On phones the row simply swipes.
   var exp = document.getElementById("experience");
   var expStage = document.querySelector("[data-exp-stage]");
   var expTrack = document.querySelector("[data-timeline]");
