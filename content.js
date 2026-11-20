@@ -108,7 +108,7 @@ window.HUB = {
       title: { en: "PM Mentee", zh: "PM 組學員" },
       org: { en: "The Mentorship, Cohort 8", zh: "曼陀號第 8 屆" },
       link: "https://medium.com/@webber52543363/%E6%9B%BC%E9%99%80%E8%99%9F%E7%AC%AC-8-%E5%B1%86-pm-%E7%B5%84-%E5%8D%8A%E5%B9%B4%E8%88%AA%E7%A8%8B%E8%A8%98%E9%8C%84-27dcf4cc1c28" },
-    { lane: "interest", from: "2026", to: "ongoing", type: "life", icon: "trail",
+    { lane: "interest", from: "2026.01", to: "ongoing", type: "life", icon: "trail",
       title: { en: "Trail Running", zh: "越野跑" } }
   ],
 
