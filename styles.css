@@ -847,3 +847,17 @@ html[lang="zh-Hant"] .layer-name { letter-spacing: .1em; font-size: 14px; }
   .layer-cells { grid-template-columns: 1fr; }
   .layer-join::after { grid-column: 1; }
 }
+
+/* stage summary line in a process map */
+.flow-text { margin: -4px 0 12px; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+/* a short map (three stages or fewer) stacks on phones instead of swiping */
+@media (max-width: 760px) {
+  .flow[style*="--cols:3"] { grid-template-columns: 1fr; min-width: 0; row-gap: var(--s3); }
+  .flow[style*="--cols:3"] .flow-stage { grid-column: 1 !important; grid-row: auto; padding-top: 0; padding-left: 26px; }
+  .flow[style*="--cols:3"] .flow-stage::before { top: 6px; bottom: calc(var(--s3) * -1); left: 4px; right: auto; width: 1.5px; height: auto; }
+  .flow[style*="--cols:3"] .flow-stage:last-child::before { display: none; }
+  .flow[style*="--cols:3"] .flow-stage::after { display: none; }
+  .flow[style*="--cols:3"] .flow-dot { top: 2px; }
+  .flow[style*="--cols:3"] .flow-n { position: static; display: block; margin-bottom: 4px; }
+  .flow[style*="--cols:3"] .flow-band { grid-row: auto; grid-column: 1 !important; }
+}

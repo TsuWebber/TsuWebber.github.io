@@ -109,11 +109,29 @@ window.HUB_PROJECTS = {
       },
       {
         h: { en: "Three parts", zh: "三個核心功能" },
-        steps: [
-          { name: { en: "Conversation and input", zh: "對話與輸入" }, text: { en: "Start from text, a CV or an import, then a multi-turn conversation where an AI coach asks for whatever is still missing, and a button that turns it into insight.", zh: "從文字、履歷或快速匯入開始，接著多輪對話，由 AI 教練追問還缺的資訊，最後一個按鈕產生洞察。" } },
-          { name: { en: "Timeline and insight", zh: "時間軸與洞察" }, text: { en: "Each event becomes an Echo Card that sets the record against the feeling.", zh: "每個事件產出一張 Echo Card，把客觀紀錄和主觀感受放在一起。" } },
-          { name: { en: "Dashboard", zh: "儀表板" }, text: { en: "A persona card, what drives you, a word cloud, behaviour patterns, and career-anchor, RIASEC and DISC charts that update as events add up.", zh: "Persona 卡片、驅動因素、文字雲、行為模式，以及職涯錨點、RIASEC、DISC 圖表，隨事件累積增量更新。" } }
-        ]
+        wide: true,
+        flow: {
+          stages: [
+            {
+              n: "A", title: { en: "Conversation and input", zh: "對話與輸入" },
+              text: { en: "An AI coach asks one question at a time, so you don't need to know how to prompt.", zh: "AI 教練一問一答引導，不需要會調 prompt。" },
+              skills: [{ name: { en: "Start", zh: "開始" }, subs: [{ en: "text", zh: "文字" }, { en: "CV or quick import", zh: "履歷或快速匯入" }] },
+                       { name: { en: "Conversation", zh: "多輪對話" }, subs: [{ en: "asks for what's missing", zh: "追問還缺的資訊" }, { en: "Generate insight", zh: "產生洞察" }] }]
+            },
+            {
+              n: "B", title: { en: "Timeline and insight", zh: "時間軸與洞察" },
+              text: { en: "Each event sets your record against how you felt, to show where they diverge.", zh: "每個事件把客觀紀錄和主觀感受放在一起，看出落差在哪。" },
+              skills: [{ name: "Echo Card", subs: [{ en: "one card per event", zh: "每個事件一張" }, { en: "edit or go back to the chat", zh: "可編輯或回到對話補充" }] }]
+            },
+            {
+              n: "C", title: { en: "Dashboard", zh: "儀表板" },
+              text: { en: "Events add up to a self-portrait tied to what actually happened, updated as more come in.", zh: "累積的事件組成一份連得回真實經歷的自我畫像，隨新事件增量更新。" },
+              skills: [{ name: { en: "Self-portrait", zh: "自我畫像" }, subs: [{ en: "persona", zh: "Persona" }, { en: "what drives you", zh: "驅動因素" }, { en: "word cloud", zh: "文字雲" }, { en: "behaviour patterns", zh: "行為模式" }] },
+                       { name: { en: "Career frameworks", zh: "職涯測評" }, subs: [{ en: "career anchors", zh: "職涯錨點" }, "RIASEC", "DISC"] }]
+            }
+          ],
+          base: { name: { en: "MVP", zh: "MVP" }, text: { en: "One lightweight prompt to an existing model, before deciding whether to build a full engine", zh: "先用單一 prompt 呼叫既有模型，再決定要不要投入完整的自動化引擎" } }
+        }
       },
       {
         h: { en: "How we worked", zh: "協作方式" },
