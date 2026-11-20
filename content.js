@@ -43,7 +43,7 @@ window.HUB = {
       title: { en: "Career Ambassador", zh: "職涯大使" },
       org: { en: "College of Commerce, NCCU", zh: "政大商學院" } },
     { lane: "side", from: "2022.12", to: "2022.12", type: "award",
-      title: { en: "Startup Case Competition · 1st of 6", zh: "新創個案競賽・6 隊中第一" },
+      title: { en: "STCC Startup Case Competition · 1st of 4", zh: "STCC 新創個案競賽・4 組中第一" },
       org: { en: "NCCU Entrepreneur Association", zh: "政大創聯會" } },
     { lane: "side", from: "2023.01", to: "2023.07", type: "program",
       title: { en: "Project Member", zh: "專案成員" },
@@ -207,30 +207,119 @@ window.HUB = {
     }
   ],
 
-  // Past projects for the Work page (school, programme and team work), newest first.
-  // Written only from his Medium posts and LinkedIn. year is the year it ended.
+  // Past projects for the Projects page (school, programme, competition and team work), newest first.
+  // Written only from his Notion project log, Medium posts and LinkedIn. deck: a publicly shared deck or poster.
   past: [
     {
-      id: "nccucg-cloud-gaming",
-      name: { en: "Cloud Gaming Launch Strategy", zh: "雲端遊戲平台上市策略" },
+      id: "stormplay",
+      name: { en: "StormPlay Launch Strategy", zh: "StormPlay 雲端遊戲平台上市策略" },
       year: "2024",
-      context: { en: "NCCU Consulting Group · client project · 1st place", zh: "政大管理顧問社・實體業主專案・第一名" },
+      context: { en: "NCCU Consulting Group · client project with Cooler Master · team of 6", zh: "政大管理顧問社・Cooler Master 實體業主專案・6 人團隊" },
       summary: {
-        en: "A go-to-market project for a cloud gaming platform, run with a real client and a mentor. We used issue trees and hypothesis-driven research to focus on the questions that mattered.",
-        zh: "替雲端遊戲平台規劃產品上市策略的實體專案，與業主和 Mentor 一起進行。用議題樹和假說驅動的研究，聚焦在真正關鍵的問題上。"
+        en: "Segmented the gaming market, defined StormPlay's target users and found where the cloud gaming platform could make money, with recommendations on direct revenue and the indirect value it could bring to Cooler Master's hardware business.",
+        zh: "釐清遊戲產業的市場區隔，定義 StormPlay 的目標客群並找出商業機會，對 Cooler Master 提出直接獲利與帶給硬體本業間接價值的策略建議。"
       },
+      deck: "https://drive.google.com/drive/folders/1EOtbtJvkDzB1RR6YA1nSFJEUqeKaVpR_?usp=sharing",
       link: "https://medium.com/@webber52543363/%E6%94%BF%E5%A4%A7%E7%AE%A1%E7%90%86%E9%A1%A7%E5%95%8F%E7%A4%BE-%E8%A7%A3%E6%B1%BA%E5%95%8F%E9%A1%8C%E8%88%87%E9%82%8F%E8%BC%AF%E6%80%9D%E8%80%83%E7%9A%84%E5%AD%B8%E7%BF%92-94d4c9c7907c"
+    },
+    {
+      id: "realitysync",
+      name: { en: "RealitySync", zh: "RealitySync" },
+      year: "2024",
+      context: { en: "Solana Hackathon · PM · 2nd in Taiwan", zh: "Solana 黑客松・PM・台灣區第 2 名" },
+      summary: {
+        en: "An optimistic oracle on Solana. In a team of two PMs and three engineers I drove the idea, market research, business model and go-to-market, drew the flowcharts and wrote the product requirements the prototype was built from.",
+        zh: "Solana 鏈上的樂觀預言機。在 2 位 PM、3 位工程師的團隊裡，我負責項目發想、市場研究、商業模式與 Go-To-Market，繪製 Flowchart，並寫出工程師據以實作 Prototype 的產品需求。"
+      },
+      deck: "https://drive.google.com/file/d/1VjXsTRKSJbG0Gzf8r81gSEBbbPwWUkj-/view?usp=sharing"
+    },
+    {
+      id: "takeit-forum",
+      name: { en: "Takeit Career Forum", zh: "Takeit 伸手牌職涯論壇" },
+      year: "2024",
+      context: { en: "Online content product strategy course · solo", zh: "網路內容產品策略與規劃課程・個人作業" },
+      summary: {
+        en: "A full product proposal for the career platform I was working on outside school: interviews, a customer journey, user stories and an MRD.",
+        zh: "替我在校外實際參與運營的職涯平台，做出完整的產品提案：質化訪談、Customer Journey、User Story 與 MRD 產品文件。"
+      },
+      deck: "https://drive.google.com/drive/folders/1TEVl0v4Y06qt4By2nI9jES7Q6huvma8H?usp=sharing"
+    },
+    {
+      id: "venus",
+      name: { en: "Venus Razor: Taiwan Market Entry", zh: "Venus 女性除毛刀台灣市場進入策略" },
+      year: "2023",
+      context: { en: "NCCU Consulting Group · team of 7 · 1st of 5", zh: "政大管理顧問社・7 人團隊・5 組中第 1 名" },
+      summary: {
+        en: "A Taiwan entry plan aiming for a 20% market share: market size and growth, competitors across product, packaging, pricing, retail, marketing and customer value, then media, channel and campaign strategy.",
+        zh: "以 20% 市占為目標的台灣市場進入策略：市場規模與成長率、從產品、包裝、定價、零售、行銷溝通與客戶價值六個面向做競爭分析，再設計媒體、通路與檔期策略。"
+      },
+      deck: "https://drive.google.com/file/d/1plsDZhcZDiPehQuD8tmTn_9BQAAosEkM/view?usp=sharing",
+      link: "https://medium.com/@webber52543363/%E6%94%BF%E5%A4%A7%E7%AE%A1%E7%90%86%E9%A1%A7%E5%95%8F%E7%A4%BE-%E8%A7%A3%E6%B1%BA%E5%95%8F%E9%A1%8C%E8%88%87%E9%82%8F%E8%BC%AF%E6%80%9D%E8%80%83%E7%9A%84%E5%AD%B8%E7%BF%92-94d4c9c7907c"
+    },
+    {
+      id: "ren",
+      name: { en: "REN: Japan Market Entry", zh: "韌REN 無鋼圈內衣日本市場進入策略" },
+      year: "2023",
+      context: { en: "NKDA course project · lead · 2nd of 5", zh: "中華知識生產力協會課程專案・主責・5 組中第 2 名" },
+      summary: {
+        en: "Japan market entry for a wire-free bra: market research, target customers, channels and pricing, and marketing. With little access to users, I reached two Japanese women through my own network for interviews.",
+        zh: "無鋼圈內衣的日本市場進入策略：市場研究、目標客群、通路與定價、行銷策略。使用者研究不易，我透過個人人脈訪談了兩位日本女性。"
+      }
+    },
+    {
+      id: "daonan",
+      name: { en: "Daonan Village Revitalization", zh: "道南新村空間再造" },
+      year: "2023",
+      context: { en: "USR international PBL course · NCCU with Chiba University", zh: "大學社會責任國際 PBL 課程・政大與日本千葉大學" },
+      summary: {
+        en: "A space revitalization proposal for Daonan Village, gathering stakeholders' views through design thinking and the KJ method, in a team of three Taiwanese and two Japanese students.",
+        zh: "道南新村空間再造提案，用設計思考與 KJ 法蒐集利害關係人的觀點，團隊由 3 位政大學生和 2 位千葉大學學生組成。"
+      },
+      deck: "https://drive.google.com/drive/folders/10lCziJS1l9BWjYlXn73qAfov3xHdhPp3?usp=sharing",
+      deckLabel: { en: "Poster", zh: "海報" }
     },
     {
       id: "emonono",
       name: { en: "Emonono", zh: "Emonono" },
       year: "2023",
-      context: { en: "YEF Young Entrepreneur Program · co-founder, team of 7", zh: "未來創業人 YEF・共同創辦人，七人團隊" },
+      context: { en: "YEF Young Entrepreneur Program · project lead · 2nd of 7", zh: "未來創業人 YEF・專案主責・7 組中第 2 名" },
       summary: {
-        en: "A startup to help victims of psychological abuse, from recognising it to gathering evidence and taking legal action: recording guides, a discreet recording feature and AI transcription. We pivoted from B2C to B2B after Demo Day and pitched at the final Elevator Pitch.",
-        zh: "協助精神暴力受害者的新創，從辨識、蒐證到法律訴訟：錄音教學、隱密錄音功能與 AI 逐字稿。Demo Day 後把商業模式從 2C 轉為 2B，最後在 Elevator Pitch 提案。"
+        en: "An app to help victims of psychological abuse before, during and after: education, recording guides and a discreet recording feature for evidence, then transcription and an AI score for how closely it matches court rulings on psychological abuse. I ran project management, customer and pain analysis, and the business model.",
+        zh: "協助精神暴力受害者的 App：事件發生前的教育、發生當下的錄音教學與秘密錄音蒐證、發生後的逐字稿與 AI 比對司法院裁判書的精神暴力符合率。我主責專案管理、目標客群與痛點分析、商業模式。"
       },
+      deck: "https://drive.google.com/drive/folders/1WmiZZXgFW0U1TLbe3YhTYMfbw3Z7IZ9F?usp=sharing",
       link: "https://medium.com/@webber52543363/%E8%BF%B7%E6%83%98%E4%B8%AD%E7%A9%8D%E6%A5%B5-%E6%B7%B7%E4%BA%82%E4%B8%AD%E6%88%90%E9%95%B7-b1c047e911fe"
+    },
+    {
+      id: "ziyouzhiqiu",
+      name: { en: "Ziyouzhiqiu: User Research and Website", zh: "自由之丘使用者研究與網站" },
+      year: "2023",
+      context: { en: "New media course · team of 6 · 2nd of 6", zh: "新媒體創藝行動家・6 人團隊・6 組中第 2 名" },
+      summary: {
+        en: "User research and a website for a restaurant. I led the user research and impact assessment, and learned Figma and UI/UX design along the way.",
+        zh: "替餐廳做使用者研究與網站。我主要負責使用者研究與效益評估，也在過程中學了 Figma 與 UI/UX 設計。"
+      }
+    },
+    {
+      id: "netflix-case",
+      name: { en: "Netflix Subscription Case", zh: "NETFLIX 訂閱制商模個案分析" },
+      year: "2022",
+      context: { en: "STCC Startup Case Competition · team lead · 1st of 4", zh: "STCC 新創個案競賽・組長・4 組中第 1 名" },
+      summary: {
+        en: "Two weeks reading Netflix's financials and breaking down subscription metrics, proposing better membership tiers to lift revenue and stronger IP content to cut churn. I led a team formed on the day, planned the schedule and brought in mentors.",
+        zh: "兩週內判讀財報、拆解訂閱制關鍵指標，提出改善會員分級以提升營收、強化高品質 IP 內容以降低流失。我擔任組長，負責現場組成團隊的分工、排程與業師安排。"
+      },
+      deck: "https://drive.google.com/drive/folders/1PhbDOPJ-_mFQNrMy1qVpUf5-lXYRT-OW?usp=sharing"
+    },
+    {
+      id: "sanfang",
+      name: { en: "Sanfang Oil Shop: Online Marketing", zh: "三芳油行線上行銷" },
+      year: "2022",
+      context: { en: "Maker In College course · project lead · 2nd of 7", zh: "大學新創行動家課程・專案主責・7 組中第 2 名" },
+      summary: {
+        en: "Worked with a traditional oil shop near NCCU on its brand: hand-drawn recipes for its Facebook page, a brand site and SEO. My first time leading a project; the work was carried out with the owner.",
+        zh: "與政大附近的傳統商家三芳油行合作，用手繪食譜經營 FB 粉專、建立品牌網頁並做 SEO。這是我第一次擔任專案主責，成果也實際與業主合作落地。"
+      }
     }
   ],
 

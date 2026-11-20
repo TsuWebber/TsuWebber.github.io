@@ -290,7 +290,7 @@ No load animation. The only continuous motion is the dial turning with scroll (e
 - Below 360px the header nav tightens (11px, 12px gaps) so all five links fit.
 
 ## Projects page (works.html; nav label "Projects" / 「專案」)
-- Same shell as the Blog page. Two sections in the blog's year grid: "Side projects" / 「個人專案」 (every Build work: the homepage picks first, then finished before planned, each with status, stack, summary and links) and "Past projects" / 「過去專案」 (school, programme and team work from `past` in content.js: year, context line, summary, and a "Read the story" link to his own post). Past projects carry a hollow 9px dot.
+- Same shell as the Blog page. Two sections in the blog's year grid: "Side projects" / 「個人專案」 (every Build work: the homepage picks first, then finished before planned, each with status, stack, summary and links) and "Past projects" / 「過去專案」 (school, programme, competition and team work from `past` in content.js, written from his Notion project log, Medium and LinkedIn: year, context line with role and ranking, summary, and links to a publicly shared pitch deck or poster and to his own post). Past projects carry a hollow 9px dot.
 - Past-project write-ups come only from his Medium posts and LinkedIn; nothing is added that those don't say.
 - Homepage Build ends with "All projects" / 「全部專案」 linking here (Think and Learn still link out). Nav: Projects / 專案 sits before Blog; in the phone menu both are the large page links under the hairline.
 

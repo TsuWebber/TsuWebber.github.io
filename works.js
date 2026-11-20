@@ -10,7 +10,7 @@
       "work.sub": "Side projects I built and still run, and earlier projects from school, programmes and teams.",
       side: "Side projects", past: "Past projects",
       status: { live: "Live", built: "Built", planned: "Planned" },
-      pending: "Private for now", readMore: "Read the story", details: "About this project",
+      pending: "Private for now", readMore: "Read the story", deck: "Pitch deck", details: "About this project",
       "foot.h": "Elsewhere", "foot.meta": "Taipei",
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase invite" }
     },
@@ -21,7 +21,7 @@
       "work.sub": "我自己做、還在運作的個人專案，以及過去在學校、培訓計畫和團隊裡做過的專案。",
       side: "個人專案", past: "過去專案",
       status: { live: "上線中", built: "已完成", planned: "規劃中" },
-      pending: "目前不公開", readMore: "看這段的文章", details: "看專案介紹",
+      pending: "目前不公開", readMore: "看這段的文章", deck: "提案簡報", details: "看專案介紹",
       "foot.h": "其他地方", "foot.meta": "台北",
       links: { github: "GitHub", linkedin: "LinkedIn", medium: "Medium", substack: "Substack", facebook: "Facebook", heptabase: "Heptabase 邀請連結" }
     }
@@ -65,7 +65,9 @@
       '<div class="work-title"><span class="dot" style="--d:9px;background:none;border:1px solid var(--ink-3)" aria-hidden="true"></span><h3>' + esc(t(p.name)) + "</h3></div>" +
       '<p class="work-meta"><span>' + esc(p.year) + "</span><span>" + esc(t(p.context)) + "</span></p>" +
       '<p class="work-summary">' + esc(t(p.summary)) + "</p>" +
-      (p.link ? '<div class="work-links"><a href="' + esc(p.link) + '" target="_blank" rel="noopener" hreflang="zh-Hant">' + esc(ui.readMore) + ARROW + "</a></div>" : "") + "</li>";
+      ((p.deck || p.link) ? '<div class="work-links">' +
+        (p.deck ? '<a href="' + esc(p.deck) + '" target="_blank" rel="noopener">' + esc(t(p.deckLabel) || ui.deck) + ARROW + "</a>" : "") +
+        (p.link ? '<a href="' + esc(p.link) + '" target="_blank" rel="noopener" hreflang="zh-Hant">' + esc(ui.readMore) + ARROW + "</a>" : "") + "</div>" : "") + "</li>";
   }
   function renderWorks() {
     var ui = UI[lang];
