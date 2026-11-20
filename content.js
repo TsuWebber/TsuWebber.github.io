@@ -189,21 +189,6 @@ window.HUB = {
       ]
     },
     {
-      id: "mentorship-sailors",
-      orbit: "build", mag: 2,
-      name: { en: "Mentorship Sailors", zh: "曼陀號水手" },
-      status: "live", year: { en: "2026", zh: "2026" },
-      summary: {
-        en: "A one-file page for The Mentorship closing showcase, shared with a fellow mentee: the audience scans a QR code and lands on our side projects.",
-        zh: "曼陀號閉幕分享用的單頁網站，和另一位水手共用：台下掃 QR code 就能看到我們的 side project。"
-      },
-      stack: { en: "Single HTML file · GitHub Pages", zh: "單一 HTML 檔 · GitHub Pages" },
-      links: [
-        { label: { en: "Open page", zh: "打開頁面" }, url: "https://tsuwebber.github.io/mentorship-sailors/" },
-        { label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/mentorship-sailors" }
-      ]
-    },
-    {
       id: "piyan-party",
       orbit: "build", mag: 2,
       name: { en: "Home Digital Twin", zh: "屁眼派對數位分身" },
