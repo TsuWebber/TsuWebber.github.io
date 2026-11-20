@@ -722,6 +722,11 @@ html[lang="zh-Hant"] .motto { word-break: keep-all; }   /* Chinese breaks at the
 .tl-peek img { display: block; width: 100%; height: auto; scale: .96; rotate: -1.5deg; transition: scale .35s var(--ease-out), rotate .35s var(--ease-out); }
 .tl-peek.is-on { opacity: 1; }
 .tl-peek.is-on img { scale: 1; rotate: 0deg; }
-.tl[data-cover] { cursor: default; }
+/* Hovering a card lights its story link, so the reader knows where the preview lives. */
+@media (hover: hover) and (pointer: fine) {
+  .tl[data-cover] .tl-link { transition: color .2s var(--ease-out); }
+  .tl[data-cover]:hover .tl-link { color: var(--ink); }
+  .tl[data-cover] .tl-link:hover { color: var(--gold); }
+}
 @media (prefers-reduced-motion: reduce) { .tl-peek img { scale: 1; rotate: 0deg; transition: none; } }
 @media not all and (hover: hover) { .tl-peek { display: none; } }

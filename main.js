@@ -389,8 +389,8 @@
     track.insertAdjacentHTML("afterbegin", '<svg class="tl-lines" width="' + W + '" height="100%" aria-hidden="true" focusable="false">' + lines + nodes + names + "</svg>");
   }
 
-  // ---------- Article preview: hovering an entry that has a story shows that post's cover ----------
-  // One floating card follows the pointer (mouse only); keyboard focus on "Read the story" shows it beside the link.
+  // ---------- Article preview: hovering "Read the story" shows that post's cover ----------
+  // One floating card follows the pointer over "Read the story" (mouse only); keyboard focus shows it beside the link.
   var peek = document.createElement("div");
   peek.className = "tl-peek"; peek.setAttribute("aria-hidden", "true");
   peek.innerHTML = '<img alt="" decoding="async">';
@@ -410,7 +410,8 @@
   var tlTrack = document.querySelector("[data-timeline]");
   tlTrack.addEventListener("mouseover", function (e) {
     if (!fine.matches) return;
-    var li = e.target.closest(".tl[data-cover]");
+    // Only the "Read the story" link opens the preview, so panning the map under a still cursor stays quiet.
+    var a = e.target.closest(".tl-link"), li = a && a.closest(".tl[data-cover]");
     if (!li) { hidePeek(); return; }
     showPeek(li.getAttribute("data-cover")); placePeek(e.clientX, e.clientY);
   });
