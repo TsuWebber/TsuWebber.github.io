@@ -171,7 +171,10 @@ window.HUB = {
         zh: "曼陀號 PM × 工程師合作專案的職涯反思產品：AI 教練一問一答引導你講出職涯經歷，和客觀紀錄交叉比對找出落差，並隨時間累積成一份自我畫像。我和另一位 PM 一起撰寫並維護放在 Git 的 MVP 規格，給兩位工程師和兩位 mentor 使用。"
       },
       stack: { en: "MVP spec in Git · 2 PMs, 2 engineers", zh: "Git 規格庫 · 2 PM、2 工程師" },
-      links: [{ label: { en: "Spec repo on GitHub", zh: "GitHub 規格庫" }, url: "https://github.com/ZeYuanDuan/echotrail-project-management" }]
+      links: [
+        { label: { en: "Try the prototype", zh: "試用原型" }, url: "https://echotrail-dev-508500-k6.web.app/" },
+        { label: { en: "Spec repo on GitHub", zh: "GitHub 規格庫" }, url: "https://github.com/ZeYuanDuan/echotrail-project-management" }
+      ]
     },
     {
       id: "flexbox-rpg",
