@@ -200,6 +200,30 @@ window.HUB_PROJECTS = {
         ]
       },
       {
+        h: { en: "How the files are laid out", zh: "文件結構" },
+        wide: true,
+        intro: {
+          en: "Everything lives in one Git spec repo. Each request gets its own folder, and every file in it has one job, so a skill always knows where to read and where to write.",
+          zh: "所有文件都在同一個 Git 規格庫。每個需求一個資料夾，裡面每個檔案只負責一件事，skill 才知道該去哪裡讀、寫到哪裡。"
+        },
+        tree: [
+            { d: 0, path: "specs/docs/<module>/", note: { en: "How live features work today: the reference every new spec starts from", zh: "已上線功能的現況規格，寫新規格前先讀這裡" }, skill: "pm-launch sync-code" },
+            { d: 0, path: "drafts/", note: { en: "Everything not live yet", zh: "還沒上線的一切" } },
+            { d: 1, path: "_meta/", note: { en: "Templates for each file below", zh: "下面每個檔案的模板" } },
+            { d: 1, path: "planning/<line>/<feature>/", note: { en: "Material for work not yet in a sprint, kept as it came", zh: "還沒排進 Sprint 的素材，原樣收著" }, skill: "pm-intake material" },
+            { d: 1, path: "<sprint>/<feature>/", note: { en: "One folder per request", zh: "一個需求一個資料夾" }, skill: "pm-plan scope" },
+            { d: 2, path: "spec.md", note: { en: "The spec engineering builds from: stories, acceptance criteria, metrics", zh: "工程照著做的唯一規格：Story、驗收條件、指標" }, skill: "pm-spec write" },
+            { d: 2, path: "decisions.md", note: { en: "What's been decided, with the reasons", zh: "已拍板的決定和理由" }, skill: "pm-plan decide" },
+            { d: 2, path: "actions.md", note: { en: "Open questions and to-dos; nothing here goes into the spec", zh: "待確認和待辦；還沒定案的不進規格" }, skill: "pm-intake meeting" },
+            { d: 2, path: "changelog.md", note: { en: "Every change to the spec, with its version", zh: "規格每次改了什麼、第幾版" }, skill: "pm-spec write" },
+            { d: 2, path: "design-review.md", note: { en: "Each design change and my reply to it", zh: "每條設計修改和我的回覆" }, skill: "pm-design dr" },
+            { d: 2, path: "meetings/", note: { en: "Meeting notes", zh: "會議記錄" } },
+            { d: 2, path: "cases/  pains/", note: { en: "Research: how others do it, evidence the pain is real", zh: "調研：別人怎麼做、痛點的實例" }, skill: "pm-discover" },
+            { d: 2, path: "prototype/", note: { en: "A clickable prototype", zh: "可以點的原型" }, skill: "pm-design prototype" },
+            { d: 0, path: "archive/<sprint>/<feature>/", note: { en: "Where a request's folder goes after launch", zh: "上線後整個需求資料夾封存到這裡" }, skill: "pm-launch archive" }
+        ]
+      },
+      {
         h: { en: "All 11 skills", zh: "全部 11 個 skill" },
         wide: true,
         flow: {

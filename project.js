@@ -121,6 +121,10 @@
     if (sec.flow) out += flowMap(sec.flow);
     if (sec.layers) out += layerMap(sec.layers);
     if (sec.figure) out += '<figure class="proj-figure"><img src="' + esc(sec.figure.src) + '" alt="' + esc(t(sec.figure.alt)) + '" loading="lazy" decoding="async"><figcaption>' + esc(t(sec.figure.caption)) + "</figcaption></figure>";
+    if (sec.tree) out += '<ul class="ftree">' + sec.tree.map(function (r) {
+      return '<li class="ftree-row" style="--d:' + r.d + '"><code class="ftree-path">' + esc(r.path) + '</code><span class="ftree-note">' + esc(t(r.note)) + "</span>" +
+        (r.skill ? '<code class="ftree-skill">' + esc(r.skill) + "</code>" : "") + "</li>";
+    }).join("") + "</ul>";
     if (sec.steps && sec.stepsFold) out += '<details class="proj-fold"><summary>' + esc(t(sec.stepsFold)) + "</summary>";
     if (sec.steps) out += '<ol class="proj-steps">' + sec.steps.map(function (st) {
       return '<li><span class="proj-step-name">' + esc(t(st.name)) + '</span><span class="proj-step-text">' + esc(t(st.text)) + "</span></li>";

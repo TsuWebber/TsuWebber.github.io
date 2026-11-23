@@ -950,3 +950,18 @@ html[lang="zh-Hant"] .cyc-h { letter-spacing: .04em; }
 .proj-fold summary:hover { color: var(--ink); }
 .proj-fold summary:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
 .proj-fold .proj-steps { margin-top: var(--s2); }
+
+/* File tree on project pages: path, what the file is for, the skill that writes it. */
+.ftree { list-style: none; margin: var(--s3) 0 0; padding: 0; max-width: 1080px; border-top: 1px solid var(--ring-3); }
+.ftree-row { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr) 170px; gap: 6px 20px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--ring-3); }
+.ftree-path { position: relative; padding-left: calc(var(--d) * 22px); font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 13px; color: var(--ink); white-space: nowrap; }
+/* a short elbow marks each nested level */
+.ftree-path::before { content: ""; position: absolute; left: calc(var(--d) * 22px - 14px); top: -4px; width: 9px; height: 12px; border-left: 1px solid var(--ring-1); border-bottom: 1px solid var(--ring-1); }
+.ftree-row[style*="--d:0"] .ftree-path::before { display: none; }
+.ftree-note { font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+.ftree-skill { justify-self: start; font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12px; color: var(--gold); }
+@media (max-width: 760px) {
+  .ftree-row { grid-template-columns: 1fr; gap: 4px; padding-left: calc(var(--d) * 16px); }
+  .ftree-path { padding-left: 0; white-space: normal; overflow-wrap: anywhere; }
+  .ftree-path::before { left: -13px; }
+}
