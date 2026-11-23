@@ -212,6 +212,8 @@ window.HUB = {
   past: [
     {
       id: "stormplay",
+      deckPeek: "img/decks/stormplay.webp",
+      linkPeek: "img/covers/nccucg.webp",
       name: { en: "StormPlay Launch Strategy", zh: "StormPlay 雲端遊戲平台上市策略" },
       year: "2024",
       context: { en: "NCCU Consulting Group · client project with Cooler Master · team of 6", zh: "政大管理顧問社・Cooler Master 實體業主專案・6 人團隊" },
@@ -224,6 +226,7 @@ window.HUB = {
     },
     {
       id: "realitysync",
+      deckPeek: "img/decks/realitysync.webp",
       name: { en: "RealitySync", zh: "RealitySync" },
       year: "2024",
       context: { en: "Solana Hackathon · PM · 2nd in Taiwan", zh: "Solana 黑客松・PM・台灣區第 2 名" },
@@ -235,6 +238,7 @@ window.HUB = {
     },
     {
       id: "takeit-forum",
+      deckPeek: "img/decks/takeit-forum.webp",
       name: { en: "Takeit Career Forum", zh: "Takeit 伸手牌職涯論壇" },
       year: "2024",
       context: { en: "Online content product strategy course · solo", zh: "網路內容產品策略與規劃課程・個人作業" },
@@ -246,6 +250,8 @@ window.HUB = {
     },
     {
       id: "venus",
+      deckPeek: "img/decks/venus.webp",
+      linkPeek: "img/covers/nccucg.webp",
       name: { en: "Venus Razor: Taiwan Market Entry", zh: "Venus 女性除毛刀台灣市場進入策略" },
       year: "2023",
       context: { en: "NCCU Consulting Group · team of 7 · 1st of 5", zh: "政大管理顧問社・7 人團隊・5 組中第 1 名" },
@@ -268,6 +274,8 @@ window.HUB = {
     },
     {
       id: "emonono",
+      deckPeek: "img/decks/emonono.webp",
+      linkPeek: "img/covers/yef.webp",
       name: { en: "Emonono", zh: "Emonono" },
       year: "2023",
       context: { en: "YEF Young Entrepreneur Program · project lead · 2nd of 7", zh: "未來創業人 YEF・專案主責・7 組中第 2 名" },
@@ -290,6 +298,7 @@ window.HUB = {
     },
     {
       id: "netflix-case",
+      deckPeek: "img/decks/netflix-case.webp",
       name: { en: "Netflix Subscription Case", zh: "NETFLIX 訂閱制商模個案分析" },
       year: "2022",
       context: { en: "STCC Startup Case Competition · team lead · 1st of 4", zh: "STCC 新創個案競賽・組長・4 組中第 1 名" },

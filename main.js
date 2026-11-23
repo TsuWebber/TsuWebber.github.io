@@ -322,7 +322,7 @@
         (e.org ? '<p class="tl-org">' + esc(t(e.org)) + "</p>" : "") +
         // Only the current role carries a description; the rest stay to title, place and story link.
         (e.note && e.to === "now" ? '<p class="tl-note">' + esc(t(e.note)) + "</p>" : "") +
-        (e.link ? '<a class="tl-link" href="' + esc(e.link) + '" target="_blank" rel="noopener">' + esc(ui.readMore) + ARROW + "</a>" : "");
+        (e.link ? '<a class="tl-link" href="' + esc(e.link) + '" target="_blank" rel="noopener"' + (e.cover ? ' data-peek="' + esc(e.cover) + '"' : "") + ">" + esc(ui.readMore) + ARROW + "</a>" : "");
     }
     var track = document.querySelector("[data-timeline]");
     // Phones: a plain vertical list, newest first. The three-line map needs a wide screen.
@@ -394,52 +394,6 @@
       return '<text class="tl-lane" x="' + (PAD + FORK - 28) + '" y="' + (l[1] - 10) + '" text-anchor="end">' + esc(ui.lanes[l[0]]) + "</text>";
     }).join("");
     track.insertAdjacentHTML("afterbegin", '<svg class="tl-lines" width="' + W + '" height="100%" aria-hidden="true" focusable="false">' + lines + nodes + names + "</svg>");
-  }
-
-  // ---------- Article preview: hovering "Read the story" shows that post's cover ----------
-  // One floating card follows the pointer over "Read the story" (mouse only); keyboard focus shows it beside the link.
-  var peek = document.createElement("div");
-  peek.className = "tl-peek"; peek.setAttribute("aria-hidden", "true");
-  peek.innerHTML = '<img alt="" decoding="async">';
-  document.body.appendChild(peek);
-  var peekImg = peek.firstChild, peekOn = false, fine = window.matchMedia("(hover: hover) and (pointer: fine)");
-  function placePeek(x, y) {
-    var w = peek.offsetWidth || 280, h = peek.offsetHeight || 200, gap = 22;
-    var left = x + gap + w > window.innerWidth - 12 ? x - gap - w : x + gap;
-    var top = Math.min(Math.max(12, y - h / 2), window.innerHeight - h - 12);
-    peek.style.transform = "translate3d(" + Math.round(left) + "px," + Math.round(top) + "px,0)";
-  }
-  function showPeek(src) {
-    if (peekImg.getAttribute("src") !== src) peekImg.setAttribute("src", src);
-    peek.classList.add("is-on"); peekOn = true;
-  }
-  function hidePeek() { peek.classList.remove("is-on"); peekOn = false; }
-  var tlTrack = document.querySelector("[data-timeline]");
-  tlTrack.addEventListener("mouseover", function (e) {
-    if (!fine.matches) return;
-    // Only the "Read the story" link opens the preview, so panning the map under a still cursor stays quiet.
-    var a = e.target.closest(".tl-link"), li = a && a.closest(".tl[data-cover]");
-    if (!li) { hidePeek(); return; }
-    showPeek(li.getAttribute("data-cover")); placePeek(e.clientX, e.clientY);
-  });
-  tlTrack.addEventListener("mousemove", function (e) { if (peekOn) placePeek(e.clientX, e.clientY); });
-  tlTrack.addEventListener("mouseleave", hidePeek);
-  tlTrack.addEventListener("focusin", function (e) {
-    var li = e.target.closest(".tl[data-cover]");
-    if (!li || !fine.matches) return;
-    var r = e.target.getBoundingClientRect();
-    showPeek(li.getAttribute("data-cover")); placePeek(r.right, r.top + r.height / 2);
-  });
-  tlTrack.addEventListener("focusout", hidePeek);
-  window.addEventListener("scroll", function () { if (peekOn && !fine.matches) hidePeek(); }, { passive: true });
-  // Warm the covers once the timeline is near, so the first hover shows at once.
-  if ("IntersectionObserver" in window) {
-    var warm = new IntersectionObserver(function (es) {
-      if (!es.some(function (x) { return x.isIntersecting; })) return;
-      warm.disconnect();
-      (HUB.timeline || []).forEach(function (t) { if (t.cover) { var im = new Image(); im.src = t.cover; } });
-    }, { rootMargin: "600px" });
-    warm.observe(document.getElementById("experience"));
   }
 
   function renderLinks() {

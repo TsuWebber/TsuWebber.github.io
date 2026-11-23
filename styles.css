@@ -710,7 +710,7 @@ html[lang="zh-Hant"] .motto { word-break: keep-all; }   /* Chinese breaks at the
   .bar nav { padding-bottom: calc(var(--s4) + env(safe-area-inset-bottom, 0px)); }
 }
 
-/* ---------- Article preview on the timeline (mouse only) ----------
+/* ---------- Link preview (mouse only): peek.js, for any link with data-peek ----------
    A small card with the post's cover follows the pointer over any entry that has a story. */
 .tl-peek {
   position: fixed; left: 0; top: 0; z-index: 30; width: 280px; pointer-events: none;
@@ -860,4 +860,9 @@ html[lang="zh-Hant"] .layer-name { letter-spacing: .1em; font-size: 14px; }
   .flow[style*="--cols:3"] .flow-dot { top: 2px; }
   .flow[style*="--cols:3"] .flow-n { position: static; display: block; margin-bottom: 4px; }
   .flow[style*="--cols:3"] .flow-band { grid-row: auto; grid-column: 1 !important; }
+}
+
+/* Links with a preview get the same quiet hint as the timeline's story links. */
+@media (hover: hover) and (pointer: fine) {
+  .work-links a[data-peek] { cursor: zoom-in; }
 }

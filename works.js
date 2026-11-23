@@ -66,8 +66,8 @@
       '<p class="work-meta"><span>' + esc(p.year) + "</span><span>" + esc(t(p.context)) + "</span></p>" +
       '<p class="work-summary">' + esc(t(p.summary)) + "</p>" +
       ((p.deck || p.link) ? '<div class="work-links">' +
-        (p.deck ? '<a href="' + esc(p.deck) + '" target="_blank" rel="noopener">' + esc(t(p.deckLabel) || ui.deck) + ARROW + "</a>" : "") +
-        (p.link ? '<a href="' + esc(p.link) + '" target="_blank" rel="noopener" hreflang="zh-Hant">' + esc(ui.readMore) + ARROW + "</a>" : "") + "</div>" : "") + "</li>";
+        (p.deck ? '<a href="' + esc(p.deck) + '" target="_blank" rel="noopener"' + (p.deckPeek ? ' data-peek="' + esc(p.deckPeek) + '"' : "") + ">" + esc(t(p.deckLabel) || ui.deck) + ARROW + "</a>" : "") +
+        (p.link ? '<a href="' + esc(p.link) + '" target="_blank" rel="noopener" hreflang="zh-Hant"' + (p.linkPeek ? ' data-peek="' + esc(p.linkPeek) + '"' : "") + ">" + esc(ui.readMore) + ARROW + "</a>" : "") + "</div>" : "") + "</li>";
   }
   function renderWorks() {
     var ui = UI[lang];
