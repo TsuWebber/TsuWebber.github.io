@@ -49,23 +49,35 @@
 
   // A left-to-right process map: numbered stages on one rail, a dashed gold loop back to the spec,
   // a base band every stage reads from, and a side band for routine work outside the main line.
+  var CYCLE = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"/><path d="M12.4 1.6v2.9H9.5"/></svg>';
   function flowMap(f) {
     var cols = f.stages.length, from = -1, to = -1;
     f.stages.forEach(function (st, i) { if (st.loopTo) to = i; if (st.loopFrom) from = i; });
     var subs = function (list) { return '<ul class="flow-subs">' + list.map(function (x) { return "<li>" + esc(t(x)) + "</li>"; }).join("") + "</ul>"; };
+    // A stage that repeats on its own (a sprint's daily cycle) wraps its skills in a dashed gold ring.
+    function cycle(st, html) {
+      if (!st.cycle) return html;
+      return '<div class="flow-cycle"><span class="flow-cycle-h">' + CYCLE + esc(t(st.cycle.name)) + "</span>" + html +
+        '<p class="flow-cycle-text">' + esc(t(st.cycle.text)) + "</p></div>";
+    }
+    var prevN = null;
     var stages = f.stages.map(function (st, i) {
-      return '<li class="flow-stage' + (st.loopTo ? " is-loop-to" : "") + (st.loopFrom ? " is-loop-from" : "") + '" style="grid-column:' + (i + 1) + '">' +
-        '<span class="flow-n">' + esc(t(st.n)) + '</span><span class="flow-dot" aria-hidden="true"></span>' +
-        '<h3 class="flow-title">' + esc(t(st.title)) + "</h3>" + (st.text ? '<p class="flow-text">' + esc(t(st.text)) + "</p>" : "") +
-        (st.skills || []).map(function (sk) {
+      return '<li class="flow-stage' + (st.ring ? " has-ring" : "") + (st.loopTo ? " is-loop-to" : "") + (st.loopFrom ? " is-loop-from" : "") + '" style="grid-column:' + (i + 1) + (st.ring ? ";--size:" + (st.ring.size || 500) + "px;--node:" + (st.ring.node || 138) + "px" : "") + '">' +
+        '<span class="flow-n' + (t(st.n) === prevN ? " is-same" : "") + '">' + esc((prevN = t(st.n), prevN)) + '</span><span class="flow-dot" aria-hidden="true"></span>' +
+        (st.title ? '<h3 class="flow-title">' + esc(t(st.title)) + "</h3>" : "") + (st.text ? '<p class="flow-text">' + esc(t(st.text)) + "</p>" : "") +
+        (st.ring ? cycleMap(st.ring) : "") +
+        cycle(st, (st.skills || []).map(function (sk) {
           return '<div class="flow-skill"><code>' + esc(t(sk.name)) + "</code>" +
             (sk.optional ? '<span class="flow-opt">' + esc(lang === "zh" ? "選用" : "optional") + "</span>" : "") + subs(sk.subs) + "</div>";
-        }).join("") + "</li>";
+        }).join("")) + "</li>";
     }).join("");
     var loop = from > -1 && to > -1 ? '<div class="flow-loop" style="grid-column:' + (to + 1) + " / " + (from + 2) + '"><span>' + esc(t(f.loop)) + "</span></div>" : "";
     var base = f.base ? '<div class="flow-band flow-base" style="grid-column:1 / ' + (cols + 1) + '"><code>' + esc(t(f.base.name)) + "</code><span>" + esc(t(f.base.text)) + "</span></div>" : "";
     var side = f.side ? '<div class="flow-band flow-side" style="grid-column:1 / ' + (cols + 1) + '"><code>' + esc(f.side.name) + "</code>" + subs(f.side.subs) + "<span>" + esc(t(f.side.text)) + "</span></div>" : "";
-    return '<div class="flow-scroll"><div class="flow" style="--cols:' + cols + '"><ol class="flow-stages">' + stages + "</ol>" + loop + base + side + "</div></div>";
+    var hasRing = f.stages.some(function (st) { return st.ring; });
+    var tpl = hasRing ? ";grid-template-columns:" + f.stages.map(function (st) { return st.ring ? (st.ring.size || 500) + "px" : "minmax(136px,1fr)"; }).join(" ") +
+      ";min-width:" + (f.stages.reduce(function (w, st) { return w + (st.ring ? (st.ring.size || 500) : 136); }, 0) + (cols - 1) * 14) + "px" : "";
+    return '<div class="flow-scroll"><div class="flow" style="--cols:' + cols + tpl + '"><ol class="flow-stages">' + stages + "</ol>" + loop + base + side + "</div></div>";
   }
 
   // Stacked layers: application on top, support in the middle, the foundation at the bottom, widest and in gold.
@@ -80,14 +92,39 @@
     return '<div class="layers">' + rows + "</div>" + (L.foot ? '<p class="layers-foot">' + esc(t(L.foot)) + "</p>" : "");
   }
 
+  // A cycle: nodes evenly spaced on a dashed gold ring, clockwise, the first at the top.
+  // Each node names who does it; only the PM's nodes carry a skill. Phones get a numbered list instead.
+  function cycleMap(c) {
+    var n = c.nodes.length, r = 38, arrows = "";
+    for (var k = 0; k < n; k++) {
+      var a = (-90 + (k + .5) * 360 / n) * Math.PI / 180;
+      var deg = (-90 + (k + .5) * 360 / n) + 90;
+      arrows += '<path d="M-1.8 -1.8 0 0 -1.8 1.8" transform="translate(' + (50 + r * Math.cos(a)).toFixed(2) + " " + (50 + r * Math.sin(a)).toFixed(2) + ") rotate(" + deg.toFixed(1) + ')"/>';
+    }
+    var nodes = c.nodes.map(function (d, k) {
+      var a = (-90 + k * 360 / n) * Math.PI / 180;
+      return '<li class="cyc-node' + (d.pm ? " is-pm" : "") + '" style="left:' + (50 + r * Math.cos(a)).toFixed(2) + "%;top:" + (50 + r * Math.sin(a)).toFixed(2) + '%">' +
+        '<span class="cyc-who">' + esc(t(d.who)) + "</span><h3>" + esc(t(d.title)) + "</h3>" +
+        (d.skill ? '<p class="cyc-skill"><code>' + esc(d.skill.name) + "</code>" + d.skill.subs.map(function (x) { return "<span>" + esc(x) + "</span>"; }).join("") + "</p>" : "") + "</li>";
+    }).join("");
+    return '<figure class="cyc"><div class="cyc-ring">' +
+      '<svg class="cyc-svg" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="' + r + '"/>' + arrows + "</svg>" +
+      '<div class="cyc-center"><span class="cyc-center-h">' + esc(t(c.center.name)) + "</span><span>" + esc(t(c.center.text)) + "</span>" +
+        (c.center.skill ? '<p class="cyc-skill"><code>' + esc(c.center.skill.name) + "</code>" + c.center.skill.subs.map(function (x) { return "<span>" + esc(x) + "</span>"; }).join("") + "</p>" : "") + "</div>" +
+      '<ol class="cyc-nodes">' + nodes + "</ol></div>" +
+      (c.back ? '<figcaption class="cyc-back">' + CYCLE + esc(t(c.back)) + "</figcaption>" : "") + "</figure>";
+  }
+
   function section(sec) {
     var out = '<section class="year proj-sec' + (sec.wide ? " is-wide" : "") + '"><h2 class="year-h">' + esc(t(sec.h)) + '</h2><div class="proj-body">';
+    if (sec.intro) out += '<p class="proj-p">' + esc(t(sec.intro)) + "</p>";
     if (sec.flow) out += flowMap(sec.flow);
     if (sec.layers) out += layerMap(sec.layers);
     if (sec.figure) out += '<figure class="proj-figure"><img src="' + esc(sec.figure.src) + '" alt="' + esc(t(sec.figure.alt)) + '" loading="lazy" decoding="async"><figcaption>' + esc(t(sec.figure.caption)) + "</figcaption></figure>";
+    if (sec.steps && sec.stepsFold) out += '<details class="proj-fold"><summary>' + esc(t(sec.stepsFold)) + "</summary>";
     if (sec.steps) out += '<ol class="proj-steps">' + sec.steps.map(function (st) {
       return '<li><span class="proj-step-name">' + esc(t(st.name)) + '</span><span class="proj-step-text">' + esc(t(st.text)) + "</span></li>";
-    }).join("") + "</ol>";
+    }).join("") + "</ol>" + (sec.stepsFold ? "</details>" : "");
     if (sec.table) out += '<div class="proj-table-wrap"><table class="proj-table"><thead><tr>' + sec.table.head.map(function (c) { return "<th>" + esc(t(c)) + "</th>"; }).join("") +
       "</tr></thead><tbody>" + sec.table.rows.map(function (r) { return "<tr>" + r.map(function (c) { return "<td>" + esc(t(c)) + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table></div>";
     if (sec.p) out += '<p class="proj-p">' + esc(t(sec.p)) + "</p>";

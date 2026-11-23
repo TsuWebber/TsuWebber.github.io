@@ -109,19 +109,98 @@ window.HUB_PROJECTS = {
 
   "pm-ai-workflows": {
     lead: {
-      en: "The Claude Code skills I use every day as a software PM: one entry point per stage, from collecting material and writing specs to review, Jira tickets, release and the weekly report.",
-      zh: "我身為軟體 PM 每天實際在用的 Claude Code skill：一個工作階段一個入口，從收素材、寫規格，到審查、開 Jira 票、上線和週報。"
+      en: "Every sprint, a PM does much the same work again, just for a different problem. I turned that repeated work into Claude Code skills: the AI runs the process, and the judgement calls stay with me.",
+      zh: "PM 每跑一次 Sprint，幾乎都在重做同樣的事，只是解決的問題不同。我把這些重複的流程做成 Claude Code skill：流程交給 AI 跑，判斷和拍板留在我手上。"
     },
     sections: [
       {
+        h: { en: "Why it exists", zh: "為什麼做這套" },
+        list: [
+          { en: "Every sprint means turning meeting notes into decisions, writing the spec, splitting front-end and back-end tickets, the release note, the daily and weekly reports, each time from scratch. Tedious, time-consuming work that can be automated.", zh: "每個 Sprint 都要整理會議記錄、寫規格、拆前後端票、寫 release note、日報週報，每次都從頭來。這些繁瑣又花時間的流程，完全可以自動化。" },
+          { en: "Specs and tickets drift apart: the spec changes and the ticket doesn't, so engineering, QA and design end up reading different versions.", zh: "規格和票對不上：規格改了、票沒跟著改，RD、QA、設計看的不是同一版。" },
+          { en: "Ready-made PM skills don't know how my team works, so I built one around how we actually work: specs in a Git spec repo, tickets in our Jira formats, everything in Traditional Chinese.", zh: "現成的 PM skill 不知道我們團隊怎麼做事，所以我照團隊的實際做法自己做一套：規格放 Git 規格庫、照 Jira 的票型開票、全部用繁體中文。" }
+        ]
+      },
+      {
         h: { en: "What it is", zh: "這是什麼" },
         p: {
-          en: "One Claude Code plugin, pm-workflow, with 11 skills. Each skill covers one stage of the work and splits into sub-commands, so I only need to know which stage I am in. Specs live in a Git-managed spec repo and move through drafts, pull requests and review, so engineering, QA and design always read the same latest version. Everything it writes is in Traditional Chinese, following how Taiwanese software teams usually split the work.",
-          zh: "一個 Claude Code plugin「pm-workflow」，11 個 skill。每個 skill 對應一個工作階段，底下再用子指令區分，只要知道自己在哪個階段就知道要叫哪個。規格寫在 Git 管理的規格庫，用草稿、PR、審查迭代，RD、QA、設計看的永遠是同一份最新版本。全部用繁體中文產出，用語和流程貼近台灣軟體團隊的分工。"
+          en: "One Claude Code plugin, pm-workflow: 11 skills, one entry point per stage of the work. I rarely call them by name: I just say what I'm doing, like pasting meeting notes or asking for tickets, and Claude works out from that which skill fits. Specs live in a Git spec repo and change through pull requests, so engineering, QA and design always read the same version.",
+          zh: "一個 Claude Code plugin「pm-workflow」：11 個 skill，一個工作階段一個入口。平常我很少直接呼叫：照平常的方式講要做的事，例如貼上會議記錄、說要開票，Claude 會從內容判斷該用哪個 skill。規格寫在 Git 規格庫、用 PR 修改，RD、QA、設計看的永遠是同一版。"
         }
       },
       {
-        h: { en: "The flow", zh: "完整流程" },
+        h: { en: "One request, start to finish: partial refunds", zh: "一個需求怎麼走完：以部分退款為例" },
+        wide: true,
+        intro: {
+          en: "How a request actually moves for me, laid on the Scrum cycle, with the skill behind each step. The request is made up: orders can only be refunded in full, and support wants to refund part of one.",
+          zh: "一個需求在我手上實際怎麼走，對照 Scrum 的各個階段，以及每一步背後的 skill。需求是假想的：訂單目前只能整筆退款，客服希望能只退一部分。"
+        },
+        flow: {
+          stages: [
+            { n: "Product Backlog", title: { en: "Research", zh: "收需求、做研究" }, text: { en: "Material, interviews, how others do it", zh: "整理素材、訪談、看別人怎麼做" }, skills: [{ name: "pm-intake", subs: ["material", "meeting"] }, { name: "pm-discover", subs: ["pains", "cases"] }] },
+            { n: "Product Backlog", title: { en: "First plan", zh: "初步規劃" }, text: { en: "Hypotheses first, phases if needed", zh: "寫下假設，必要時切階段" }, skills: [{ name: "pm-plan", subs: ["scope", "decide"] }] },
+            { n: "Refinement", title: { en: "Write the spec", zh: "寫成規格" }, text: { en: "Once the direction is roughly agreed", zh: "方向大致確認後才動筆" }, skills: [{ name: "pm-spec", subs: ["write"] }] },
+            { n: "Refinement", title: { en: "Prototype", zh: "做 Prototype" }, text: { en: "The spec as a clickable prototype", zh: "把規格做成可以點的原型" }, skills: [{ name: "pm-design", subs: ["prototype"] }] },
+            { n: "Refinement", ring: {
+              size: 380, node: 124,
+              center: { name: { en: "Design comes in", zh: "設計進場" }, text: { en: "PM and designer revise design and spec together", zh: "PM 和 PD 一起修設計和規格" } },
+              nodes: [
+                { who: { en: "Designer", zh: "PD" }, title: { en: "Design", zh: "出設計" } },
+                { who: "PM", pm: true, title: { en: "Reply to changes", zh: "回覆設計修改" }, skill: { name: "pm-design", subs: ["dr"] } },
+                { who: "PM", pm: true, title: { en: "Adjust the spec", zh: "調整規格" }, skill: { name: "pm-spec", subs: ["write"] } }
+              ]
+            } },
+            { n: "Sprint Planning", title: "Sprint Backlog", text: { en: "Every expected story opened beforehand", zh: "開工前把預期的 Story 都開好" }, skills: [{ name: "pm-ticket", subs: ["spec"] }] },
+            { n: "Sprint", ring: {center: { name: { en: "Engineering comes in", zh: "工程進場" }, text: { en: "A daily report for the Daily Scrum", zh: "每天的 Daily Scrum 日報" }, skill: { name: "pm-report", subs: ["daily"] } },
+          nodes: [
+            { who: { en: "Engineers", zh: "工程師" }, title: { en: "Build", zh: "實作" } },
+            { who: "PM", pm: true, title: { en: "Talk it through", zh: "和工程師討論" } },
+            { who: "PM", pm: true, title: { en: "Adjust the spec", zh: "調整規格" }, skill: { name: "pm-spec", subs: ["write"] } },
+            { who: { en: "Designer", zh: "PD" }, title: { en: "Adjust the design", zh: "調整設計" } },
+            { who: "PM", pm: true, title: { en: "Open extra or bug tickets", zh: "開增補票或 bug 票" }, skill: { name: "pm-ticket", subs: ["task", "sprint-bug"] } }
+          ]
+            } },
+            { n: "Sprint Review", title: { en: "Launch", zh: "上線" }, text: { en: "A release note for the teams who use it", zh: "給使用單位的 release note" }, skills: [{ name: "pm-launch", subs: ["release"] }] },
+            { n: "Retrospective", title: { en: "Look back", zh: "回顧" }, text: { en: "The record, narrowed to conclusions", zh: "把紀錄收斂成結論" }, skills: [{ name: "pm-launch", subs: ["retro"] }] }
+          ],
+          base: { name: { en: "Next sprint", zh: "下一個 Sprint" }, text: { en: "Retro fixes, the next phase and unfinished work go back to the Product Backlog", zh: "回顧的改進、下一階段、沒做完的，回到 Product Backlog" } },
+          side: { name: "pm-report", subs: ["weekly"], text: { en: "A weekly report across every sprint", zh: "跨 Sprint 的每週回報" } }
+        },
+        stepsFold: { en: "Step by step", zh: "逐步說明" },
+        steps: [
+          { name: "pm-intake · pm-discover", text: { en: "Support's complaints and notes go in as they are. Interviews become pain evidence with people's own words, and other products' refund flows show what's conventional and where we can do better.", zh: "客服的抱怨和紀錄原樣收進來；訪談整理成有原話可查的痛點證據；再看其他產品怎麼做退款，找出慣例和能做得更好的地方。" } },
+          { name: "pm-plan scope · decide", text: { en: "Hypotheses written down, split into phases if needed: say, partial refunds on a single item first, with shipping and discount splits later.", zh: "寫下假設，必要時切階段：例如先做單一商品的部分退款，運費和折扣分攤留到下一階段。" } },
+          { name: "pm-spec write", text: { en: "Once the direction is roughly agreed, it becomes spec.md: background and goal, metrics, scope, stories and acceptance criteria. Anything unsettled stays an open question.", zh: "方向大致確認後才寫成 spec.md：背景與目標、指標、範圍、Story 與驗收條件。還沒定案的留在待確認。" } },
+          { name: "pm-design prototype", text: { en: "Before design comes in, I turn the spec into a prototype that runs in the browser, to check screens and flow. It isn't wired to a back end.", zh: "設計進場前，先把規格做成瀏覽器就能看的 prototype，驗證畫面和流程，不串後端。" } },
+          { name: "pm-design dr · pm-spec write", text: { en: "Once the designer comes in, each change is logged on its own and I reply to each; accepted ones adjust the spec, until design and spec are settled.", zh: "PD 進場後，每個設計修改各記一條，我逐條回覆；接受的就調整規格，直到設計和規格都定案。" } },
+          { name: "pm-ticket spec", text: { en: "Before the sprint, every expected story is opened in Jira, split into front end and back end.", zh: "Sprint 開始前，把預期的 Story 都開好，拆成前端、後端。" } },
+          { name: "Kickoff", text: { en: "The sprint opens by going through the spec and stories with the engineers.", zh: "和工程師一起過規格與 Story。" } },
+          { name: "pm-spec write", text: { en: "Questions come up during the build, and the spec changes with them; every change is logged with a new version.", zh: "實作中和工程師討論，規格跟著調整，每次改動都記下版本與異動。" } },
+          { name: "pm-ticket task · sprint-bug", text: { en: "Extra tickets for what the discussion adds, bug tickets for what testing finds.", zh: "討論後要補的開增補票，測試發現的開 bug 票。" } },
+          { name: "pm-report daily", text: { en: "Each day's tasks and calendar, put together for the Daily Scrum.", zh: "每天把待辦和行事曆整理成 Daily Scrum 用的日報。" } },
+          { name: "pm-launch release", text: { en: "A release note for the teams who use it, like support and finance: what changed, how to use it and what it means for them.", zh: "寫給客服、財務等使用單位的 release note：上了什麼、怎麼用、對他們有什麼影響。" } },
+          { name: "pm-launch retro", text: { en: "The record from kickoff to launch becomes a retro: a full draft first, then conclusions narrowed one by one with multiple-choice questions.", zh: "把從 kickoff 到上線的紀錄整理成回顧文件：先出完整草稿，再用選擇題逐條收斂結論。" } }
+        ]
+      },
+      {
+        h: { en: "In real use", zh: "實際使用" },
+        p: { en: "How often each one ran in my Claude Code sessions from mid-July to mid-November 2026, not counting scheduled runs. Most of the use is the line from writing the spec to review to tickets.", zh: "2026 年 7 月中到 11 月中，各 skill 在我的 Claude Code 裡執行的次數（不含排程自動執行）。主力在「寫規格 → 送審 → 開票」這條線。" },
+        table: {
+          head: [{ en: "Skill", zh: "Skill" }, { en: "Calls", zh: "次數" }],
+          rows: [["pm-ticket", "21"], ["pm-ship", "14"], ["pm-spec write", "11"], ["pm-plan scope", "9"], ["pm-setup tools", "7"], ["pm-report weekly", "6"]]
+        }
+      },
+      {
+        h: { en: "The AI runs it, I make the calls", zh: "AI 跑流程，PM 做判斷" },
+        list: [
+          { en: "Draft first: before writing to files, Notion, Jira or Git, it lists what it will do and waits for my go-ahead.", zh: "先給草稿：寫入檔案、Notion、Jira、Git 前，一律先列出要做的事，我確認後才執行。" },
+          { en: "No guessing: unclear business rules or terms are marked as open questions with a hypothesis, never filled in.", zh: "不推論：業務規則、名詞不確定時，標成待確認並附上假說，不自己補。" },
+          { en: "An independent check: the pre-flight review runs in a separate context that can't see our conversation, so my explanations can't sway it.", zh: "獨立審查：送審前的預審在獨立 context 執行，看不到前面的對話，我的解釋影響不了它。" },
+          { en: "One source of truth: specs live only in the Git spec repo; Notion just receives a one-way copy.", zh: "規格只有一個來源：Git 規格庫。Notion 只做單向輸出。" }
+        ]
+      },
+      {
+        h: { en: "All 11 skills", zh: "全部 11 個 skill" },
         wide: true,
         flow: {
           stages: [
@@ -140,32 +219,13 @@ window.HUB_PROJECTS = {
         }
       },
       {
-        h: { en: "In real use", zh: "實際使用" },
-        p: { en: "How often I called each one in Claude Code from mid-July to mid-November 2026, not counting scheduled runs. Most of the use is the line from writing the spec to review to tickets.", zh: "2026 年 7 月中到 11 月中，我在 Claude Code 裡叫用的次數（不含排程自動執行）。主力在「寫規格 → 送審 → 開票」這條線。" },
-        table: {
-          head: [{ en: "Skill", zh: "Skill" }, { en: "Calls", zh: "次數" }],
-          rows: [["pm-ticket", "21"], ["pm-ship", "14"], ["pm-spec write", "11"], ["pm-plan scope", "9"], ["pm-setup tools", "7"], ["pm-report weekly", "6"]]
-        }
-      },
-      {
-        h: { en: "Design choices", zh: "設計原則" },
-        list: [
-          { en: "One entry per stage. It started as 24 skills and 13 commands, many doing similar things; grouping by stage brought it to 11.", zh: "一個階段一個入口。原本有 24 個 skill、13 個 command，很多在做相近的事，依工作階段收成 11 個。" },
-          { en: "Sub-commands load only when used, so the context never fills up at once.", zh: "子指令按需載入，用到才讀，不會一次塞滿 context。" },
-          { en: "One source for specs: the Git spec repo. Notion only receives a one-way copy for presentation.", zh: "規格只有一個來源：Git 規格庫。Notion 只做單向輸出。" },
-          { en: "Company details live in a private config file, so the public skills and the ones I use are the same files.", zh: "公司資訊放在私人設定檔，公開的和自己用的是同一份 skill。" },
-          { en: "Draft first: before writing to files, Notion, Jira or Git, it lists what it will do and waits for confirmation.", zh: "先給草稿：寫入檔案、Notion、Jira、Git 前一律先列提案，確認後才執行。" },
-          { en: "No guessing. Unclear business rules or terms are marked as open questions with a hypothesis.", zh: "不推論。業務規則、名詞不確定時標成待確認並附假說，不自己補。" },
-          { en: "The pre-flight review runs in a separate context that cannot see the conversation, so the author's explanations don't sway it.", zh: "送審前預審在獨立 context 執行，看不到前面的對話，避免作者的說明影響審查。" }
-        ]
-      },
-      {
         h: { en: "How it evolved", zh: "迭代紀錄" },
         list: [
           { en: "v1: a single pm skill with 9 sub-commands for decisions, review, tickets and announcements.", zh: "v1：只有一個 pm skill，9 個子指令，負責決策、審查、開票、公告。" },
           { en: "Specs moved from Notion to the Git spec repo; spec writing moved to the team's spec-repo skills.", zh: "規格從 Notion 搬到 Git 規格庫，寫規格改由團隊規格庫的 skill 負責。" },
           { en: "v2: put together with the team's skills, 24 skills and 13 commands. Complete, but too many entry points.", zh: "v2：和團隊規格庫的 skill 放在一起，24 個 skill、13 個 command，完整但入口太多。" },
-          { en: "v3: regrouped by stage into the 11 skills here.", zh: "v3：依階段重組成現在的 11 個。" }
+          { en: "v3: regrouped by stage into the 11 here, one entry point per stage. Sub-commands load only when used, so the context never fills up at once.", zh: "v3：依階段重組成現在的 11 個，一個階段一個入口；子指令用到才載入，不會一次塞滿 context。" },
+          { en: "To publish it, company details moved to a private config file, so the public skills and the ones I use are the same files.", zh: "為了公開，公司資訊移到私人設定檔，公開的和自己用的是同一份 skill。" }
         ]
       },
       {

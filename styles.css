@@ -866,3 +866,87 @@ html[lang="zh-Hant"] .layer-name { letter-spacing: .1em; font-size: 14px; }
 @media (hover: hover) and (pointer: fine) {
   .work-links a[data-peek] { cursor: zoom-in; }
 }
+
+/* A stage that repeats every day inside the sprint: a dashed gold ring around its skills. */
+.flow-cycle { position: relative; margin-top: 4px; padding: 22px 8px 8px; border: 1.5px dashed var(--gold); border-radius: 14px; }
+.flow-cycle-h { position: absolute; top: -10px; left: 10px; display: inline-flex; align-items: center; gap: 5px; padding: 0 6px; background: var(--void); font-size: 12px; color: var(--gold); white-space: nowrap; }
+.flow-cycle-h svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.flow-cycle .flow-skill:last-of-type { margin-bottom: 0; }
+.flow-cycle-text { margin: 10px 2px 0; font-size: 12px; line-height: 1.5; color: var(--gold); }
+
+/* ---------- Cycle diagram (project pages): nodes on a dashed gold ring, clockwise ---------- */
+.cyc-h { margin: var(--s5) 0 var(--s2); font-size: 15px; font-weight: 500; color: var(--ink); }
+html[lang="zh-Hant"] .cyc-h { letter-spacing: .04em; }
+.cyc { margin: 0; }
+.cyc-ring { position: relative; width: min(100%, 620px); aspect-ratio: 1; margin: 0 auto; }
+.cyc-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.cyc-svg circle { fill: none; stroke: var(--gold); stroke-width: .35; stroke-dasharray: 1.4 1.2; opacity: .85; }
+.cyc-svg path { fill: none; stroke: var(--gold); stroke-width: .5; stroke-linecap: round; stroke-linejoin: round; }
+.cyc-nodes { list-style: none; margin: 0; padding: 0; }
+.cyc-node { position: absolute; width: 168px; transform: translate(-50%, -50%); padding: 12px 14px; border: 1px solid var(--ring-2); border-radius: 10px; background: var(--void); text-align: center; }
+.cyc-node.is-pm { border-color: rgba(233, 185, 73, .45); }
+.cyc-who { display: block; font-size: 11.5px; letter-spacing: .06em; color: var(--ink-3); }
+.cyc-node.is-pm .cyc-who { color: var(--gold); }
+.cyc-node h3 { margin: 4px 0 0; font-size: 14.5px; font-weight: 500; line-height: 1.35; color: var(--ink); }
+.cyc-skill { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin: 8px 0 0; }
+.cyc-skill code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12px; color: var(--gold); margin-right: 2px; }
+.cyc-skill span { font-size: 11.5px; line-height: 1; padding: 4px 6px; border-radius: 4px; background: rgba(255, 255, 255, .05); color: var(--ink-2); }
+.cyc-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 40%; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; font-size: 13px; color: var(--ink-2); }
+.cyc-center-h { font-size: 18px; font-weight: 500; color: var(--ink); }
+.cyc-back { margin: var(--s2) auto 0; text-align: center; font-size: 13px; color: var(--gold); }
+.cyc-back { display: flex; justify-content: center; align-items: center; gap: 6px; }
+.cyc-back svg { width: 13px; height: 13px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Phones: the ring becomes a numbered list that closes back on the first step. */
+@media (max-width: 640px) {
+  .cyc-ring { aspect-ratio: auto; width: 100%; }
+  .cyc-svg { display: none; }
+  .cyc-center { position: static; transform: none; width: auto; align-items: flex-start; text-align: left; margin-bottom: var(--s2); }
+  .cyc-nodes { counter-reset: cyc; display: grid; gap: 10px; padding-left: 14px; border-left: 1.5px dashed var(--gold); }
+  .cyc-node { position: static; transform: none; width: auto; text-align: left; }
+  .cyc-skill { justify-content: flex-start; }
+  .cyc-back { text-align: left; }
+}
+
+/* The cycle inside a process-map stage: smaller nodes, and it stays a ring on every screen (the map swipes). */
+.flow-stage .cyc { margin-top: 6px; }
+.flow-stage .cyc-ring { width: 100%; max-width: 560px; aspect-ratio: 1; margin: 0 auto; }
+.flow-stage .cyc-svg { display: block; }
+.flow-stage .cyc-node { position: absolute; width: 138px; transform: translate(-50%, -50%); padding: 9px 10px; text-align: center; }
+.flow-stage .cyc-node h3 { font-size: 13.5px; }
+.flow-stage .cyc-nodes { display: block; padding: 0; border: 0; }
+.flow-stage .cyc-center { position: absolute; transform: translate(-50%, -50%); width: 36%; align-items: center; text-align: center; margin: 0; }
+.flow-stage .cyc-skill { justify-content: center; }
+.flow-stage .cyc-back { margin-top: 4px; text-align: center; font-size: 12px; }
+
+/* The rail runs straight through the middle of the ring. The ring's stage is a fixed 500px square,
+   so the whole map drops its rail to the ring's centre (250px) and every other stage hangs below it. */
+.flow:has(.has-ring) { --rail: 250px; }
+.flow:has(.has-ring) .flow-stage { padding-top: calc(var(--rail) + 14px); }
+.flow:has(.has-ring) .flow-stage::before { top: var(--rail); }
+.flow:has(.has-ring) .flow-stage:not(:last-child)::after { top: calc(var(--rail) - 3.5px); }
+.flow:has(.has-ring) .flow-dot { top: calc(var(--rail) - 4px); }
+.flow:has(.has-ring) .flow-n { top: calc(var(--rail) - 26px); }
+/* each ring sits with its centre on the rail, whatever its size */
+.flow-stage.has-ring .cyc { margin-top: calc(-14px - var(--size) / 2); }
+.flow-stage.has-ring .cyc-ring { max-width: none; width: var(--size); }
+.flow-stage.has-ring .cyc-node { width: var(--node); }
+.flow-stage.has-ring .cyc-node { z-index: 1; }
+/* the centre text sits just above the line instead of being struck through; the lower half stays clear for the nodes */
+.flow-stage.has-ring .cyc-center { top: auto; bottom: calc(50% + 14px); transform: translateX(-50%); width: 40%; }
+/* Inside the ring the line disappears: it stops at the ring's left edge and starts again at its right edge
+   (ring radius 38% of 500px = 190px around the centre at 250px). */
+.flow:has(.has-ring) .flow-stage.has-ring::before { background: linear-gradient(to right, var(--ring-1) 0 calc(var(--size) * .12), transparent calc(var(--size) * .12) calc(var(--size) * .88), var(--ring-1) calc(var(--size) * .88)); }
+
+/* a phase label is shown once, where the phase begins; the stages after it share it */
+.flow-n.is-same { visibility: hidden; }
+
+/* A folded step-by-step list under a process map: the map tells it, the steps are there on request. */
+.proj-fold { margin-top: var(--s3); }
+.proj-fold summary { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 14px; letter-spacing: .04em; color: var(--ink-2); list-style: none; }
+.proj-fold summary::-webkit-details-marker { display: none; }
+.proj-fold summary::before { content: ""; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .2s var(--ease-out); }
+.proj-fold[open] summary::before { transform: rotate(45deg); }
+.proj-fold summary:hover { color: var(--ink); }
+.proj-fold summary:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+.proj-fold .proj-steps { margin-top: var(--s2); }
