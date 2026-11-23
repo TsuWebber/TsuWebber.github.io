@@ -965,3 +965,9 @@ html[lang="zh-Hant"] .cyc-h { letter-spacing: .04em; }
   .ftree-path { padding-left: 0; white-space: normal; overflow-wrap: anywhere; }
   .ftree-path::before { left: -13px; }
 }
+/* Wide screens: the page column stops at 1480px, but a map wider than that runs on to the window's right edge
+   instead of being cut off mid-page. The body is the size container, so 100cqw is the window minus its scrollbar. */
+body.page-project { container-type: inline-size; }
+@media (min-width: 1481px) {
+  .page-project .flow-scroll { margin-right: calc(var(--gutter) * -1 - max(0px, 100cqw - 1480px)); padding-right: var(--gutter); }
+}
