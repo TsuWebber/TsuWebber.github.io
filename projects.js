@@ -15,6 +15,98 @@
 */
 window.HUB_PROJECTS = {
 
+  "lifeos": {
+    lead: {
+      en: "A life dashboard that puts your past, present and future in one place: look back at the road you've walked, run this quarter's goals day to day, and imagine three possible futures.",
+      zh: "把過去、現在、未來放在同一個地方的人生儀表板：回顧走過的路、管理這一季的目標，並展望三種可能的人生。"
+    },
+    sections: [
+      {
+        h: { en: "The problem", zh: "要解決的問題" },
+        list: [
+          { en: "Plenty of experience that never joins up: several jobs and projects, interests you can't let go of, and no clear sense of what you're good at or truly care about.", zh: "經歷很多，卻連不成一條線：換過幾份工作、做過不少專案，也有放不下的興趣，卻說不出自己擅長什麼、真正熱衷什麼。" },
+          { en: "Busy every day, unsure where it's heading: goals set at the start of the year never line up with daily work, and health, family and interests get pushed aside.", zh: "每天都很忙，卻不確定在往哪走：年初訂的目標和每天在做的事對不上，健康、家人和興趣總被擱在一旁。" },
+          { en: "Only a vague picture of the future, and little thought about any path other than the current one.", zh: "對未來只有模糊的想像，也很少想過眼前這條路以外的可能。" },
+          { en: "Reflection lives in a diary, goals in a to-do app and the future in your head, so the whole picture never comes together.", zh: "回顧寫在日記、目標放在待辦、未來留在腦海裡，人生被拆在不同地方，就拼不出完整的自己。" }
+        ]
+      },
+      {
+        h: { en: "Past, present, future", zh: "過去、現在、未來" },
+        wide: true,
+        flow: {
+          stages: [
+            { n: { en: "Past", zh: "過去" }, title: "Wayfinding Map", text: { en: "Work, relationships and learning on one timeline, to see what keeps drawing you in and which choices turned things.", zh: "把工作、感情、學習的經歷放上同一條時間軸，看出哪些事讓你一再投入、哪些決定牽動了後來的轉折。" }, skills: [{ name: { en: "Look back", zh: "回顧" }, subs: [{ en: "timeline", zh: "時間軸" }, { en: "turning points", zh: "轉折點" }] }] },
+            { n: { en: "Present", zh: "現在" }, title: "Goals", text: { en: "OKRs break the year into measurable results for this quarter, then into what to move each week and day.", zh: "用 OKR 把年度目標拆成這一季可衡量的關鍵結果，再拆到每週、每天要推進的行動。" }, skills: [{ name: "OKR", subs: [{ en: "year", zh: "年" }, { en: "quarter", zh: "季" }, { en: "month", zh: "月" }, { en: "week", zh: "週" }, { en: "day", zh: "日" }] }] },
+            { n: { en: "Future · coming soon", zh: "未來・即將推出" }, title: "Odyssey Plan", text: { en: "Three possible five-year lives side by side: the current path, a backup if it disappears, and one with no limits at all.", zh: "同時想像三種五年人生：現在這條路、這條路消失時的備案、不考慮任何現實限制的狂想。" }, skills: [{ name: { en: "Three paths", zh: "三條路" }, subs: [{ en: "current", zh: "現在" }, { en: "backup", zh: "備案" }, { en: "wild card", zh: "狂想" }] }] }
+          ],
+          base: { name: { en: "8 areas of life", zh: "八個人生面向" }, text: { en: "Learning, interests, work, fulfilment, quality of life, health, money and relationships: work is only one of them", zh: "學習成長、個人興趣、工作職涯、自我實現、生活品質、身心健康、財富累積、人際關係：工作只是其中之一" } }
+        }
+      },
+      {
+        h: { en: "Built on proven methods", zh: "背後的方法" },
+        list: [
+          { en: "Wayfinding and the Odyssey Plan come from Designing Your Life by Bill Burnett and Dave Evans, and Stanford's Life Design Lab.", zh: "人生尋路地圖與奧德賽計畫，來自 Bill Burnett 與 Dave Evans 的《做自己的生命設計師》與 Stanford 生命設計課程。" },
+          { en: "Goals follow OKRs from John Doerr's Measure What Matters, with the Mandal-Art method and eight dimensions of life goals.", zh: "目標管理採用 John Doerr《OKR：做最重要的事》，搭配曼陀羅思考法與人生目標的八大向度。" }
+        ]
+      },
+      {
+        h: { en: "Where it stands", zh: "目前狀態" },
+        p: {
+          en: "Live and in small-scale testing. New people join through a waitlist and get an invite link in order. Built with HTML, Supabase and Vercel.",
+          zh: "已上線，目前小規模測試中，新使用者透過等候名單依序收到邀請連結。用 HTML、Supabase 與 Vercel 打造。"
+        }
+      }
+    ]
+  },
+
+  "flexbox-rpg": {
+    lead: {
+      en: "A small browser game for learning CSS Flexbox: a monster attacks with a scrambled layout, and you break the spell by typing the right Flexbox values before time runs out.",
+      zh: "打怪學 CSS Flexbox 的網頁小遊戲：怪物用一段亂掉的排版施法攻擊你，在時間內輸入正確的 Flexbox 屬性值破解它，就能反擊。"
+    },
+    sections: [
+      {
+        h: { en: "How a round works", zh: "一回合怎麼進行" },
+        steps: [
+          { name: { en: "The monster casts", zh: "怪物施法" }, text: { en: "It throws a layout that's out of place.", zh: "出一題排亂的版面。" } },
+          { name: { en: "You answer", zh: "你作答" }, text: { en: "Put it back with the right values for justify-content, align-items, flex-direction or flex-wrap.", zh: "用對 justify-content、align-items、flex-direction、flex-wrap 的值把它排回來。" } },
+          { name: { en: "Hit or get hit", zh: "反擊或被打" }, text: { en: "A right answer deals damage, with a bonus for speed; a wrong answer or running out of time costs you health.", zh: "答對造成傷害，答得快有速攻加成；答錯或超時就會被打。" } },
+          { name: { en: "Hints", zh: "提示" }, text: { en: "Stuck? Ask for a hint, but it's noted in the final score.", zh: "卡住可以按提示，但結算時會被記下來。" } }
+        ]
+      },
+      {
+        h: { en: "Four monsters", zh: "四隻怪物" },
+        wide: true,
+        flow: {
+          stages: [
+            { n: "Lv.1", title: { en: "Confused Slime", zh: "困惑史萊姆" }, text: { en: "Easy", zh: "簡單" }, skills: [] },
+            { n: "Lv.2", title: { en: "Mischief Goblin", zh: "搗亂哥布林" }, text: { en: "Normal", zh: "普通" }, skills: [] },
+            { n: "Lv.3", title: { en: "Dark Mage", zh: "黑暗法師" }, text: { en: "Hard", zh: "困難" }, skills: [] },
+            { n: "Lv.4", title: { en: "Chaos Dragon", zh: "混沌巨龍" }, text: { en: "Boss: only 9 seconds to answer", zh: "Boss：只有 9 秒作答" }, skills: [] }
+          ],
+          base: { name: { en: "Further in", zh: "越往後" }, text: { en: "More health, harder hits and less time to answer", zh: "血越厚、攻擊越痛、作答時間越短" } }
+        }
+      },
+      {
+        h: { en: "Two ways to play", zh: "兩種操作方式" },
+        table: {
+          head: [{ en: "Mode", zh: "模式" }, { en: "For", zh: "適合" }, { en: "How you answer", zh: "怎麼答題" }],
+          rows: [
+            [{ en: "Click", zh: "點擊模式" }, { en: "New to Flexbox", zh: "剛開始學 Flexbox" }, { en: "Pick CSS values from buttons", zh: "從按鈕裡選 CSS 值" }],
+            [{ en: "Type", zh: "打字模式" }, { en: "Up for a challenge", zh: "想挑戰自己" }, { en: "Type the CSS yourself", zh: "直接輸入 CSS" }]
+          ]
+        }
+      },
+      {
+        h: { en: "How it's built", zh: "技術" },
+        p: {
+          en: "A single index.html in plain HTML, CSS and JavaScript, with nothing to install or build, deployed on GitHub Pages. To play offline, open the file in a browser.",
+          zh: "單一個 index.html，純 HTML、CSS、JavaScript，不需要安裝或建置，部署在 GitHub Pages。本機直接用瀏覽器打開就能玩。"
+        }
+      }
+    ]
+  },
+
   "pm-ai-workflows": {
     lead: {
       en: "The Claude Code skills I use every day as a software PM: one entry point per stage, from collecting material and writing specs to review, Jira tickets, release and the weekly report.",

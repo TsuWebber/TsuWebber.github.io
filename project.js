@@ -55,9 +55,9 @@
     var subs = function (list) { return '<ul class="flow-subs">' + list.map(function (x) { return "<li>" + esc(t(x)) + "</li>"; }).join("") + "</ul>"; };
     var stages = f.stages.map(function (st, i) {
       return '<li class="flow-stage' + (st.loopTo ? " is-loop-to" : "") + (st.loopFrom ? " is-loop-from" : "") + '" style="grid-column:' + (i + 1) + '">' +
-        '<span class="flow-n">' + esc(st.n) + '</span><span class="flow-dot" aria-hidden="true"></span>' +
+        '<span class="flow-n">' + esc(t(st.n)) + '</span><span class="flow-dot" aria-hidden="true"></span>' +
         '<h3 class="flow-title">' + esc(t(st.title)) + "</h3>" + (st.text ? '<p class="flow-text">' + esc(t(st.text)) + "</p>" : "") +
-        st.skills.map(function (sk) {
+        (st.skills || []).map(function (sk) {
           return '<div class="flow-skill"><code>' + esc(t(sk.name)) + "</code>" +
             (sk.optional ? '<span class="flow-opt">' + esc(lang === "zh" ? "選用" : "optional") + "</span>" : "") + subs(sk.subs) + "</div>";
         }).join("") + "</li>";

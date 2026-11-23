@@ -49,7 +49,12 @@
 <main id="top" class="blog">
   <header class="blog-head">
     <h1 class="blog-h" data-i18n="work.h">Projects</h1>
-    <p class="blog-sub" data-i18n="work.sub">Side projects I built and still run, and earlier projects from school, programmes and teams.</p>
+    <p class="blog-sub" data-i18n="work.sub">Products I built and still run, and case work from school, programmes and competitions.</p>
+    <div class="blog-filter" role="group" aria-label="Kind" data-filter>
+      <button type="button" data-src="all" aria-pressed="true" data-i18n="f.all">All</button>
+      <button type="button" data-src="side" aria-pressed="false" data-i18n="f.side">Products</button>
+      <button type="button" data-src="past" aria-pressed="false" data-i18n="f.past">Cases</button>
+    </div>
   </header>
   <div id="works" class="blog-list panel work-list" data-works></div>
 </main>

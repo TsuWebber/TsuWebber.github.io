@@ -135,16 +135,17 @@ window.HUB = {
   works: [
     {
       id: "lifeos",
+      page: "works/lifeos.html",
       featured: true,
       orbit: "build", mag: 1,
       name: { en: "LifeOS", zh: "LifeOS" },
       status: "live", year: { en: "2026", zh: "2026" },
       summary: {
-        en: "An OKR dashboard I built for myself: one set of objectives and key results for each of eight areas of my life, including learning, work, health, money and relationships.",
-        zh: "我替自己做的 OKR 儀表板：學習、工作、健康、金錢、人際等八個生活面向，各有一組目標與關鍵結果。"
+        en: "A life dashboard across eight areas of life: a map of the road you've walked, OKRs from the year down to today, and soon three possible five-year futures.",
+        zh: "橫跨八個人生面向的人生儀表板：回顧走過的路、用 OKR 把年度目標拆到每天，之後還能並排想像三種五年人生。"
       },
       stack: { en: "HTML · Supabase · Vercel", zh: "HTML · Supabase · Vercel" },
-      links: [{ label: { en: "Open live app", zh: "打開線上版" }, url: "https://lifeos.cards/welcome" }]
+      links: [{ label: { en: "Open live app", zh: "打開線上版" }, url: "https://lifeos.cards/welcome", peek: "img/side/lifeos.webp" }]
     },
     {
       id: "referee",
@@ -158,7 +159,7 @@ window.HUB = {
         zh: "用 Claude Code 打造的 agent，涵蓋 FIBA 規則、官方解釋與 2PO／3PO 裁判法。每個答案都附條號與出處，並用 66 題評測集測過。"
       },
       stack: { en: "Claude Code · Eval set", zh: "Claude Code · 評測集" },
-      links: [{ label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/basketball-referee-assistant" }]
+      links: [{ label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/basketball-referee-assistant", peek: "img/side/referee-gh.webp" }]
     },
     {
       id: "echotrail",
@@ -172,12 +173,13 @@ window.HUB = {
       },
       stack: { en: "MVP spec in Git · 2 PMs, 2 engineers", zh: "Git 規格庫 · 2 PM、2 工程師" },
       links: [
-        { label: { en: "Try the prototype", zh: "試用原型" }, url: "https://echotrail-dev-508500-k6.web.app/" },
+        { label: { en: "Try the prototype", zh: "試用原型" }, url: "https://echotrail-dev-508500-k6.web.app/", peek: "img/side/echotrail-proto.webp" },
         { label: { en: "Spec repo on GitHub", zh: "GitHub 規格庫" }, url: "https://github.com/ZeYuanDuan/echotrail-project-management" }
       ]
     },
     {
       id: "flexbox-rpg",
+      page: "works/flexbox-rpg.html",
       orbit: "build", mag: 2,
       name: { en: "Flexbox RPG", zh: "Flexbox 勇者傳說" },
       status: "live", year: { en: "2026", zh: "2026" },
@@ -187,8 +189,8 @@ window.HUB = {
       },
       stack: { en: "HTML · CSS · GitHub Pages", zh: "HTML · CSS · GitHub Pages" },
       links: [
-        { label: { en: "Play it", zh: "開始玩" }, url: "https://tsuwebber.github.io/flexbox-rpg/" },
-        { label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/flexbox-rpg" }
+        { label: { en: "Play it", zh: "開始玩" }, url: "https://tsuwebber.github.io/flexbox-rpg/", peek: "img/side/flexbox-play.webp" },
+        { label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/flexbox-rpg", peek: "img/side/flexbox-gh.webp" }
       ]
     },
     {
@@ -203,7 +205,7 @@ window.HUB = {
         zh: "我身為軟體 PM 每天在用的 11 個 Claude Code skill：從寫規格、審查、開 Jira 票到上線，規格放在 Git 裡用 PR 迭代。"
       },
       stack: { en: "Claude Code plugin · 11 skills", zh: "Claude Code plugin · 11 個 skill" },
-      links: [{ label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/pm-workflow-skills" }]
+      links: [{ label: { en: "Source on GitHub", zh: "GitHub 原始碼" }, url: "https://github.com/TsuWebber/pm-workflow-skills", peek: "img/side/pmws-gh.webp" }]
     }
   ],
 

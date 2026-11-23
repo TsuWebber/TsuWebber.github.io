@@ -7,8 +7,8 @@
       wordmark: "Webber Hsu", skip: "Skip to projects",
       "nav.build": "Build", "nav.think": "Think", "nav.learn": "Learn", "nav.exp": "Experience", "nav.work": "Projects", "nav.blog": "Blog",
       "work.h": "Projects",
-      "work.sub": "Side projects I built and still run, and earlier projects from school, programmes and teams.",
-      side: "Side projects", past: "Past projects",
+      "work.sub": "Products I built and still run, and case work from school, programmes and competitions.",
+      side: "Products", past: "Cases", "f.all": "All", "f.side": "Products", "f.past": "Cases",
       status: { live: "Live", built: "Built", planned: "Planned" },
       pending: "Private for now", readMore: "Read the story", deck: "Pitch deck", details: "About this project",
       "foot.h": "Elsewhere", "foot.meta": "Taipei",
@@ -18,8 +18,8 @@
       wordmark: "徐偉博", skip: "跳到專案",
       "nav.build": "實作", "nav.think": "思考", "nav.learn": "學習", "nav.exp": "經歷", "nav.work": "專案", "nav.blog": "部落格",
       "work.h": "專案",
-      "work.sub": "我自己做、還在運作的個人專案，以及過去在學校、培訓計畫和團隊裡做過的專案。",
-      side: "個人專案", past: "過去專案",
+      "work.sub": "我自己做、還在運作的產品，以及在學校、培訓計畫和競賽裡做過的案例。",
+      side: "產品", past: "案例", "f.all": "全部", "f.side": "產品", "f.past": "案例",
       status: { live: "上線中", built: "已完成", planned: "規劃中" },
       pending: "目前不公開", readMore: "看這段的文章", deck: "提案簡報", details: "看專案介紹",
       "foot.h": "其他地方", "foot.meta": "台北",
@@ -46,9 +46,9 @@
   function workRow(w) {
     var ui = UI[lang];
     // A work with its own page gets an inside link first; the rest open outside.
-    var inside = w.page ? '<a class="work-page" href="' + esc(w.page) + '">' + esc(ui.details) + ARROW + "</a>" : "";
+    var inside = w.page ? '<a class="work-page" href="' + esc(w.page) + '">' + esc(ui.details) + "</a>" : "";   // stays on this site, so no outside-link arrow
     var links = (w.links || []).filter(function (l) { return l.url; }).map(function (l) {
-      return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(t(l.label)) + ARROW + "</a>";
+      return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener"' + (l.peek ? ' data-peek="' + esc(l.peek) + '"' : "") + ">" + esc(t(l.label)) + ARROW + "</a>";
     }).join("");
     links = inside + links;
     if (!links && w.status !== "planned") links = '<span class="work-pending">' + esc(ui.pending) + "</span>";
@@ -69,6 +69,7 @@
         (p.deck ? '<a href="' + esc(p.deck) + '" target="_blank" rel="noopener"' + (p.deckPeek ? ' data-peek="' + esc(p.deckPeek) + '"' : "") + ">" + esc(t(p.deckLabel) || ui.deck) + ARROW + "</a>" : "") +
         (p.link ? '<a href="' + esc(p.link) + '" target="_blank" rel="noopener" hreflang="zh-Hant"' + (p.linkPeek ? ' data-peek="' + esc(p.linkPeek) + '"' : "") + ">" + esc(ui.readMore) + ARROW + "</a>" : "") + "</div>" : "") + "</li>";
   }
+  var filter = "all";
   function renderWorks() {
     var ui = UI[lang];
     // Side projects: everything on the Build track, the homepage picks first, then finished before planned.
@@ -76,9 +77,11 @@
     var side = (HUB.works || []).filter(function (w) { return w.orbit === "build"; }).slice()
       .sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || rank[a.status] - rank[b.status]; });
     var past = HUB.past || [];
+    // The filter shows both groups, or only products, or only cases.
+    var showSide = filter !== "past", showPast = filter !== "side";
     document.querySelector("[data-works]").innerHTML =
-      '<section class="year" aria-labelledby="w-side"><h2 class="year-h" id="w-side">' + esc(ui.side) + '</h2><ol class="works">' + side.map(workRow).join("") + "</ol></section>" +
-      (past.length ? '<section class="year" aria-labelledby="w-past"><h2 class="year-h" id="w-past">' + esc(ui.past) + '</h2><ol class="works">' + past.map(pastRow).join("") + "</ol></section>" : "");
+      (!showSide ? "" : '<section class="year" aria-labelledby="w-side"><h2 class="year-h" id="w-side">' + esc(ui.side) + '</h2><ol class="works">' + side.map(workRow).join("") + "</ol></section>") +
+      (past.length && showPast ? '<section class="year" aria-labelledby="w-past"><h2 class="year-h" id="w-past">' + esc(ui.past) + '</h2><ol class="works">' + past.map(pastRow).join("") + "</ol></section>" : "");
   }
 
   function renderLinks() {
@@ -98,7 +101,15 @@
     var ui = UI[lang];
     document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
     document.querySelectorAll("[data-i18n]").forEach(function (el) { var v = ui[el.getAttribute("data-i18n")]; if (typeof v === "string") el.textContent = v; });
-    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    document.querySelector("[data-filter]").addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    filter = b.getAttribute("data-src");
+    document.querySelectorAll("[data-filter] button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    renderWorks();
+  });
+
+  document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
     renderLinks();
     renderWorks();
   }

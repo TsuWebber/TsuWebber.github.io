@@ -227,9 +227,9 @@
   function workRow(w) {
     var ui = UI[lang];
     // A work with its own page gets an inside link first; the rest open outside.
-    var inside = w.page ? '<a class="work-page" href="' + esc(w.page) + '">' + esc(ui.details) + ARROW + "</a>" : "";
+    var inside = w.page ? '<a class="work-page" href="' + esc(w.page) + '">' + esc(ui.details) + "</a>" : "";   // stays on this site, so no outside-link arrow
     var links = w.links.filter(function (l) { return l.url; }).map(function (l) {
-      return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(t(l.label)) + ARROW + "</a>";
+      return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener"' + (l.peek ? ' data-peek="' + esc(l.peek) + '"' : "") + ">" + esc(t(l.label)) + ARROW + "</a>";
     }).join("");
     links = inside + links;
     if (!links && w.status !== "planned") links = '<span class="work-pending">' + esc(ui.pending) + "</span>";
@@ -262,7 +262,7 @@
         : items.length ? '<ol class="entries">' + items.map(entryRow).join("") + "</ol>"
         : '<p class="empty"><span class="dot" style="--d:8px" aria-hidden="true"></span>' + esc(cat === "learn" ? ui.emptyLearn : ui.emptyThink) + "</p>";
       // Build points to the site's own Work page; Think and Learn point out to Medium and Substack.
-      var more = cat === "build" ? '<a class="panel-more" href="works.html">' + esc(ui.allWork) + ARROW + "</a>"
+      var more = cat === "build" ? '<a class="panel-more" href="works.html">' + esc(ui.allWork) + "</a>"
         : HUB.links[src] ? '<a class="panel-more" href="' + esc(HUB.links[src]) + '" target="_blank" rel="noopener">' + esc(ui.readOn[src]) + ARROW + "</a>" : "";
       return '<section class="cat" id="' + cat + '" aria-labelledby="' + cat + '-h"><header class="panel-head"><h3 class="panel-h" id="' + cat + '-h">' + esc(copy.h) + "</h3></header>" + list + more + "</section>";
     }).join("");
