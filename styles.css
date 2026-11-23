@@ -971,3 +971,101 @@ body.page-project { container-type: inline-size; }
 @media (min-width: 1481px) {
   .page-project .flow-scroll { margin-right: calc(var(--gutter) * -1 - max(0px, 100cqw - 1480px)); padding-right: var(--gutter); }
 }
+
+/* Skill catalogue under the full map: one row per skill, opened for its sub-commands. */
+.skcat-note { margin-top: var(--s4); }
+.skcat { max-width: 1080px; margin-top: var(--s2); border-top: 1px solid var(--ring-3); }
+.skcat-item { border-bottom: 1px solid var(--ring-3); }
+.skcat-item summary { display: grid; grid-template-columns: 52px 150px minmax(0, 1fr) 14px; gap: 16px; align-items: baseline; min-height: 48px; padding: 13px 0; cursor: pointer; list-style: none; }
+.skcat-item summary::-webkit-details-marker { display: none; }
+.skcat-item summary::after { content: ""; align-self: center; width: 7px; height: 7px; border-right: 1.5px solid var(--ink-3, var(--ink-2)); border-bottom: 1.5px solid var(--ink-3, var(--ink-2)); transform: rotate(45deg); transition: transform .2s var(--ease-out); }
+.skcat-item[open] summary::after { transform: rotate(-135deg); }
+.skcat-item summary:hover .skcat-name { color: var(--gold); }
+.skcat-item summary:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+.skcat-n { font-size: 12px; letter-spacing: .08em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.skcat-name { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 14px; color: var(--ink); transition: color .2s var(--ease-out); }
+.skcat-what { font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.skcat-body { padding: 0 0 20px calc(52px + 16px); }
+.skcat-subs { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px 16px; margin: 0; }
+.skcat-subs dt { margin: 0; }
+.skcat-subs dt code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 13px; color: var(--gold); }
+.skcat-subs dd { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+.skcat-foot { margin: 14px 0 0; font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+@media (max-width: 640px) {
+  .skcat-item summary { grid-template-columns: 40px minmax(0, 1fr) 14px; gap: 4px 12px; }
+  .skcat-what { grid-column: 2; grid-row: 2; font-size: 14px; }
+  .skcat-item summary::after { grid-column: 3; grid-row: 1; }
+  .skcat-body { padding-left: 52px; }
+  .skcat-subs { grid-template-columns: 1fr; gap: 2px; }
+  .skcat-subs dd { margin-bottom: 10px; }
+}
+
+/* Buttons in the skill catalogue that open a file preview. */
+.skcat-skillfile, .skcat-sub { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; margin: 0; padding: 0; border: 0; background: none; color: var(--gold); cursor: pointer; font: inherit; text-align: left; }
+.skcat-skillfile { margin: 0 0 12px; color: var(--ink-2); }
+.skcat-skillfile code, .skcat-sub code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 13px; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color .2s var(--ease-out), color .2s var(--ease-out); }
+.skcat-skillfile svg, .skcat-sub svg { width: 12px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linejoin: round; opacity: .7; }
+.skcat-skillfile:hover, .skcat-sub:hover { color: var(--ink); }
+.skcat-skillfile:hover code, .skcat-sub:hover code { text-decoration-color: currentColor; }
+.skcat-skillfile:focus-visible, .skcat-sub:focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+.skcat-subs dt { align-self: start; margin-top: -6px; }
+
+/* File preview dialog. */
+html:has(dialog.mdv[open]) { overflow: hidden; }
+.mdv { width: min(860px, calc(100vw - 32px)); max-height: min(86vh, 900px); margin: auto; padding: 0; border: 1px solid var(--ring-2, var(--ring-1)); border-radius: 14px; background: #0d0f14; color: var(--ink); display: none; flex-direction: column; overflow: hidden; }
+.mdv[open] { display: flex; }
+.mdv::backdrop { background: rgba(0, 0, 0, .62); backdrop-filter: blur(3px); }
+.mdv-head { display: flex; align-items: center; gap: 16px; padding: 14px 14px 14px 24px; border-bottom: 1px solid var(--ring-3); }
+.mdv-meta { display: flex; align-items: baseline; gap: 10px; min-width: 0; flex: 1; }
+.mdv-skill { font-size: 12px; letter-spacing: .06em; color: var(--ink-2); white-space: nowrap; }
+.mdv-path { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 14px; color: var(--gold); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mdv-gh { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+.mdv-gh:hover { color: var(--ink); }
+.mdv-gh svg { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.4; }
+.mdv-x { display: grid; place-items: center; width: 40px; height: 40px; flex: none; border: 0; border-radius: 50%; background: none; color: var(--ink-2); cursor: pointer; }
+.mdv-x:hover { background: rgba(255, 255, 255, .06); color: var(--ink); }
+.mdv-x:focus-visible, .mdv-tab:focus-visible, .mdv-gh:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+.mdv-x svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+.mdv-tabs { display: flex; gap: 4px; padding: 10px 20px 0; border-bottom: 1px solid var(--ring-3); overflow-x: auto; }
+.mdv-tabs[hidden], .mdv-lang[hidden] { display: none; }
+.mdv-tab { padding: 8px 10px 10px; border: 0; border-bottom: 1.5px solid transparent; margin-bottom: -1px; background: none; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.mdv-tab code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 13px; }
+.mdv-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--gold); }
+.mdv-lang { margin: 0; padding: 10px 24px 0; font-size: 12px; color: var(--ink-2); }
+.mdv-body { flex: 1; min-height: 160px; overflow-y: auto; overscroll-behavior: contain; padding: 8px 32px 36px; }
+.mdv-status { margin: 24px 0; font-size: 14px; color: var(--ink-2); }
+/* the rendered file: a reading measure, quiet hierarchy */
+.mdv-doc { max-width: 70ch; font-size: 14.5px; line-height: 1.75; color: var(--ink-2); letter-spacing: .01em; }
+.mdv-doc > :first-child { margin-top: 20px; }
+.mdv-doc h3, .mdv-doc h4, .mdv-doc h5, .mdv-doc h6 { color: var(--ink); line-height: 1.4; font-weight: 600; letter-spacing: .02em; }
+.mdv-doc h3 { margin: 28px 0 12px; font-size: 20px; }
+.mdv-doc h4 { margin: 30px 0 10px; font-size: 16px; }
+.mdv-doc h5, .mdv-doc h6 { margin: 22px 0 8px; font-size: 14.5px; }
+.mdv-doc p { margin: 0 0 12px; }
+.mdv-doc ul, .mdv-doc ol { margin: 0 0 12px; padding-left: 1.4em; }
+.mdv-doc li { margin: 3px 0; }
+.mdv-doc li > ul, .mdv-doc li > ol { margin: 4px 0 0; }
+.mdv-doc strong { color: var(--ink); font-weight: 600; }
+.mdv-doc a { color: var(--gold); text-underline-offset: 3px; }
+.mdv-doc code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .88em; padding: 1px 5px; border-radius: 4px; background: rgba(255, 255, 255, .06); color: var(--ink); }
+.mdv-doc pre { margin: 0 0 14px; padding: 14px 16px; border-radius: 8px; background: rgba(255, 255, 255, .04); overflow-x: auto; }
+.mdv-doc pre code { padding: 0; background: none; font-size: 12.5px; line-height: 1.6; }
+.mdv-doc blockquote { margin: 0 0 12px; padding: 2px 0 2px 14px; border-left: 2px solid var(--ring-1); }
+.mdv-doc hr { margin: 24px 0; border: 0; border-top: 1px solid var(--ring-3); }
+.mdv-table { margin: 0 0 14px; overflow-x: auto; }
+.mdv-doc table { border-collapse: collapse; font-size: 13.5px; line-height: 1.6; min-width: 100%; }
+.mdv-doc th, .mdv-doc td { padding: 8px 12px; border-bottom: 1px solid var(--ring-3); text-align: left; vertical-align: top; }
+.mdv-doc th { color: var(--ink); font-weight: 600; white-space: nowrap; }
+@media (max-width: 640px) {
+  .mdv { width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; border: 0; border-radius: 0; }
+  .mdv-head { padding-left: 16px; gap: 8px; }
+  .mdv-meta { flex-direction: column; gap: 2px; }
+  .mdv-gh { font-size: 12px; }
+  .mdv-tabs { padding: 8px 12px 0; }
+  .mdv-lang { padding: 10px 16px 0; }
+  .mdv-body { padding: 4px 16px 32px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mdv[open] { animation: mdv-in .22s var(--ease-out); }
+  @keyframes mdv-in { from { opacity: 0; transform: translateY(8px); } }
+}

@@ -240,7 +240,406 @@ window.HUB_PROJECTS = {
           loop: { en: "Problems found in review, and accepted design changes, go back to the spec", zh: "審查找到的問題、接受的設計修改，都回到規格修改" },
           base: { name: "shared/ · pm-config", text: { en: "Every skill reads the shared writing rules and your private config first", zh: "所有 skill 執行前都先讀共用規則與私人設定" } },
           side: { name: "pm-report", subs: ["digest", "daily", "weekly"], text: { en: "Every day and every week, outside any single feature", zh: "每天、每週的例行回報，不屬於單一需求" } }
-        }
+        },
+        catalogNote: { en: "Open a skill to see its sub-commands. Select a file name to read the skill file itself, straight from the repo.", zh: "點開每個 skill，看底下的子指令各做什麼；點檔名可以直接預覽 repo 裡的原始檔。" },
+        catalogRepo: "TsuWebber/pm-workflow-skills",
+        catalog: [
+          {
+            "n": "0",
+            "name": "pm-setup",
+            "what": {
+              "en": "Setup: project context, tools, an up-to-date spec repo",
+              "zh": "準備：專案背景、工具、最新的規格庫"
+            },
+            "subs": [
+              {
+                "name": "init",
+                "text": {
+                  "en": "Creates or updates .pm/PROJECT.md, the project context every skill reads",
+                  "zh": "建立或更新專案背景 .pm/PROJECT.md，之後每個 skill 都會讀"
+                }
+              },
+              {
+                "name": "tools",
+                "text": {
+                  "en": "Installs and authorises git and the other tools the spec repo needs, with a health check",
+                  "zh": "一次裝好 git 等規格庫需要的工具並完成授權，附健康檢查"
+                }
+              },
+              {
+                "name": "sync",
+                "text": {
+                  "en": "Brings the local spec repo up to date without losing drafts in progress",
+                  "zh": "把本機規格庫更新到最新，進行中的草稿不會弄丟"
+                }
+              }
+            ]
+          },
+          {
+            "n": "1",
+            "name": "pm-intake",
+            "what": {
+              "en": "Brings scattered material into the spec repo",
+              "zh": "把散在各處的素材收進規格庫"
+            },
+            "subs": [
+              {
+                "name": "notion",
+                "text": {
+                  "en": "Moves a spec from Notion into drafts, sorted into spec, decisions, to-dos, meetings and out of scope; images go to Drive",
+                  "zh": "Notion 上的規格搬進 drafts，分成規格、決策、待辦、會議、範圍外；圖片搬到 Drive"
+                }
+              },
+              {
+                "name": "meeting",
+                "text": {
+                  "en": "Turns meeting notes into decisions, to-dos and proposed spec additions",
+                  "zh": "會議記錄整理成決策、待辦與規格增補提案"
+                }
+              },
+              {
+                "name": "material",
+                "text": {
+                  "en": "Sorts rough material, like a domain model or story map, into the planning flow",
+                  "zh": "還沒成形的素材（domain model、story mapping、草稿）整理進規劃流程"
+                }
+              }
+            ]
+          },
+          {
+            "n": "1",
+            "name": "pm-discover",
+            "what": {
+              "en": "Optional research before writing: how others do it, whether the pain is real",
+              "zh": "選用的調研：別人怎麼做、這個痛是不是真的"
+            },
+            "subs": [
+              {
+                "name": "cases",
+                "text": {
+                  "en": "Collects the solution space: conventions in shipped products and cases done badly",
+                  "zh": "收集解法空間：成品的慣例、做不好的案例"
+                }
+              },
+              {
+                "name": "pains",
+                "text": {
+                  "en": "Turns a pain into evidence that can be traced back to real cases",
+                  "zh": "把痛點落成可追溯的實例證據"
+                }
+              }
+            ],
+            "note": {
+              "en": "Once both have run, a FINDINGS.md sums them up and hands over to pm-plan scope.",
+              "zh": "兩個都跑完後寫一份 FINDINGS.md 綜合結論，交給 pm-plan scope。"
+            }
+          },
+          {
+            "n": "1",
+            "name": "pm-plan",
+            "what": {
+              "en": "Whether to build it, and in which direction",
+              "zh": "決定要不要做、往哪個方向做"
+            },
+            "subs": [
+              {
+                "name": "scope",
+                "text": {
+                  "en": "A guided conversation on the problem, the modules touched and the scope, then sets up the feature folder in drafts",
+                  "zh": "引導對話想清楚解什麼問題、碰哪些模組、範圍到哪，並建好 drafts 的資料夾"
+                }
+              },
+              {
+                "name": "decide",
+                "text": {
+                  "en": "A decision document for one big change: background, options compared, a recommendation",
+                  "zh": "單次重大改動的決策文件：背景、選項比較、建議"
+                }
+              }
+            ]
+          },
+          {
+            "n": "2",
+            "name": "pm-spec",
+            "what": {
+              "en": "Writes specs, in the spec repo only",
+              "zh": "寫規格，只寫在規格庫"
+            },
+            "subs": [
+              {
+                "name": "write",
+                "text": {
+                  "en": "Turns the agreed direction into spec.md, with acceptance criteria and metric definitions",
+                  "zh": "把收斂的方向寫成 spec.md，含 AC 與指標定義"
+                }
+              },
+              {
+                "name": "story · flow", "files": ["reference/story.md", "reference/flow.md"],
+                "text": {
+                  "en": "User stories in Gherkin, or user flows, from a draft",
+                  "zh": "從草稿產出 Gherkin 格式的 User Story，或 Userflow"
+                }
+              },
+              {
+                "name": "reverse", "files": ["reference/reverse-story.md", "reference/reverse-flow.md"],
+                "text": {
+                  "en": "Works out how a live feature behaves from the front-end and back-end code",
+                  "zh": "從前後端程式碼反推現況規格"
+                }
+              },
+              {
+                "name": "search",
+                "text": {
+                  "en": "Finds which live specs describe a piece of logic",
+                  "zh": "查某個邏輯目前寫在哪些已上線的規格"
+                }
+              }
+            ]
+          },
+          {
+            "n": "3-5",
+            "name": "pm-review",
+            "what": {
+              "en": "Everything that finds problems or fills gaps, from first draft to review",
+              "zh": "從寫完到送審前，所有找問題、補內容的事"
+            },
+            "subs": [
+              {
+                "name": "qa",
+                "text": {
+                  "en": "From QA's side: gaps, vague parts, conflicts, things easy to get wrong or overbuild",
+                  "zh": "QA 角度：缺漏、模糊、衝突、容易做錯、做太多"
+                }
+              },
+              {
+                "name": "readers",
+                "text": {
+                  "en": "Rule checks plus reviews as engineering, QA, design, operations and finance, in one list",
+                  "zh": "規則檢查，加上工程、QA、設計、營運、財務的讀者審查，合併成一份清單"
+                }
+              },
+              {
+                "name": "edge",
+                "text": {
+                  "en": "State changes, reverse flows like cancellations and returns, permissions, bad data, zero and limits",
+                  "zh": "狀態轉換、取消退貨等逆向流程、權限、資料異常、0 筆與上限"
+                }
+              },
+              {
+                "name": "impact",
+                "text": {
+                  "en": "What changes for each team, what they need to prepare, who decides",
+                  "zh": "各部門受到的影響、要準備什麼、誰拍板"
+                }
+              },
+              {
+                "name": "consistency",
+                "text": {
+                  "en": "Scans the whole text for contradictions between rules, criteria and formulas",
+                  "zh": "全文掃矛盾：規則衝突、AC 與內文不一致、公式邊界、狀態流轉"
+                }
+              },
+              {
+                "name": "polish", "files": ["reference/polish-clarify.md", "reference/polish-distill.md"],
+                "text": {
+                  "en": "Makes terms consistent and removes vague words, then cuts it down",
+                  "zh": "先統一用語、消除模糊詞，再精簡"
+                }
+              },
+              {
+                "name": "preflight",
+                "text": {
+                  "en": "A full review to QA's standard before sending, in a separate context; lists problems, changes nothing",
+                  "zh": "送審前用 QA 標準完整預審，在獨立 context 執行，只列問題不改檔"
+                }
+              }
+            ],
+            "note": {
+              "en": "all runs qa, readers, edge, impact and consistency in turn and merges them into one list by severity.",
+              "zh": "all 會依序跑 qa、readers、edge、impact、consistency，合併成一份依嚴重度排序的清單。"
+            }
+          },
+          {
+            "n": "4",
+            "name": "pm-design",
+            "what": {
+              "en": "Keeps spec and design aligned while both are moving",
+              "zh": "規格和畫面都在動的時候，讓兩邊對齊"
+            },
+            "subs": [
+              {
+                "name": "dr",
+                "text": {
+                  "en": "Logs each design change as its own entry; only the ones I accept become proposed spec changes",
+                  "zh": "設計師的每個修改各記一條，討論後我接受的才產出規格增補提案"
+                }
+              },
+              {
+                "name": "prototype",
+                "text": {
+                  "en": "A prototype that runs in the browser, which also catches usability and consistency issues",
+                  "zh": "做可以在瀏覽器操作的 prototype，順便挑出可用性與一致性問題"
+                }
+              }
+            ],
+            "note": {
+              "en": "No design change reaches spec.md without my sign-off.",
+              "zh": "沒有 PM 確認的設計修改，一律不改 spec.md。"
+            }
+          },
+          {
+            "n": "6",
+            "name": "pm-ship",
+            "what": {
+              "en": "Sends the spec for review and wraps up after",
+              "zh": "規格送審與收尾"
+            },
+            "subs": [
+              {
+                "name": "(none)", "files": ["reference/ship.md"],
+                "text": {
+                  "en": "Reads the changes, groups them into commits, pushes and opens a PR",
+                  "zh": "分析變更、分組 commit、push、開 PR"
+                }
+              },
+              {
+                "name": "suggest · apply", "files": ["reference/suggest.md", "reference/apply.md"],
+                "text": {
+                  "en": "Leaves suggestions on the exact lines of someone else's PR, or applies the ones left on mine",
+                  "zh": "審別人的 PR 時在指定行留建議；或把別人留給我的建議核對後套用"
+                }
+              },
+              {
+                "name": "wrap",
+                "text": {
+                  "en": "After review: changelog, Notion output, a sync message for the group, a reminder to open tickets",
+                  "zh": "送審後收尾：changelog、Notion 輸出、群組同步文字、開票提醒"
+                }
+              },
+              {
+                "name": "notion",
+                "text": {
+                  "en": "Publishes a settled spec as a read-only Notion page",
+                  "zh": "把定案的規格輸出成 Notion 展示頁（單向）"
+                }
+              }
+            ]
+          },
+          {
+            "n": "7",
+            "name": "pm-ticket",
+            "what": {
+              "en": "Creates Jira tickets",
+              "zh": "建立 Jira 工單"
+            },
+            "subs": [
+              {
+                "name": "spec",
+                "text": {
+                  "en": "Splits a spec into front-end and back-end user stories",
+                  "zh": "把規格拆成前端與後端兩種 User Story"
+                }
+              },
+              {
+                "name": "bug · sprint-bug", "files": ["reference/ticket/bug.md", "reference/ticket/sprint-bug.md"],
+                "text": {
+                  "en": "Bugs found in production, or during sprint testing, filed under the epic",
+                  "zh": "一般 bug，或 Sprint 測試期間發現、掛在 Epic 底下的 bug"
+                }
+              },
+              {
+                "name": "task · optimization", "files": ["reference/ticket/task.md", "reference/ticket/optimization.md"],
+                "text": {
+                  "en": "Investigation, data fixes and daily work; or UI and experience improvements",
+                  "zh": "調查、資料修補等日常任務；或 UI、體驗上的優化"
+                }
+              },
+              {
+                "name": "story · tech · form", "files": ["reference/ticket/pm-story.md", "reference/ticket/tech.md", "reference/ticket/jiandaoyun.md"],
+                "text": {
+                  "en": "A batch of epic and stories; tech debt and refactoring; reports passed in from a form",
+                  "zh": "批次建 Epic 與 Story；技術債與重構；表單通報傳進來的問題"
+                }
+              }
+            ],
+            "note": {
+              "en": "It lists the tickets it will create first, and creates them only after I confirm.",
+              "zh": "開票前先列出要建的票，我確認後才建。"
+            }
+          },
+          {
+            "n": "8",
+            "name": "pm-launch",
+            "what": {
+              "en": "After launch: tell the users, keep the repo clean, keep the lessons",
+              "zh": "上線後：讓使用單位知道、規格庫保持乾淨、留下經驗"
+            },
+            "subs": [
+              {
+                "name": "release",
+                "text": {
+                  "en": "A release note for the teams who use it: what changed, how to use it, what it means for them",
+                  "zh": "給使用單位的 release note：上了什麼、怎麼用、對他們有什麼影響"
+                }
+              },
+              {
+                "name": "archive",
+                "text": {
+                  "en": "Moves a launched feature from drafts to the archive, fixes references and opens a PR",
+                  "zh": "已上線的 feature 從 drafts 封存到 archive，修好引用並開 PR"
+                }
+              },
+              {
+                "name": "sync-code",
+                "text": {
+                  "en": "Reads new changes in the code and adds behaviour the live specs don't cover yet",
+                  "zh": "讀程式碼的新變更，把還沒寫進現況規格的行為補進去"
+                }
+              },
+              {
+                "name": "retro",
+                "text": {
+                  "en": "Builds a timeline from group chats and project records, narrowed to Keep / Problem / Try",
+                  "zh": "從群組對話與專案紀錄整理時間軸，收斂成 Keep / Problem / Try"
+                }
+              }
+            ]
+          },
+          {
+            "n": {
+              "en": "Daily",
+              "zh": "每天"
+            },
+            "name": "pm-report",
+            "what": {
+              "en": "Routine reports that follow the calendar, not a feature",
+              "zh": "跟著時間跑的例行回報，不屬於單一需求"
+            },
+            "subs": [
+              {
+                "name": "digest",
+                "text": {
+                  "en": "Yesterday's changes and group conclusions, split into one message per project; runs on a schedule",
+                  "zh": "整理昨天的改動與群組結論，依專案拆成群組訊息，適合排程每天早上跑"
+                }
+              },
+              {
+                "name": "daily",
+                "text": {
+                  "en": "A daily report from the task database and calendar",
+                  "zh": "從任務資料庫與行事曆產生 Daily 回報"
+                }
+              },
+              {
+                "name": "weekly",
+                "text": {
+                  "en": "A weekly report from meeting notes, calendar and tasks, in a results version and a personal one",
+                  "zh": "從週會筆記、行事曆、任務資料庫產生週報，分成果版與個人紀錄版"
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         h: { en: "How it evolved", zh: "迭代紀錄" },

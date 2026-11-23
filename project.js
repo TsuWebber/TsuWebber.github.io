@@ -125,6 +125,17 @@
       return '<li class="ftree-row" style="--d:' + r.d + '"><code class="ftree-path">' + esc(r.path) + '</code><span class="ftree-note">' + esc(t(r.note)) + "</span>" +
         (r.skill ? '<code class="ftree-skill">' + esc(r.skill) + "</code>" : "") + "</li>";
     }).join("") + "</ul>";
+    if (sec.catalog) out += (sec.catalogNote ? '<p class="proj-p skcat-note">' + esc(t(sec.catalogNote)) + "</p>" : "") +
+      '<div class="skcat">' + sec.catalog.map(function (k) {
+        return '<details class="skcat-item"><summary><span class="skcat-n">' + esc(t(k.n)) + '</span><code class="skcat-name">' + esc(k.name) +
+          '</code><span class="skcat-what">' + esc(t(k.what)) + '</span></summary><div class="skcat-body">' +
+          mdButton(sec.catalogRepo, k.name, "SKILL.md", ["SKILL.md"], "skcat-skillfile") + '<dl class="skcat-subs">' +
+          k.subs.map(function (s) {
+            var files = s.files || ["reference/" + s.name + ".md"];
+            return "<dt>" + mdButton(sec.catalogRepo, k.name, s.name, files, "skcat-sub") + "</dt><dd>" + esc(t(s.text)) + "</dd>";
+          }).join("") + "</dl>" +
+          (k.note ? '<p class="skcat-foot">' + esc(t(k.note)) + "</p>" : "") + "</div></details>";
+      }).join("") + "</div>";
     if (sec.steps && sec.stepsFold) out += '<details class="proj-fold"><summary>' + esc(t(sec.stepsFold)) + "</summary>";
     if (sec.steps) out += '<ol class="proj-steps">' + sec.steps.map(function (st) {
       return '<li><span class="proj-step-name">' + esc(t(st.name)) + '</span><span class="proj-step-text">' + esc(t(st.text)) + "</span></li>";
@@ -135,6 +146,134 @@
     if (sec.list) out += '<ul class="proj-list">' + sec.list.map(function (x) { return "<li>" + esc(t(x)) + "</li>"; }).join("") + "</ul>";
     return out + "</div></section>";
   }
+
+  // ---- Markdown preview: skill files read straight from the public repo, shown in a dialog.
+  var DOC = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5h4l2.5 2.5v6.5h-6.5zM7 1.5V4h2.5"/></svg>';
+  function mdButton(repo, skill, label, files, cls) {
+    return '<button type="button" class="' + cls + '" data-md-repo="' + esc(repo) + '" data-md-skill="' + esc(skill) + '" data-md-files="' + esc(files.join(",")) + '">' +
+      DOC + "<code>" + esc(label) + "</code></button>";
+  }
+  var MDUI = {
+    en: { loading: "Loading…", failed: "Couldn't load this file.", gh: "Open on GitHub", close: "Close", zh: "The skill files are written in Traditional Chinese." },
+    zh: { loading: "載入中…", failed: "這個檔案載入失敗，可以到 GitHub 看原檔。", gh: "在 GitHub 開啟", close: "關閉", zh: "" }
+  };
+  var mdCache = {};
+  function cjk(ch) { return /[\u3000-\u303f\u3400-\u9fff\uff00-\uffef]/.test(ch || ""); }
+  function mdInline(s, blob) {
+    var keep = [];
+    function hold(html) { keep.push(html); return "\u0000" + (keep.length - 1) + "\u0000"; }
+    s = s.replace(/`([^`]+)`/g, function (_, c) { return hold("<code>" + esc(c) + "</code>"); });
+    s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (_, txt, u) {
+      var href;
+      try { href = new URL(u, blob).href; } catch (e) { return txt; }
+      if (!/^https:/.test(href)) return txt;
+      return hold('<a href="' + esc(href) + '" target="_blank" rel="noopener">' + mdInline(txt, blob) + "</a>");
+    });
+    s = esc(s).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    return s.replace(/\u0000(\d+)\u0000/g, function (_, i) { return keep[+i]; });
+  }
+  var BLOCK = /^(```|#{1,6}\s|\s*>|\s*([-*+]|\d+\.)\s|\s*\||\s*(-{3,}|\*{3,})\s*$)/;
+  function mdRender(src, blob) {
+    var lines = src.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "").split(/\r?\n/), i = 0, out = "", m;
+    function cells(l) { return l.trim().replace(/^\||\|$/g, "").split(/(?<!\\)\|/).map(function (c) { return mdInline(c.trim().replace(/\\\|/g, "|"), blob); }); }
+    while (i < lines.length) {
+      var l = lines[i];
+      if (/^\s*```/.test(l)) {
+        var code = []; i++;
+        while (i < lines.length && !/^\s*```/.test(lines[i])) code.push(lines[i++]);
+        i++; out += "<pre><code>" + esc(code.join("\n")) + "</code></pre>";
+      } else if (/^\s*$/.test(l)) { i++; }
+      else if ((m = /^(#{1,6})\s+(.*)$/.exec(l))) {
+        var h = Math.min(m[1].length + 2, 6); out += "<h" + h + ">" + mdInline(m[2], blob) + "</h" + h + ">"; i++;
+      } else if (/^\s*(-{3,}|\*{3,})\s*$/.test(l)) { out += "<hr>"; i++; }
+      else if (/^\s*\|/.test(l) && /^\s*\|?\s*:?-{2,}/.test(lines[i + 1] || "")) {
+        var head = cells(l); i += 2; var rows = [];
+        while (i < lines.length && /^\s*\|/.test(lines[i])) rows.push(cells(lines[i++]));
+        out += '<div class="mdv-table"><table><thead><tr>' + head.map(function (c) { return "<th>" + c + "</th>"; }).join("") + "</tr></thead><tbody>" +
+          rows.map(function (r) { return "<tr>" + r.map(function (c) { return "<td>" + c + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table></div>";
+      } else if (/^\s*>/.test(l)) {
+        var q = [];
+        while (i < lines.length && /^\s*>/.test(lines[i])) q.push(lines[i++].replace(/^\s*>\s?/, ""));
+        out += "<blockquote>" + mdRender(q.join("\n"), blob) + "</blockquote>";
+      } else if (/^\s*([-*+]|\d+\.)\s/.test(l)) {
+        var items = [];
+        while (i < lines.length) {
+          var li = /^(\s*)([-*+]|\d+\.)\s+(.*)$/.exec(lines[i]);
+          if (li) { items.push({ d: li[1].length, o: /\d/.test(li[2]), x: li[3] }); i++; }
+          else if (/^\s+\S/.test(lines[i]) && items.length) { var last = items[items.length - 1], nx = lines[i++].trim(); last.x += (cjk(last.x.slice(-1)) && cjk(nx[0]) ? "" : " ") + nx; }
+          else if (/^\s*$/.test(lines[i]) && /^\s*([-*+]|\d+\.)\s/.test(lines[i + 1] || "")) i++;
+          else break;
+        }
+        var k = 0;
+        (function list(d) {
+          var tag = items[k].o ? "ol" : "ul", html = "<" + tag + ">";
+          while (k < items.length && items[k].d >= d) {
+            if (items[k].d > d) { html = html.replace(/<\/li>$/, "") + list(items[k].d) + "</li>"; continue; }
+            html += "<li>" + mdInline(items[k].x, blob) + "</li>"; k++;
+          }
+          html += "</" + tag + ">";
+          if (d === items[0].d) out += html;
+          return html;
+        })(items[0].d);
+      } else {
+        var para = l.trim(); i++;
+        while (i < lines.length && !/^\s*$/.test(lines[i]) && !BLOCK.test(lines[i])) {
+          var n2 = lines[i++].trim(); para += (cjk(para.slice(-1)) && cjk(n2[0]) ? "" : " ") + n2;
+        }
+        out += "<p>" + mdInline(para, blob) + "</p>";
+      }
+    }
+    return out;
+  }
+  var dlg = null;
+  function mdDialog() {
+    if (dlg) return dlg;
+    dlg = document.createElement("dialog");
+    dlg.className = "mdv";
+    dlg.setAttribute("aria-labelledby", "mdv-title");
+    dlg.innerHTML = '<div class="mdv-head"><div class="mdv-meta"><span class="mdv-skill"></span><code class="mdv-path" id="mdv-title"></code></div>' +
+      '<a class="mdv-gh" target="_blank" rel="noopener"></a><button type="button" class="mdv-x"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7"/></svg></button></div>' +
+      '<div class="mdv-tabs" role="tablist"></div><p class="mdv-lang"></p><div class="mdv-body"></div>';
+    document.body.appendChild(dlg);
+    dlg.querySelector(".mdv-x").addEventListener("click", function () { dlg.close(); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+    return dlg;
+  }
+  function mdLoad(repo, path) {
+    var d = mdDialog(), ui = MDUI[lang], body = d.querySelector(".mdv-body");
+    var blob = "https://github.com/" + repo + "/blob/main/" + path;
+    d.querySelector(".mdv-path").textContent = path.replace(/^pm-workflow\/skills\/[^/]+\//, "");
+    var gh = d.querySelector(".mdv-gh"); gh.href = blob; gh.innerHTML = esc(ui.gh) + ARROW;
+    d.querySelectorAll(".mdv-tab").forEach(function (b) { b.setAttribute("aria-selected", String(b.getAttribute("data-path") === path)); });
+    body.scrollTop = 0;
+    function show(src) { body.innerHTML = '<div class="mdv-doc">' + mdRender(src, blob) + "</div>"; }
+    if (mdCache[path]) return show(mdCache[path]);
+    body.innerHTML = '<p class="mdv-status">' + esc(ui.loading) + "</p>";
+    fetch("https://raw.githubusercontent.com/" + repo + "/main/" + path).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.text();
+    }).then(function (src) { mdCache[path] = src; if (d.open) show(src); })
+      .catch(function () { body.innerHTML = '<p class="mdv-status">' + esc(ui.failed) + "</p>"; });
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-md-files]");
+    if (!b) return;
+    var repo = b.getAttribute("data-md-repo"), skill = b.getAttribute("data-md-skill");
+    var paths = b.getAttribute("data-md-files").split(",").map(function (f) { return "pm-workflow/skills/" + skill + "/" + f; });
+    var d = mdDialog(), ui = MDUI[lang];
+    d.querySelector(".mdv-skill").textContent = skill;
+    d.querySelector(".mdv-x").setAttribute("aria-label", ui.close);
+    d.querySelector(".mdv-lang").textContent = ui.zh;
+    d.querySelector(".mdv-lang").hidden = !ui.zh;
+    var tabs = d.querySelector(".mdv-tabs");
+    tabs.hidden = paths.length < 2;
+    tabs.innerHTML = paths.map(function (p) {
+      return '<button type="button" role="tab" class="mdv-tab" data-path="' + esc(p) + '"><code>' + esc(p.split("/").pop()) + "</code></button>";
+    }).join("");
+    tabs.querySelectorAll(".mdv-tab").forEach(function (tb) { tb.addEventListener("click", function () { mdLoad(repo, tb.getAttribute("data-path")); }); });
+    if (!d.open) d.showModal();
+    mdLoad(repo, paths[0]);
+  });
 
   function renderProject() {
     var ui = UI[lang];
