@@ -219,7 +219,7 @@ window.HUB = {
         en: "Segmented the gaming market, defined StormPlay's target users and found where the cloud gaming platform could make money, with recommendations on direct revenue and the indirect value it could bring to Cooler Master's hardware business.",
         zh: "釐清遊戲產業的市場區隔，定義 StormPlay 的目標客群並找出商業機會，對 Cooler Master 提出直接獲利與帶給硬體本業間接價值的策略建議。"
       },
-      deck: "https://drive.google.com/drive/folders/1EOtbtJvkDzB1RR6YA1nSFJEUqeKaVpR_?usp=sharing",
+      deck: "https://drive.google.com/file/d/1cG5VzmTXBF5RsjcdTSHyyS4vuC1-0scJ/view?usp=sharing",
       link: "https://medium.com/@webber52543363/%E6%94%BF%E5%A4%A7%E7%AE%A1%E7%90%86%E9%A1%A7%E5%95%8F%E7%A4%BE-%E8%A7%A3%E6%B1%BA%E5%95%8F%E9%A1%8C%E8%88%87%E9%82%8F%E8%BC%AF%E6%80%9D%E8%80%83%E7%9A%84%E5%AD%B8%E7%BF%92-94d4c9c7907c"
     },
     {
@@ -242,7 +242,7 @@ window.HUB = {
         en: "A full product proposal for the career platform I was working on outside school: interviews, a customer journey, user stories and an MRD.",
         zh: "替我在校外實際參與運營的職涯平台，做出完整的產品提案：質化訪談、Customer Journey、User Story 與 MRD 產品文件。"
       },
-      deck: "https://drive.google.com/drive/folders/1TEVl0v4Y06qt4By2nI9jES7Q6huvma8H?usp=sharing"
+      deck: "https://drive.google.com/file/d/1Urz-IuCjdS0trtDvQjxgaTkqzLI0Rzay/view?usp=sharing"
     },
     {
       id: "venus",
@@ -275,7 +275,7 @@ window.HUB = {
         en: "A space revitalization proposal for Daonan Village, gathering stakeholders' views through design thinking and the KJ method, in a team of three Taiwanese and two Japanese students.",
         zh: "道南新村空間再造提案，用設計思考與 KJ 法蒐集利害關係人的觀點，團隊由 3 位政大學生和 2 位千葉大學學生組成。"
       },
-      deck: "https://drive.google.com/drive/folders/10lCziJS1l9BWjYlXn73qAfov3xHdhPp3?usp=sharing",
+      deck: "https://drive.google.com/file/d/12RRpgl7TvBbweaXz_6sk4ZYMuyclEe85/view?usp=sharing",
       deckLabel: { en: "Poster", zh: "海報" }
     },
     {
@@ -287,7 +287,7 @@ window.HUB = {
         en: "An app to help victims of psychological abuse before, during and after: education, recording guides and a discreet recording feature for evidence, then transcription and an AI score for how closely it matches court rulings on psychological abuse. I ran project management, customer and pain analysis, and the business model.",
         zh: "協助精神暴力受害者的 App：事件發生前的教育、發生當下的錄音教學與秘密錄音蒐證、發生後的逐字稿與 AI 比對司法院裁判書的精神暴力符合率。我主責專案管理、目標客群與痛點分析、商業模式。"
       },
-      deck: "https://drive.google.com/drive/folders/1WmiZZXgFW0U1TLbe3YhTYMfbw3Z7IZ9F?usp=sharing",
+      deck: "https://drive.google.com/file/d/1K_t7uSoNonXOaoCvE_ZzW4Ec2tndNYJo/view?usp=sharing",
       link: "https://medium.com/@webber52543363/%E8%BF%B7%E6%83%98%E4%B8%AD%E7%A9%8D%E6%A5%B5-%E6%B7%B7%E4%BA%82%E4%B8%AD%E6%88%90%E9%95%B7-b1c047e911fe"
     },
     {
@@ -309,7 +309,7 @@ window.HUB = {
         en: "Two weeks reading Netflix's financials and breaking down subscription metrics, proposing better membership tiers to lift revenue and stronger IP content to cut churn. I led a team formed on the day, planned the schedule and brought in mentors.",
         zh: "兩週內判讀財報、拆解訂閱制關鍵指標，提出改善會員分級以提升營收、強化高品質 IP 內容以降低流失。我擔任組長，負責現場組成團隊的分工、排程與業師安排。"
       },
-      deck: "https://drive.google.com/drive/folders/1PhbDOPJ-_mFQNrMy1qVpUf5-lXYRT-OW?usp=sharing"
+      deck: "https://drive.google.com/file/d/1tQC0mw5qeWIKAc57_oax4ZOppOQyCTTF/view?usp=sharing"
     },
     {
       id: "sanfang",
