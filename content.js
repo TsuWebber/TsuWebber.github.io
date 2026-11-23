@@ -267,18 +267,6 @@ window.HUB = {
       }
     },
     {
-      id: "daonan",
-      name: { en: "Daonan Village Revitalization", zh: "道南新村空間再造" },
-      year: "2023",
-      context: { en: "USR international PBL course · NCCU with Chiba University", zh: "大學社會責任國際 PBL 課程・政大與日本千葉大學" },
-      summary: {
-        en: "A space revitalization proposal for Daonan Village, gathering stakeholders' views through design thinking and the KJ method, in a team of three Taiwanese and two Japanese students.",
-        zh: "道南新村空間再造提案，用設計思考與 KJ 法蒐集利害關係人的觀點，團隊由 3 位政大學生和 2 位千葉大學學生組成。"
-      },
-      deck: "https://drive.google.com/file/d/12RRpgl7TvBbweaXz_6sk4ZYMuyclEe85/view?usp=sharing",
-      deckLabel: { en: "Poster", zh: "海報" }
-    },
-    {
       id: "emonono",
       name: { en: "Emonono", zh: "Emonono" },
       year: "2023",
